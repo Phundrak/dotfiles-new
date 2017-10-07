@@ -21,12 +21,12 @@ Dependencies
 
 Because indeed there are some dependencies, and here they are. The versions mentionned are the version I am currently using. My dotfiles **might** work with earlier versions.
 
--   [Emacs](https://github.com/emacs-mirror/emacs) &gt;= =25.3-1=
+-   [Emacs](https://github.com/emacs-mirror/emacs) &gt;= `25.3-1``
     -   [Spacemacs](http://spacemacs.org/) &gt;= `0.200.9@25.3.1`
 -   [zsh](https://github.com/zsh-users/zsh) &gt;= `5.0`
 -   `.zshrc` dependencies (can be ignored if commenting out the corresponding lines in the file):
     -   [powerline](https://github.com/powerline/powerline) &gt;= `2.6-1`
-    -   [clang](http://clang.llvm.org/) &gt;= =5.0.0-1=
+    -   [clang](http://clang.llvm.org/) &gt;= `5.0.0-1`
     -   [highlight](http://www.andre-simon.de/doku/highlight/highlight.html) &gt;= `3.39-1`
     -   [youtube-dl](http://rg3.github.io/youtube-dl) &gt;= `2017.10.01-1`
     -   [curl](https://curl.haxx.se) &gt;= `7.55.1-2`
@@ -34,8 +34,8 @@ Because indeed there are some dependencies, and here they are. The versions ment
     -   [feh](https://feh.finalrewind.org/) &gt;= `2.20-1`
 -   [i3-gaps](https://github.com/Airblader/i3) &gt;= `4.14.1-1`
 -   [compton](https://github.com/chjj/compton) &gt;= `0.1_beta2.5-8`
--   [pywal](https://github.com/dylanaraps/pywal) &gt;= =0.6.9-1=
--   [dmenu](http://tools.suckless.org/dmenu/) &gt;= =4.7-1=
+-   [pywal](https://github.com/dylanaraps/pywal) &gt;= `0.6.9-1=`
+-   [dmenu](http://tools.suckless.org/dmenu/) &gt;= `4.7-1`
 -   [uxterm](http://invisible-island.net/xterm/) &gt;= `330-1`
 -   [Rust nightly](https://rustup.rs/) &gt;= `0.20`
 -   [eclipse-common](https://eclipse.org) &gt;= `4.7.1-1`
