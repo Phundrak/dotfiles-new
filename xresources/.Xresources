@@ -1,0 +1,20 @@
+URxvt.scrollBar: false
+URxvt.internalBorder: 0
+URxvt.externalBorder: 0
+URxvt.borderLess: true
+URxvt.transparent: true
+URxvt.shading: 15
+URxvt.fading: 2%
+URxvt.depth: 16
+URxvt.fadeColor: grey
+UXTerm*faceName: Source Code Pro for Powerline
+UXTerm*faceSize: 10
+UXTerm*borderLess: true
+UXTerm*externalBorder: 0
+UXTerm*internalBorder: 0
+URxvt.font: xft:Source Code Pro for Powerline:pixelsize=9
+export_emacs() {
+    x_colors+="emacs*background: ${colors[0]}${newline}"
+    x_colors+="emacs*foreground: ${colors[15]}${newline}"
+}
+export_emacs
