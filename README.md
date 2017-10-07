@@ -21,7 +21,7 @@ Dependencies
 
 Because indeed there are some dependencies, and here they are. The versions mentionned are the version I am currently using. My dotfiles **might** work with earlier versions.
 
--   [Emacs](https://github.com/emacs-mirror/emacs) &gt;= `25.3-1``
+-   [Emacs](https://github.com/emacs-mirror/emacs) &gt;= `25.3-1`
     -   [Spacemacs](http://spacemacs.org/) &gt;= `0.200.9@25.3.1`
 -   [zsh](https://github.com/zsh-users/zsh) &gt;= `5.0`
 -   `.zshrc` dependencies (can be ignored if commenting out the corresponding lines in the file):
