@@ -54,11 +54,11 @@ bindsym $mod+Shift+q kill
 bindsym $alt+F4 kill
 
 # start dmenu (a program launcher)
-# bindsym $mod+d exec dmenu_run
+# bindsym $mod+Shift+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $mod+d exec --no-startup-id j4-dmenu-desktop
+bindsym $mod+Shift+d exec --no-startup-id j4-dmenu-desktop
 bindsym $mod+d exec "rofi -combi-modi window,drun -show combi -mohh combi"
 
 # change focus
@@ -148,6 +148,8 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# hibernate
+bindsym $mod+Shift+h exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89' && systemctl hibernate"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -175,6 +177,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Volume and brightness keyboard shortcuts
 bindsym XF86AudioRaiseVolume exec amixer -D pulse -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec amixer -D pulse -q set Master 5%- unmute
 bindsym XF86MonBrightnessUp exec light -A 5
@@ -182,8 +185,8 @@ bindsym XF86MonBrightnessDown exec light -U 5
 
 # Gaps
 smart_gaps on
-gaps inner 30
-gaps outer -20
+gaps inner 20
+gaps outer -10
 Focus_follows_mouse off
 
 new_window pixel 0
@@ -202,11 +205,17 @@ exec "xrdb $HOME/.Xresources"
 exec --no-startup-id compton -F --opengl --config ~/.config/compton.conf
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
-### WAL ###
-# exec "wal -R -t"
+### Shortcuts ###
+# Wal
 exec_always wal -i "$(< "${HOME}/.cache/wal/wal")"
 bindsym $mod+Ctrl+w exec "wal -i ~/.config/Wallpapers -o wal-set"
-bindsym $mod+Ctrl+z scrot
+
+# Take a screenshot
+bindsym $mod+Ctrl+z exec "scrot"
+bindsym $mod+Shift+z exec "scrot -d 3"
+
+# Lock screen
+bindsym $mod+Ctrl+l exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'"
 
 # Set colors from Xresources
 # Change 'color7' and 'color2' to whatever colors you want i3 to use
@@ -246,3 +255,4 @@ client.placeholder      $bg     $bg     $fg  $bg       $bg
 # Please remove the following exec line:
 #######################################################################
 # exec i3-config-wizard
+ 
