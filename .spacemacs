@@ -20,13 +20,7 @@
 ;; --------------------------------------------------------------------
 
 (defun dotspacemacs/layers ()
-  "Configuration Layers declaration.
-You should not put any user code in this function besides modifying the variable
-values."
   (setq-default
-   ;; Base distribution to use. This is a layer contained in the directory
-   ;; `+distribution'. For now available distributions are `spacemacs-base'
-   ;; or `spacemacs'. (default 'spacemacs)
    dotspacemacs-distribution 'spacemacs
    ;; Lazy installation of layers (i.e. layers are installed only when a file
    ;; with a supported type is opened). Possible values are `all', `unused'
@@ -48,21 +42,12 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      asm
-     ;; auto-completion
      (auto-completion :variables auto-completion-complete-with-key-sequence-delay 0.02)
-     ;; better-defaults
-     c-c++
+     (c-c++ :variables c-c++-enable-clang-support t)
      csv
      colors
-     d
      emacs-lisp
-     emoji
      git
      github
      helm
@@ -71,31 +56,28 @@ values."
      javascript
      latex
      markdown
-     ;; org
      (org :variables org-projectile-file "TODOs.org")
      pandoc
+     plantuml
      php
      python
      rust
      scheme
-     ;; shell
      (shell :variables shell-default-height 30 shell-default-position 'bottom)
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; spacemacs-org
+     semantic
      spotify
      syntax-checking
-     ;; themes-megapack
      twitter
-     ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(sr-speedbar htmlize xresources-theme)
+   dotspacemacs-additional-packages '(
+                                      ecb
+                                      htmlize
+                                      xresources-theme
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -108,6 +90,7 @@ values."
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
    dotspacemacs-install-packages 'used-only))
+
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -159,7 +142,7 @@ values."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 15)
-                                (projects . 5)
+                                (projects . 10)
                                 (todos . 5)
                                 (agenda . 3))
    ;; True if the home buffer should respond to resize events.
@@ -352,6 +335,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
 
+
   )
 
 (defun dotspacemacs/user-config ()
@@ -361,17 +345,20 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (turn-on-fci-mode)
-  ;; (with-eval-after-load 'org
-  ;;   (org-babel-do-load-languages
-  ;;    'org-babel-load-languages '((C . t)
-  ;;                                (python . t)
-  ;;                                (java . t)
-  ;;                                (javascript . t)
-  ;;                                (scheme . t))))
-  (setq help-at-pt-display-when-idle t)
-  (setq help-at-pt-timer-delay 0.0)
-  (setq eclimd-autostart t)
+
+  (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+  (semantic-mode 1)
+  (require 'stickyfunc-enhance)
+
+  (add-hook 'c++-mode-hook 'clang-format-bindings)
+  (defun clang-format-bindings ()
+    (define-key c++-mode-map [tab] 'clang-format-buffer))
+
+  (setq help-at-pt-display-when-idle t
+        help-at-pt-timer-delay 0.0
+        eclim-eclipse-dirs "/usr/lib/eclipse"
+        eclim-executable "~/.eclipse/org.eclipse.platform_4.7.1_155965261_linux_gtk_x86_64/eclim"
+        )
   (ac-config-default)
   (company-emacs-eclim-setup)
 
@@ -385,14 +372,7 @@ you should place your code here."
     (push (cons (concat "\\." (car e) "\\'") (cdr e)) auto-mode-alist))
 
 
-  ;; Add minted to the defaults packages to include when exporting
-  ;; (add-to-list 'org-latex-packages-alist '("" "minted"))
 
-  ;; Tell the latex export to use the minted package for source code coloration
-  ;; (setq org-latex-listings 'minted)
-
-  ;; Let the exporter use the -shell-escape option to let latex execute external
-  ;; programs
   (setq org-latex-pdf-process
         '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
@@ -446,7 +426,10 @@ you should place your code here."
     (php-extras-company company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-cmake company-files
                         (company-dabbrev-code company-gtags company-etags company-keywords)
                         company-oddmuse company-dabbrev)))
- '(ecb-options-version "2.40")
+ '(custom-safe-themes
+   (quote
+    ("065efdd71e6d1502877fd5621b984cded01717930639ded0e569e1724d058af8" default)))
+ '(ecb-options-version "2.50")
  '(evil-want-Y-yank-to-eol nil)
  '(org-babel-load-languages
    (quote
@@ -464,7 +447,7 @@ you should place your code here."
      (R . t))))
  '(package-selected-packages
    (quote
-    (xresources-theme spotify helm-spotify multi company-anaconda anaconda-mode d-mode company-dcd ivy popwin flycheck-dmd-dub twittering-mode zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help pandoc-mode ox-pandoc org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download gnuplot ob-rust htmlize web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ac-emacs-eclim rtags ac-html ac-racer ac-rtags auto-complete-c-headers company-emoji auto-complete smeargle rainbow-mode rainbow-identifiers orgit magit-gitflow magit-gh-pulls helm-gitignore gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht evil-magit magit magit-popup git-commit with-editor emoji-cheat-sheet-plus color-identifiers-mode sr-speedbar gildas-mode mmm-mode markdown-toc markdown-mode gh-md csv-mode achievements phpunit phpcbf php-extras php-auto-yasnippets geiser drupal-mode php-mode company-auctex auctex-latexmk auctex x86-lookup nasm-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode company-emacs-eclim eclim yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode pythonic toml-mode racer flycheck-rust seq cargo rust-mode disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck company-statistics company auto-yasnippet yasnippet ac-ispell ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async company))))
+    (stickyfunc-enhance srefactor company-emacs-eclim ecb plantuml-mode xresources-theme spotify helm-spotify multi company-anaconda anaconda-mode d-mode company-dcd ivy popwin flycheck-dmd-dub twittering-mode zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help pandoc-mode ox-pandoc org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download gnuplot ob-rust htmlize web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ac-emacs-eclim rtags ac-html ac-racer ac-rtags auto-complete-c-headers company-emoji auto-complete smeargle rainbow-mode rainbow-identifiers orgit magit-gitflow magit-gh-pulls helm-gitignore gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht evil-magit magit magit-popup git-commit with-editor emoji-cheat-sheet-plus color-identifiers-mode sr-speedbar gildas-mode mmm-mode markdown-toc markdown-mode gh-md csv-mode achievements phpunit phpcbf php-extras php-auto-yasnippets geiser drupal-mode php-mode company-auctex auctex-latexmk auctex x86-lookup nasm-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode pythonic toml-mode racer flycheck-rust seq cargo rust-mode disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck company-statistics company auto-yasnippet yasnippet ac-ispell ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -500,7 +483,7 @@ you should place your code here."
 ;; force flycheck to always use c++11 support. We use the
 ;; clang language backend so this is set to clang
 (add-hook 'c++-mode-hook
-	  (lambda () (setq flycheck-clang-language-standard "c++14")))
+	  (lambda () (setq flycheck-clang-language-standard "c++17")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                C/C++                ;
