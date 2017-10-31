@@ -189,7 +189,7 @@ gaps inner 20
 gaps outer -10
 Focus_follows_mouse off
 
-new_window pixel 0
+new_window none
 smart_borders on
 
 # for_window [class="cool-retro-term"] border pixel 0
@@ -201,8 +201,10 @@ smart_borders on
 #         status_command i3status
 # }
 
+# Modules startup
 exec "xrdb $HOME/.Xresources"
-exec --no-startup-id compton -F --opengl --config ~/.config/compton.conf
+exec --no-startup-id compton -F --opengl --config ~/.config/compton.conf -e 1
+bindsym $mod+Shift+m exec --no-startup-id compton -F --opengl --config ~/.config/compton-multi.conf
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 ### Shortcuts ###

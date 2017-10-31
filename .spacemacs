@@ -376,14 +376,15 @@ you should place your code here."
   (setq org-latex-pdf-process
         '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
-  (setq org-latex-listings 'minted
+  (require 'ox-latex)
+  (setq user-full-name "Lucien Cartier-Tilet"
+        user-mail-address "drakpa@drakpa.fr"
+        org-latex-listings 'minted
         org-latex-packages-alist '(("" "minted"))
         org-latex-pdf-process
-        '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+        '("pdflatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+          "pdflatex --shell-escape -interaction nonstopmode -output-directory %o %f")
         org-html-validation-link nil
-        user-full-name "Lucien Cartier-Tilet"
-        user-mail-address "drakpa@drakpa.fr"
         geiser-default-implementation 'racket
         org-journal-dir "~/org/journal/"
         org-journal-date-prefix "#+TITLE: "
@@ -438,6 +439,7 @@ you should place your code here."
      (emacs-lisp . t)
      (C . t)
      (java . t)
+     (latex . t)
      (lisp . t)
      (scheme . t)
      (makefile . t)
