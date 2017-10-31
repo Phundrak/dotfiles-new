@@ -123,13 +123,27 @@ alias prepcmakepp='mkdir -p src bin build debug && cp ~/Documents/code/C++/CMake
 alias prepcmake='mkdir -p src bin build debug && cp ~/Documents/code/C/CMakeLists.txt.template CMakeLists.txt && git init'
 alias swipl='clear && swipl -q && clear'
 cppnew() {
-    mkdir -p "$1" && cd "$1";
-    mkdir -p src bin build debug && cp ~/Documents/code/C++/CMakeLists.txt.template CMakeLists.txt
+    mkdir -p "$1"
+    cd "$1";
+    mkdir -p src bin build debug
+    cp ~/dotfiles/dev/C++/CMakeLists.txt.part1 CMakeLists.txt
+    printf "%s" "$1" >> CMakeLists.txt
+    cat ~/dotfiles/dev/C++/CMakeLists.txt.part2 >> CMakeLists.txt
+    printf "%s" "$1" >> CMakeLists.txt
+    cat ~/dotfiles/dev/C++/CMakeLists.txt.part3 >> CMakeLists.txt
+    touch src/main.cc
     git init
 }
 cnew() {
-    mkdir -p "$1" && cd "$1";
-    mkdir -p src bin build debug && cp ~/Documents/code/C/CMakeLists.txt.template CMakeLists.txt
+    mkdir -p "$1"
+    cd "$1"
+    mkdir -p src bin build debug
+    cp ~/dotfiles/dev/C/CMakeLists.txt.part1 CMakeLists.txt
+    printf "%s" "$1" >> CMakeLists.txt
+    cat ~/dotfiles/dev/C/CMakeLists.txt.part2 >> CMakeLists.txt
+    printf "%s" "$1" >> CMakeLists.txt
+    cat ~/dotfiles/dev/C/CMakeLists.txt.part3 >> CMakeLists.txt
+    touch src/main.c
     git init
 }
 
