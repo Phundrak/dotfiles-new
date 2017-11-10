@@ -2,3 +2,4 @@
 \.emacs\.d
 \.spacemacs\.before_ecb_2\.50
 /.config/.ncmpcpp/error.log
+/.config/mpd/log
