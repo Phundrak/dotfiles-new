@@ -371,7 +371,11 @@ you should place your code here."
                ("s" . asm-mode)))
     (push (cons (concat "\\." (car e) "\\'") (cdr e)) auto-mode-alist))
 
+  (add-hook 'org-mode-hook 'visual-line-mode)
 
+  (defun ck/org-confirm-babel-evaluate (lang body)
+    (not (or (string= lang "latex") (string= lang "maxima"))))
+  (setq org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate)
 
   (setq org-latex-pdf-process
         '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))

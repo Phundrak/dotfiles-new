@@ -30,7 +30,7 @@ set -k
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/alex/.zshrc'
 
-autoload -Uz compinit
+autoload -Uz compinit url-quote-magic
 compinit
 # End of lines added by compinstall
 
@@ -60,9 +60,16 @@ alias neofetch='clear && neofetch --cpu_temp C --os_arch off --cpu_cores physica
 alias rmd='rm -r'
 alias untar='tar -zxvf'
 alias compress='tar -czvf'
-
 mkcddir(){
     mkdir -p "$1" && cd "$1"
+}
+dlyt(){
+    str="$1"
+    youtube-dl --write-sub "${str#*=}"
+}
+ytmpv(){
+    str="$1"
+    mpv ytdl://"${str#*=}"
 }
 
 #Weather
