@@ -37,6 +37,7 @@ compinit
 source /usr/share/zsh/site-contrib/powerline.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zshrc-private.zsh
 
 export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
