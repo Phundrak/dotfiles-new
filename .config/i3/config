@@ -186,7 +186,7 @@ bindsym XF86MonBrightnessDown exec light -U 5
 # Gaps
 smart_gaps on
 gaps inner 20
-gaps outer -10
+gaps outer 0
 Focus_follows_mouse off
 
 new_window none
