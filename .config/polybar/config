@@ -47,13 +47,8 @@ module-margin-right = 2
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 =  "Wuncon Siji:pixelsize=10;1"
-; font-2 = "Noto Sans:pixelsize=10;1"
-; font-2 = "Tamsyn:pixelsize=10;0"
-; font-2 = "Roboto:size=11:weight:bold;0"
-; font-2 = "Material Design Icon:pixelsize=9;0"
 
 modules-left = bspwm i3 filesystem mpv
-; modules-left = bspwm ewmh filesystem mpv
 modules-center = date xwindow
 modules-right = pkg volume backlight-acpi memory cpu bluetooth wlan eth battery temperature powermenu
 
@@ -298,14 +293,12 @@ type = internal/date
 interval = 1
 
 date = %Y-%m-%d
-date-alt = %A %d %B
+date-alt = %A %d, %B
 
 time = %H:%M:%S
 time-alt = %H:%M:%S
 
-; format-prefix =
 format-prefix = 
-; format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
 
 label = %date% %time%
