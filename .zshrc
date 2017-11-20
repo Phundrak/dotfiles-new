@@ -68,6 +68,10 @@ dlyt(){
     str="$1"
     youtube-dl --write-sub "${str#*=}"
 }
+ytdl(){
+    str="$1"
+    youtube-dl --write-sub "${str#*=}"
+}
 ytmpv(){
     str="$1"
     mpv ytdl://"${str#*=}"
