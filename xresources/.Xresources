@@ -7,12 +7,15 @@ URxvt.shading: 15
 URxvt.fading: 2%
 URxvt.depth: 16
 URxvt.fadeColor: grey
-UXTerm*faceName: Source Code Pro for Powerline
+UXTerm*faceName: Source Code Pro for Powerline:style=book
+! UXTerm*faceName: Dejavu Sans Mono for Powerline:style=book
+UXTerm*faceNameDoublesize: IPAGothic:style=Regular
 UXTerm*faceSize: 10
 UXTerm*borderLess: true
 UXTerm*externalBorder: 0
 UXTerm*internalBorder: 0
 URxvt.font: xft:Source Code Pro for Powerline:pixelsize=9
+! URxvt.font: xft:DejaVu Sans Mono for Powerline:pixelsize=9
 export_emacs() {
     x_colors+="emacs*background: ${colors[0]}${newline}"
     x_colors+="emacs*foreground: ${colors[15]}${newline}"
