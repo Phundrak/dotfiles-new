@@ -81,7 +81,8 @@ type = internal/xwindow
 format-prefix-underline = ${colors.secondary}
 format-underline = ${colors.secondary}
 
-label = %title:0:30:...%
+label = %title%
+label-maxlen = 30
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
