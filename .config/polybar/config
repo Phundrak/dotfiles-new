@@ -44,9 +44,10 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 =  "Wuncon Siji:pixelsize=10;1"
+font-0 = fixed:pixelsize=10
+font-1 = unifont:fontformat=truetype:size=8:antialias=false
+font-2 = "Wuncon Siji:pixelsize=10"
+font-3 = "IPAMincho:style=regular:pixelsize=10"
 
 modules-left = i3 filesystem mpv
 modules-center = date xwindow
@@ -81,8 +82,8 @@ type = internal/xwindow
 format-prefix-underline = ${colors.secondary}
 format-underline = ${colors.secondary}
 
-label = %title%
-label-maxlen = 30
+label = %title:0:30:...%
+; label-maxlen = 30
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
