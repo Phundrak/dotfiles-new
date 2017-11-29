@@ -50,7 +50,7 @@ font-2 = "Wuncon Siji:pixelsize=10"
 font-3 = "IPAMincho:style=regular:pixelsize=10"
 
 modules-left = i3 filesystem mpv
-modules-center = date xwindow
+modules-center = date
 modules-right = pkg volume backlight-acpi memory cpu bluetooth wlan eth battery temperature powermenu
 
 tray-position = right
