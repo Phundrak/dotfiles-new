@@ -11,3 +11,12 @@
 /.config/mpv/watch_later/13AB0D2614969EFE70C38F82C0957DFC
 /.config/mpv/watch_later/9F499767C1E72049EAD927CC571282F1
 .config/mpd/database
+/.config/mpv/watch_later/AB7444F088FE5AB0D85BF0939606DB3B
+
+*.part3~
+
+\.config/mpv/watch_later/
+
+\.config/mpd/playlists/
+
+\.config/i3/config~

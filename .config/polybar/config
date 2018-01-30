@@ -60,16 +60,16 @@ tray-maxsize = 15
 tray-transparent = true
 tray-background = ${colors.background}
 
-;wm-restack = bspwm
-wm-restack = i3
+; wm-restack = bspwm
+; wm-restack = i3
 
-;override-redirect = true
+; override-redirect = true
 
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
+; scroll-up = bspwm-desknext
+; scroll-down = bspwm-deskprev
 
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+; scroll-up = i3wm-wsnext
+; scroll-down = i3wm-wsprev
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;

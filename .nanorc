@@ -1,7 +1,8 @@
 set autoindent
 set backup
 set boldtext
-set const
+set constantshow
+set linenumbers
 set morespace
 set smarthome
 set smooth
