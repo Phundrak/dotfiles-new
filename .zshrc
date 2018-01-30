@@ -16,6 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ######################################################################
 
+# Line to hopefully fix tramp-mode in Spacemacs
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=100000
@@ -34,18 +37,48 @@ autoload -Uz compinit url-quote-magic
 compinit
 # End of lines added by compinstall
 
+
 source /usr/share/zsh/site-contrib/powerline.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zshrc-private.zsh
 
-export CC=/usr/bin/clang
-export CXX=/usr/bin/clang++
-
-export EDITOR='emacs'
-
 autoload -Uz run-help
 unalias run-help
+
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+export EDITOR='emacs'
+
+TEXINPUTS=~/.tex/scheme-listings-master/:$TEXINPUTS
+TEXINPUTS=~/pgfplots/tex//:$TEXINPUTS
+
+# Safety nets
+# do not delete / or prompt if deleting more than 3 files at a time
+alias rm='rm -I --preserve-root'
+alias rmd='rm -r --preserve-root'
+# confirmation
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+# Parenting changin perms on /
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+# Tune sudo and su
+alias root='sudo -i'
+alias su='sudo -i'
+
+# Get system memory, CPU usage and GPU memory info
+alias meminfo='free -m -l -t'
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+alias cpuinfo='lscpu'
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+
 alias ..='cd ..'
 alias cd..='cd ..'
 alias ccat='highlight -O ansi'
@@ -58,9 +91,10 @@ alias mp3='youtube-dl -x --audio-format "mp3" $*'
 alias mpv='mpv --no-border'
 alias feh='feh -Zx.'
 alias neofetch='clear && neofetch --cpu_temp C --os_arch off --cpu_cores physical --kernel_shorthand on --uptime_shorthand tiny'
-alias rmd='rm -r'
 alias untar='tar -zxvf'
-alias compress='tar -czvf'
+alias compress='tar -czf'
+alias df='df -H'
+alias du='du -ch'
 mkcddir(){
     mkdir -p "$1" && cd "$1"
 }
@@ -77,7 +111,7 @@ ytmpv(){
     mpv ytdl://"${str#*=}"
 }
 
-#Weather
+# Weather
 we(){
     if [ -n "$1" ]; then
         str="$*";
@@ -91,11 +125,12 @@ alias wee='we Enghien+les+Bains'
 alias wel='we Lyon'
 alias wep='we Paris'
 
-#DL
-alias 4chandl='wget -erobots=off -nd -rHD4cdn.org -Ajpg,png,gif,webm -Rs.jpg'
-alias gehentaidl='wget -erobots=off -t4 -Umozilla -nd -rHl0 -Is,h -ERhtml'
+# Download
+alias wget='wget -c'
+alias 4chandl='wget -c -erobots=off -nd -rHD4cdn.org -Ajpg,png,gif,webm -Rs.jpg'
+alias gehentaidl='wget -c -erobots=off -t4 -Umozilla -nd -rHl0 -Is,h -ERhtml'
 
-#System
+# System
 alias diskspace='du -S | sort -n -r |more'
 alias hibernate='lock -t "Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89" && systemctl hibernate'
 alias suspend='lock -t "Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89" && systemctl suspend'
@@ -106,12 +141,12 @@ alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E 
 alias mountD='sudo mount -t ntfs /dev/sdb1 /mnt && cd /mnt/Phundrak/'
 alias umountD='cd ~ && sudo umount /mnt'
 
-#Emacs
+# Emacs
 alias enw='emacs -nw'
 alias servemacs='emacs --daemon'
 alias restartemacs='emacsclient --eval "(kill-emacs)"'
 
-#Package Manager
+# Package Manager Pacman
 alias aurupdate='pacaur -Syua'
 alias forceupdate='sudo pacman -Syyu'
 alias gimme='sudo pacman -Syu'
@@ -124,38 +159,44 @@ alias update='sudo pacman -Syu'
 alias optimize='sudo pacman-optimize && sync'
 alias pacaur='pacaur --ignore gstreamer0.10 --ignore gstreamer0.10-bad --ignore gstreamer0.10-bad-plugins --ignore gstreamer0.10-base --ignore gstreamer0.10-base-plugins --ignore gstreamer0.10-ugly --ignore gstreamer0.10-ugly-plugins'
 
-#Dev
+# Dev
 alias clang='clang -Wall'
 alias clang++='clang++ -Wall'
 alias g++='g++ -Wall'
 alias gcc='gcc -Wall'
 alias cdebug='cmake -DCMAKE_BUILD_TYPE=Debug'
 alias crelease='cmake -DCMAKE_BUILD_TYPE=Release'
-alias prepcmakepp='mkdir -p src bin build debug && cp ~/Documents/code/C++/CMakeLists.txt.template CMakeLists.txt && git init'
-alias prepcmake='mkdir -p src bin build debug && cp ~/Documents/code/C/CMakeLists.txt.template CMakeLists.txt && git init'
+# alias prepcmakepp='mkdir -p src bin build debug && cp ~/Documents/code/C++/CMakeLists.txt.template CMakeLists.txt && git init'
+# alias prepcmake='mkdir -p src bin build debug && cp ~/Documents/code/C/CMakeLists.txt.template CMakeLists.txt && git init'
 alias swipl='clear && swipl -q && clear'
 cppnew() {
     mkdir -p "$1"
     cd "$1";
     mkdir -p src bin build debug
+    cp ~/dotfiles/dev/CC/gitignore bin/.gitignore
+    cp ~/dotfiles/dev/CC/gitignore build/.gitignore
+    cp ~/dotfiles/dev/CC/gitignore debug/.gitignore
+    cp ~/dotfiles/dev/C++/main.cc src/main.cc
     cp ~/dotfiles/dev/C++/CMakeLists.txt.part1 CMakeLists.txt
     printf "%s" "$1" >> CMakeLists.txt
     cat ~/dotfiles/dev/C++/CMakeLists.txt.part2 >> CMakeLists.txt
     printf "%s" "$1" >> CMakeLists.txt
     cat ~/dotfiles/dev/C++/CMakeLists.txt.part3 >> CMakeLists.txt
-    touch src/main.cc
     git init
 }
 cnew() {
     mkdir -p "$1"
     cd "$1"
     mkdir -p src bin build debug
+    cp ~/dotfiles/dev/CC/gitignore bin/.gitignore
+    cp ~/dotfiles/dev/CC/gitignore build/.gitignore
+    cp ~/dotfiles/dev/CC/gitignore debug/.gitignore
+    cp ~/dotfiles/dev/C/main.c src/main.c
     cp ~/dotfiles/dev/C/CMakeLists.txt.part1 CMakeLists.txt
     printf "%s" "$1" >> CMakeLists.txt
     cat ~/dotfiles/dev/C/CMakeLists.txt.part2 >> CMakeLists.txt
     printf "%s" "$1" >> CMakeLists.txt
     cat ~/dotfiles/dev/C/CMakeLists.txt.part3 >> CMakeLists.txt
-    touch src/main.c
     git init
 }
 
@@ -167,7 +208,3 @@ s() { # do sudo, or sudo the last command if no argument given
         sudo "$@"
     fi
 }
-source /home/drak-pa/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-TEXINPUTS=~/.tex/scheme-listings-master/:$TEXINPUTS
-TEXINPUTS=~/pgfplots/tex//:$TEXINPUTS
