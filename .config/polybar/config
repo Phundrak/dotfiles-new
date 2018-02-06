@@ -49,7 +49,7 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false
 font-2 = "Wuncon Siji:pixelsize=10"
 font-3 = "IPAMincho:style=regular:pixelsize=10"
 
-modules-left = i3 filesystem mpv
+modules-left = i3 filesystem mpv wired-network wireless-network
 modules-center = date
 modules-right = pkg volume backlight-acpi memory cpu bluetooth wlan eth battery temperature powermenu
 
@@ -70,6 +70,20 @@ tray-background = ${colors.background}
 
 ; scroll-up = i3wm-wsnext
 ; scroll-down = i3wm-wsprev
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/wired-network]
+type = internal/network
+interface = eth0
+
+[module/wireless-network]
+type = internal/network
+interface = wlan0
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
