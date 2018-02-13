@@ -20,3 +20,5 @@
 \.config/mpd/playlists/
 
 \.config/i3/config~
+*~
+*.bak
