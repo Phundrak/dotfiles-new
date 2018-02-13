@@ -49,9 +49,9 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false
 font-2 = "Wuncon Siji:pixelsize=10"
 font-3 = "IPAMincho:style=regular:pixelsize=10"
 
-modules-left = i3 filesystem mpv wired-network wireless-network
+modules-left = i3 filesystem mpv memory cpu
 modules-center = date
-modules-right = pkg volume backlight-acpi memory cpu bluetooth wlan eth battery temperature powermenu
+modules-right = pkg volume backlight-acpi bluetooth wlan eth battery temperature powermenu
 
 tray-position = right
 tray-padding = 2
@@ -79,11 +79,11 @@ tray-background = ${colors.background}
 
 [module/wired-network]
 type = internal/network
-interface = eth0
+interface = eth1
 
 [module/wireless-network]
 type = internal/network
-interface = wlan0
+interface = wlan1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
