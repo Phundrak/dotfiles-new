@@ -49,7 +49,7 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false
 font-2 = "Wuncon Siji:pixelsize=10"
 font-3 = "IPAMincho:style=regular:pixelsize=10"
 
-modules-left = i3 filesystem mpv memory cpu
+modules-left = i3 filesystem memory cpu
 modules-center = date
 modules-right = pkg volume backlight-acpi bluetooth wlan eth battery temperature powermenu
 
@@ -469,7 +469,7 @@ exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
 type = custom/script
 
 exec = sh ~/.config/polybar/mpv.sh
-exec-if = pgrep -x mpv 
+exec-if = pgrep -x mpv
 interval = 1
 
 format = <label>
