@@ -114,6 +114,11 @@ ytmpv(){
     str="$1"
     mpv ytdl://"${str#*=}"
 }
+rainymood() {
+		FILE=$((RANDOM%4))
+		URL="https://rainymood.com/audio1110/${FILE}.ogg"
+		mpv "$URL" && rainymood
+}
 
 # Weather
 we(){
@@ -170,8 +175,7 @@ alias g++='g++ -Wall'
 alias gcc='gcc -Wall'
 alias cdebug='cmake -DCMAKE_BUILD_TYPE=Debug'
 alias crelease='cmake -DCMAKE_BUILD_TYPE=Release'
-# alias prepcmakepp='mkdir -p src bin build debug && cp ~/Documents/code/C++/CMakeLists.txt.template CMakeLists.txt && git init'
-# alias prepcmake='mkdir -p src bin build debug && cp ~/Documents/code/C/CMakeLists.txt.template CMakeLists.txt && git init'
+alias gitlog='git log --oneline --graph --decorate'
 alias swipl='clear && swipl -q && clear'
 cppnew() {
     mkdir -p "$1"
