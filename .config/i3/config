@@ -258,4 +258,3 @@ client.placeholder      $bg     $bg     $fg  $bg       $bg
 # Please remove the following exec line:
 #######################################################################
 # exec i3-config-wizard
- 
