@@ -83,6 +83,8 @@ alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
 
 alias ..='cd ..'
 alias cd..='cd ..'
+alias solo='cd ~/dotfiles/.config && ln -s compton-solo.conf compton.conf ; pkill compton ; compton'
+alias multiscreen='cd ~/dotfiles/.config && ln -s compton-multi.conf compton.conf ; pkill compton ; compton'
 alias ccat='highlight -O ansi'
 alias grep="grep --color=auto"
 alias help='run-help'
@@ -115,9 +117,9 @@ ytmpv(){
     mpv ytdl://"${str#*=}"
 }
 rainymood() {
-		FILE=$((RANDOM%4))
-		URL="https://rainymood.com/audio1110/${FILE}.ogg"
-		mpv "$URL" && rainymood
+    FILE=$((RANDOM%4))
+    URL="https://rainymood.com/audio1110/${FILE}.ogg"
+    mpv "$URL" && rainymood
 }
 
 # Weather
