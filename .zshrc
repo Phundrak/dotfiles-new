@@ -193,6 +193,8 @@ cppnew() {
     printf "%s" "$1" >> CMakeLists.txt
     cat ~/dotfiles/dev/C++/CMakeLists.txt.part3 >> CMakeLists.txt
     git init
+    git add .
+    git commit -m "initial commit"
 }
 cnew() {
     mkdir -p "$1"
@@ -208,6 +210,9 @@ cnew() {
     printf "%s" "$1" >> CMakeLists.txt
     cat ~/dotfiles/dev/C/CMakeLists.txt.part3 >> CMakeLists.txt
     git init
+    git init
+    git add .
+    git commit -m "initial commit"
 }
 
 
