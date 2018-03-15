@@ -51,7 +51,7 @@ font-3 = "IPAMincho:style=regular:pixelsize=10"
 
 modules-left = i3 filesystem memory cpu
 modules-center = date
-modules-right = pkg volume backlight-acpi bluetooth wlan eth battery temperature powermenu
+modules-right = pkg volume backlight-acpi wlan eth battery temperature powermenu
 
 tray-position = right
 tray-padding = 2
