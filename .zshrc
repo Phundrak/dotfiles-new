@@ -119,7 +119,7 @@ ytmpv(){
 rainymood() {
     FILE=$((RANDOM%4))
     URL="https://rainymood.com/audio1110/${FILE}.ogg"
-    mpv "$URL" --force-window=no && rainymood
+    mpv "$URL" --force-window=no --volume=50 && rainymood
 }
 
 # Weather
