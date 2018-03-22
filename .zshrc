@@ -117,9 +117,13 @@ ytmpv(){
     mpv ytdl://"${str#*=}"
 }
 rainymood() {
+    volume="50"
+    if [ "$#" -gt "0" ]; then
+        volume="$1"
+    fi
     FILE=$((RANDOM%4))
     URL="https://rainymood.com/audio1110/${FILE}.ogg"
-    mpv "$URL" --force-window=no --volume=50 && rainymood
+    mpv "$URL" --force-window=no --volume=${volume} && rainymood
 }
 
 # Weather
