@@ -369,8 +369,7 @@ you should place your code here."
   (require 'stickyfunc-enhance)
 
   (tramp-set-completion-function "ssh"
-                                 '((tramp-parse-sconfig "/etc/ssh_config")
-                                   (tramp-parse-sconfig "~/.ssh/config")))
+                                 '((tramp-parse-sconfig "~/.ssh/config")))
   (setq tramp-default-method "ssh")
   (ac-config-default)
 
@@ -538,4 +537,5 @@ you should place your code here."
                     (getenv "HOME")
                     "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
              (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
-             (electric-pair-mode 1)))
+             (electric-pair-mode 1)
+             (indent-guide-mode 1)))
