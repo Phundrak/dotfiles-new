@@ -26,3 +26,11 @@
 /Wallpapers/06_DESKTOP_noun_case.png
 
 \.config/compton\.conf
+
+\.config/ranger/history
+
+\.config/ranger/tagged
+
+\.config/ranger/bookmarks
+
+\.config/ranger/ranger
