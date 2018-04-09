@@ -8,6 +8,7 @@ set smarthome
 set smooth
 set softwrap
 set tabsize 2
+set tabstospaces
 include /usr/share/nano/nanorc.nanorc
 include /usr/share/nano/asm.nanorc
 include /usr/share/nano/autoconf.nanorc
