@@ -49,8 +49,8 @@ unalias run-help
 export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 export EDITOR='vim'
-export PATH=$PATH:$HOME/local/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH/usr/local/bin:$HOME/local/lib
+# export PATH=$PATH:$HOME/local/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin:$HOME/local/lib
 
 TEXINPUTS=~/.tex/scheme-listings-master/:$TEXINPUTS
 TEXINPUTS=~/pgfplots/tex//:$TEXINPUTS
