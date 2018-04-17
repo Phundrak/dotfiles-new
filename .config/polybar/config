@@ -196,7 +196,7 @@ label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
-label-urgent = %index%
+label-urgent = %index% %icon%
 label-urgent-background = ${module/bspwm.label-urgent-background}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
 
@@ -205,7 +205,7 @@ label-urgent-padding = ${module/bspwm.label-urgent-padding}
 ws-icon-0 = 1;term
 ws-icon-1 = 2;dev
 ws-icon-2 = 3;www
-ws-icon-3 = 4;4
+ws-icon-3 = 4;files
 ws-icon-4 = 5;5
 ws-icon-5 = 6;6
 ws-icon-6 = 7;7
