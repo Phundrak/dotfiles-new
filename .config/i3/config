@@ -17,7 +17,7 @@ set $alt Mod1
 # is used in the bar {} block below.
 font pango:monospace 8
 
-# setxkbmap fr-bepo
+setxkbmap fr bepo
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -40,14 +40,12 @@ set $right semicolon
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-# bindsym $mod+Return exec i3-sensible-terminal
-# bindsym $mod+Return exec cool-retro-term
-# bindsym $mod+Return exec gnome-terminal --hide-menubar
-# bindsym $mod+Return exec gnome-terminal
-# bindsym $mod+Return exec konsole --hide-menubar --hide-tabbar
-bindsym $mod+Return exec uxterm
+################################################################################
+###                                 Shortcuts                                ###
+################################################################################
 
+# start a terminal
+bindsym $mod+Return exec uxterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -150,6 +148,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 # hibernate
 bindsym $mod+Shift+h exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89' && systemctl hibernate"
+bindsym $mod+$alt+h exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89' && systemctl suspend"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -177,11 +176,57 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Volume and brightness keyboard shortcuts
+# Keyboard layout
+bindsym $mod+k setxkbmap fr bepo
+bindsym $mod+Shift+k setxkbmap fr
+bindsym $mod+Ctrl+k setxkbmap us
+
+# bindings for MS Natural Ergonomic Keyboard 4000 ##############################
+#bindsym XF86HomePage exec /usr/bin/chromium; workspace 3
+#bindsym XF86Search exec /usr/bin/xdg-open "http://www.google.com"; workspace 3
+#bindsym XF86Mail exec /usr/bin/xdg-email; workspace 5
+bindsym XF86Launch5 exec /usr/bin/emacs; workspace 2
+bindsym XF86Launch6 exec /usr/bin/chromium; workspace 3
+bindsym XF86Launch7 exec /usr/bin/discord-canary; workspace 10
+bindsym XF86Launch8 exec /usr/bin/nautilus; workspace 4
+bindsym XF86Launch9 exec /usr/bin/nemo; workspace 4
+bindsym XF86AudioMute exec amixer -D pulse set Master 1+ toggle
 bindsym XF86AudioRaiseVolume exec amixer -D pulse -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec amixer -D pulse -q set Master 5%- unmute
+#bindsym XF86AudioPlay exec mpd
+#bindsym XF86Favourites
+bindsym XF86Calculator exec /usr/bin/gnome-calculator
+#bindsym Help
+#bindsym Undo
+#bindsym Redo
+#bindsym XF86New
+#bindsym SunOpen
+#bindsym XF86Close
+#bindsym XF86Reply
+#bindsym XF86MailForward
+#bindsym XF86Send
+#bindsym XF86Save
+bindsym Print exec scrot
+bindsym $mod+Print exec scrot -d 3
+bindsym Ctrl+Print exec scrot -s
+
+# Brightness keyboard shortcuts
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
+
+# Wal
+bindsym $mod+Ctrl+w exec "wal -i ~/.config/Wallpapers -o wal-set"
+
+# Take a screenshot
+bindsym $mod+Ctrl+z exec scrot
+bindsym $mod+Shift+z exec scrot -s
+
+# Lock screen
+bindsym $mod+Ctrl+l exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'"
+
+################################################################################
+#                               i3-gaps settings                               #
+################################################################################
 
 # Gaps
 smart_gaps on
@@ -192,35 +237,25 @@ Focus_follows_mouse off
 new_window none
 smart_borders on
 
-# for_window [class="cool-retro-term"] border pixel 0
-# for_window [class="gnome-terminal"] border pixel 0
-
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 # bar {
 #         status_command i3status
 # }
 
-# Modules startup
+################################################################################
+#                                Modules startup                               #
+################################################################################
+exec_always wal -i "$(< "${HOME}/.cache/wal/wal")"
 exec "xrdb $HOME/.Xresources"
 exec --no-startup-id compton -F --opengl --config ~/.config/compton.conf -e 1
-# bindsym $mod+Shift+m exec --no-startup-id compton -F --opengl --config ~/.config/compton-multi.conf
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always redshift-gtk
+exec_always mpd
 
-### Shortcuts ###
-# Wal
-exec_always wal -i "$(< "${HOME}/.cache/wal/wal")"
-bindsym $mod+Ctrl+w exec "wal -i ~/.config/Wallpapers -o wal-set"
-
-# Take a screenshot
-bindsym $mod+Ctrl+z exec "scrot"
-bindsym $mod+Shift+z exec "scrot -d 3"
-
-# Lock screen
-bindsym $mod+Ctrl+l exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'"
-
-# Set colors from Xresources
+################################################################################
+#                          Set colors from Xresources                          #
+################################################################################
 # Change 'color7' and 'color2' to whatever colors you want i3 to use
 # from the generated scheme.
 # NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
@@ -239,14 +274,6 @@ client.placeholder      $bg     $bg     $fg  $bg       $bg
 
 # PROTIP: You can also dynamically set dmenu's colors this way:
 # bindsym $mod+d exec dmenu_run -nb "$fg" -nf "$bg" -sb "$bg" -sf "$fg"
-
-###########
-## Keyboard
-###########
-
-
-# bindsym $mod+Shift+f setxkbmap fr-bepo
-# bindsym $mod+Ctrl+Shift+f setxkbmap fr
 
 #######################################################################
 # automatically start i3-config-wizard to offer the user to create a
