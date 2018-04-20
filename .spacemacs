@@ -78,6 +78,7 @@
      sql
      syntax-checking
      twitter
+     web
      xkcd
      yaml
      )
