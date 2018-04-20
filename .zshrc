@@ -173,7 +173,6 @@ alias rmdb='sudo rm /var/lib/pacman/db.lck'
 alias search='pacaur -Ss'
 alias update='sudo pacman -Syu'
 alias optimize='sudo pacman-optimize && sync'
-alias pacaur='pacaur --ignore gstreamer0.10 --ignore gstreamer0.10-bad --ignore gstreamer0.10-bad-plugins --ignore gstreamer0.10-base --ignore gstreamer0.10-base-plugins --ignore gstreamer0.10-ugly --ignore gstreamer0.10-ugly-plugins'
 
 # Dev
 alias clang='clang -Wall'
