@@ -49,7 +49,7 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false
 font-2 = "Wuncon Siji:pixelsize=10"
 font-3 = "IPAMincho:style=regular:pixelsize=10"
 
-modules-left = i3 filesystem memory cpu
+modules-left = i3 filesystem memory cpu xkeyboard
 modules-center = date
 modules-right = pkg volume backlight-acpi wlan eth battery temperature powermenu
 
@@ -108,13 +108,15 @@ label = %title:0:30:...%
 type = internal/xkeyboard
 blacklist-0 = num lock
 
+format = <label-layout> <label-indicator>
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 format-prefix-underline = ${colors.secondary}
 
-label-layout = %layout%
+label-layout = %name%
 label-layout-underline = ${colors.secondary}
 
+label-indicator = %name%
 label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
