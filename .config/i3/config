@@ -250,7 +250,7 @@ smart_borders on
 ################################################################################
 #                                Modules startup                               #
 ################################################################################
-exec_always xinput set-prop 14 281 1
+exec_always ~/dotfiles/enable_thouch.sh
 exec_always wal -i "$(< "${HOME}/.cache/wal/wal")"
 exec "xrdb $HOME/.Xresources"
 exec --no-startup-id compton -F --opengl --config ~/.config/compton.conf -e 1
