@@ -396,17 +396,17 @@ you should place your code here."
 
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
-
+  (setq org-export-latex-hyperref-format "\\ref{%s}")
   (defun ck/org-confirm-babel-evaluate (lang body)
     (not (or (string= lang "latex") (string= lang "maxima"))))
   (setq org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate)
-
   (setq org-latex-pdf-process
         '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
   (require 'ox-latex)
+  (setq org-src-tab-acts-natively t)
+
   (setq user-full-name "Lucien Cartier-Tilet"
-        user-mail-address "drakpa@drakpa.fr"
+        user-mail-address "phundrak@phundrak.fr"
         org-latex-listings 'minted
         org-latex-packages-alist '(("" "minted"))
         org-latex-pdf-process
@@ -444,7 +444,6 @@ you should place your code here."
   (setq x86-lookup-pdf "~/Documents/code/asm/Intelx86/325383-sdm-vol-2abcd.pdf")
 
   (setq twittering-use-master-password t)
-  (setq org-src-tab-acts-natively t)
 
   )
 
