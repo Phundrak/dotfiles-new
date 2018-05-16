@@ -410,8 +410,8 @@ you should place your code here."
         org-latex-listings 'minted
         org-latex-packages-alist '(("" "minted"))
         org-latex-pdf-process
-        '("pdflatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-          "pdflatex --shell-escape -interaction nonstopmode -output-directory %o %f")
+        '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+          "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f")
         org-html-validation-link nil
         geiser-default-implementation 'racket
         org-journal-dir "~/org/journal/"
