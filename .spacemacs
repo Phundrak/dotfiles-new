@@ -188,6 +188,7 @@ values."
    ;;                             :weight normal
    ;;                             :width normal
    ;;                             :powerline-scale 1.1)
+   ;; link to the Fantasque font : https://github.com/belluzj/fantasque-sans
    dotspacemacs-default-font '("Fantasque Sans Mono"
                                :size 15
                                :weight normal
