@@ -1,23 +1,6 @@
 ;; -*- mode: emacs-lisp -*-
-
-;; --------------------------------------------------------------------
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
-;; Copyright (C) 2017  Lucien Cartier-Tilet
-;;
-;; This program is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-;; --------------------------------------------------------------------
 
 (defun dotspacemacs/layers ()
   (setq-default
@@ -56,11 +39,10 @@
      helm
      html
      imenu-list
-     java
      javascript
-     (latex :variables latex-build-command "Xelatex" latex-enable-auto-fill t)
+     (latex :variables latex-build-command "xelatex" latex-enable-auto-fill t)
      markdown
-     (org :variables org-projectile-file "TODOs.org")
+     org
      pandoc
      pdf-tools
      plantuml
@@ -70,15 +52,13 @@
      rust
      scheme
      shaders
-     (shell :variables shell-default-height 40 shell-default-position 'bottom shell-default-shell 'multi-term)
+     (shell :variables shell-default-height 40 shell-default-position 'bottom)
      selectric
      semantic
-     (spell-checking :variables spell-checking-enable-auto-dictionary t spell-checking-enable-by-default nil)
-     spotify
+     spell-checking
      sql
      syntax-checking
      twitter
-     xkcd
      yaml
      )
    ;; List of additional packages that will be installed without being
@@ -86,10 +66,7 @@
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      ecb
                                       elcord
-                                      htmlize
-                                      pdf-tools
                                       xresources-theme
                                       )
    ;; A list of packages that cannot be updated.
@@ -104,7 +81,6 @@
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
    dotspacemacs-install-packages 'used-only))
-
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -157,6 +133,7 @@ values."
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 15)
                                 (projects . 15)
+                                (bookmarks . 5)
                                 (todos . 5)
                                 (agenda . 3))
    ;; True if the home buffer should respond to resize events.
@@ -168,26 +145,11 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(xresources
                          spacemacs-dark
-                         deeper-blue
-                         manoj-dark
-                         misterioso
-                         tango-dark
-                         tsdh-dark
-                         wombat)
+                         spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   ;; dotspacemacs-default-font '("Source Code Pro"
-   ;;                             :size 13
-   ;;                             :weight normal
-   ;;                             :width normal
-   ;;                             :powerline-scale 1.1)
-   ;; dotspacemacs-default-font '("Hermit"
-   ;;                             :size 13
-   ;;                             :weight normal
-   ;;                             :width normal
-   ;;                             :powerline-scale 1.1)
    ;; link to the Fantasque font : https://github.com/belluzj/fantasque-sans
    dotspacemacs-default-font '("Fantasque Sans Mono"
                                :size 15
@@ -304,10 +266,9 @@ values."
    ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
    ;; Control line numbers activation.
-   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode'
-   ;; and `text-mode' derivatives. If set to `relative', line numbers are.
-   ;; relative. This variable can also be set to a property list for finer
-   ;; control:
+   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
+   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; This variable can also be set to a property list for finer control:
    ;; '(:relative nil
    ;;   :disabled-for-modes dired-mode
    ;;                       doc-view-mode
@@ -348,7 +309,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup t
    ))
 
 (defun dotspacemacs/user-init ()
@@ -359,13 +320,11 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  (require 'tramp)
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   (flyspell-mode 0)
 
   (load "~/dotfiles/private/private_emacs.el")
 
-  ;; (cmake-ide-setup)
   )
 
 (defun dotspacemacs/user-config ()
@@ -376,16 +335,12 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
-  (semantic-mode 1)
-  (fancy-battery-mode 1)
-  (display-time-mode 1)
-  (require 'stickyfunc-enhance)
+  (setq x86-lookup-pdf "~/Documents/code/asm/Intelx86/325383-sdm-vol-2abcd.pdf"
+        twittering-use-master-password t)
 
-  (tramp-set-completion-function "ssh"
-                                 '((tramp-parse-sconfig "~/.ssh/config")))
-  (setq tramp-default-method "ssh")
-  (ac-config-default)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;            file extension           ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (dolist (e '(("xml" . web-mode)
                ("xinp" . web-mode)
@@ -400,60 +355,84 @@ you should place your code here."
                ("fs" . glsl-mode)))
     (push (cons (concat "\\." (car e) "\\'") (cdr e)) auto-mode-alist))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;              org--mode              ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
-  (setq org-export-latex-hyperref-format "\\ref{%s}")
   (defun ck/org-confirm-babel-evaluate (lang body)
     (not (or (string= lang "latex") (string= lang "maxima"))))
-  (setq org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate)
-  (setq org-latex-pdf-process
-        '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
   (require 'ox-latex)
-  (setq org-src-tab-acts-natively t)
-
-  (setq user-full-name "Lucien Cartier-Tilet"
-        user-mail-address "phundrak@phundrak.fr"
+  (setq geiser-default-implementation 'racket
+        org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate
+        org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar"
+        org-export-latex-hyperref-format "\\ref{%s}"
+        org-html-validation-link nil
+        org-journal-date-prefix "#+TITLE: "
+        org-journal-dir "~/org/journal/"
         org-latex-listings 'minted
         org-latex-packages-alist '(("" "minted"))
-        org-latex-pdf-process
-        '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-          "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f")
-        org-html-validation-link nil
-        geiser-default-implementation 'racket
-        org-journal-dir "~/org/journal/"
-        org-journal-date-prefix "#+TITLE: "
-        org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar"
+        org-latex-pdf-process '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")
         org-plantuml-jar-path "/opt/plantuml/plantuml.jar"
-        ;; asm-comment-char ?\#
-        )
-  (setq wal-foreground "{foreground}"
-        wal-background "{background}"
-        wal-cursor "{cursor}"
-        wal-black "{color1}"
-        wal-red "{color1}"
-        wal-green "{color2}"
-        wal-yellow "{color3}"
-        wal-blue "{color4}"
-        wal-magenta "{color5}"
-        wal-cyan "{color6}"
-        wal-gray "{color7}"
-        wal-light-gray "{color8}"
-        wal-light-red "{color9}"
-        wal-light-green "{color10}"
-        wal-light-yellow "{color11}"
-        wal-light-blue "{color12}"
-        wal-light-magenta "{color13}"
-        wal-light-cyan "{color14}"
-        wal-white "{color15}"
+        org-src-tab-acts-natively t
+        user-full-name "Lucien Cartier-Tilet"
+        user-mail-address "phundrak@phundrak.fr"
         )
 
-  (setq x86-lookup-pdf "~/Documents/code/asm/Intelx86/325383-sdm-vol-2abcd.pdf")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;           custom commands           ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (setq twittering-use-master-password t)
+  (global-set-key (kbd "C-x <up>") 'windmove-up)
+  (global-set-key (kbd "C-x <down>") 'windmove-down)
+  (global-set-key (kbd "C-x <right>") 'windmove-right)
+  (global-set-key (kbd "C-x <left>") 'windmove-left)
+  (global-set-key (kbd "C-<prior>") 'previous-buffer)
+  (global-set-key (kbd "C-<next>") 'next-buffer)
+  (global-set-key (kbd "M-»") 'end-of-buffer)
+  (global-set-key (kbd "M-«") 'beginning-of-buffer)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;                  Qt                 ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (setq
+   c-C++-access-key
+   "\\<\\(slots\\|signals\\|private\\|protected\\|public\\)\\>[ \t]*[(slots\\|signals)]*[ \t]*:")
+  (font-lock-add-keywords
+   'c++-mode'(("\\<\\(Q_OBJECT\\|public slots\\|public signals\\|private slots\\|private signals\\|protected slots\\|protected signals\\)\\>" . font-lock-constant-face)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;               flycheck              ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; force flycheck to always use c++11 support. We use the
+  ;; clang language backend so this is set to clang
+  (add-hook 'c++-mode-hook
+            (lambda () (setq flycheck-clang-language-standard "c++17")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;                C/C++                ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; clang-format can be triggered using C-M-tab
+  (global-set-key [C-s-tab] 'clang-format-region)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;                 rust                ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (add-hook 'rust-mode-hook
+            '(lambda ()
+               (setq racer-cmd "/usr/bin/racer")
+               (setq racer-rust-src-path
+                     (concat
+                      (getenv "HOME")
+                      "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
+               (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
+               (electric-pair-mode 1)
+               (indent-guide-mode 1)))
 
   )
-
-
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -462,89 +441,11 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(company-backends
-   (quote
-    (php-extras-company company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-cmake company-files
-                        (company-dabbrev-code company-gtags company-etags company-keywords)
-                        company-oddmuse company-dabbrev)))
- '(custom-safe-themes
-   (quote
-    ("065efdd71e6d1502877fd5621b984cded01717930639ded0e569e1724d058af8" default)))
- '(ecb-options-version "2.50")
- '(elcord-client-id elcord-app-id)
- '(evil-want-Y-yank-to-eol nil)
- '(org-babel-load-languages
-   (quote
-    ((python . t)
-     (ditaa . t)
-     (emacs-lisp . t)
-     (C . t)
-     (java . t)
-     (latex . t)
-     (lisp . t)
-     (scheme . t)
-     (makefile . t)
-     (css . t)
-     (js . t)
-     (plantuml . t)
-     (R . t))))
  '(package-selected-packages
-   (quote
-    (ssh xresources-theme yaml-mode elcord imenu-list flyspell-correct-helm flyspell-correct auto-dictionary selectric-mode ranger eclim ghub let-alist glsl-mode fsharp-mode company-quickhelp arduino-mode sql-indent xkcd cmake-ide ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode tablist pdf-tools stickyfunc-enhance srefactor company-emacs-eclim ecb plantuml-mode spotify helm-spotify multi company-anaconda anaconda-mode d-mode company-dcd ivy popwin flycheck-dmd-dub twittering-mode zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help pandoc-mode ox-pandoc org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download gnuplot ob-rust htmlize web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ac-emacs-eclim rtags ac-html ac-racer ac-rtags auto-complete-c-headers company-emoji auto-complete smeargle rainbow-mode rainbow-identifiers orgit magit-gitflow magit-gh-pulls helm-gitignore gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht evil-magit magit magit-popup git-commit with-editor emoji-cheat-sheet-plus color-identifiers-mode sr-speedbar gildas-mode mmm-mode markdown-toc markdown-mode gh-md csv-mode achievements phpunit phpcbf php-extras php-auto-yasnippets geiser drupal-mode php-mode company-auctex auctex-latexmk auctex x86-lookup nasm-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode pythonic toml-mode racer flycheck-rust seq cargo rust-mode disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck company-statistics company auto-yasnippet yasnippet ac-ispell ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async company)))
- '(send-mail-function (quote smtpmail-send-it)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;           custom commands           ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(global-set-key (kbd "C-x <up>") 'windmove-up)
-(global-set-key (kbd "C-x <down>") 'windmove-down)
-(global-set-key (kbd "C-x <right>") 'windmove-right)
-(global-set-key (kbd "C-x <left>") 'windmove-left)
-(global-set-key (kbd "C-<prior>") 'previous-buffer)
-(global-set-key (kbd "C-<next>") 'next-buffer)
-(global-set-key (kbd "M-»") 'end-of-buffer)
-(global-set-key (kbd "M-«") 'beginning-of-buffer)
-;; (add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'before-save-hook 'whitespace-cleanup)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;                  Qt                 ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq
- c-C++-access-key
- "\\<\\(slots\\|signals\\|private\\|protected\\|public\\)\\>[ \t]*[(slots\\|signals)]*[ \t]*:")
-(font-lock-add-keywords
- 'c++-mode'(("\\<\\(Q_OBJECT\\|public slots\\|public signals\\|private slots\\|private signals\\|protected slots\\|protected signals\\)\\>" . font-lock-constant-face)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;               flycheck              ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; force flycheck to always use c++11 support. We use the
-;; clang language backend so this is set to clang
-(add-hook 'c++-mode-hook
-    (lambda () (setq flycheck-clang-language-standard "c++17")))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;                C/C++                ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; clang-format can be triggered using C-M-tab
-(global-set-key [C-s-tab] 'clang-format-region)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;                 rust                ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(add-hook 'rust-mode-hook
-          '(lambda ()
-             (setq racer-cmd "/usr/bin/racer")
-             (setq racer-rust-src-path
-                   (concat
-                    (getenv "HOME")
-                    "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
-             (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
-             (electric-pair-mode 1)
-             (indent-guide-mode 1)))
+   '(company-web web-completion-data company-tern company-cabal company-c-headers company-auctex company-anaconda elcord xresources-theme sql-indent rainbow-mode php-extras php-mode mmm-mode json-mode js2-mode csv-mode coffee-mode auctex helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
