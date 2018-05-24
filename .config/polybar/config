@@ -255,7 +255,7 @@ type = internal/xbacklight
 format = <label> <bar>
 label =
 format-prefix = 
-; format-prefix-foreground = ${colors.background-alt}
+format-underline = #9f78e1
 
 bar-width = 10
 bar-indicator = |
