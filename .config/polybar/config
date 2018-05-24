@@ -8,17 +8,22 @@
 ;=====================================================
 
 [colors]
-; background = ${xrdb:color0:#222}
-background = #50000000
+background = ${xrdb:color1:#50000000}
+; background = #50000000
 ; background = #222
-background-alt = #444
-; foreground = ${xrdb:color7:#222}
-foreground = #dfdfdf
-foreground-alt = #555
+; background-alt = #444
+background-alt = ${xrdb:color2:#444}
+foreground = ${xrdb:color7:#dfdfdf}
+; foreground = #dfdfdf
+foreground-alt = ${xrdb:color6:#555}
+; foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [bar/example]
 ; monitor = ${env:MONITOR:HDMI-1}
 bottom = false
@@ -67,16 +72,12 @@ tray-background = ${colors.background}
 
 ; scroll-up = bspwm-desknext
 ; scroll-down = bspwm-deskprev
-
-; scroll-up = i3wm-wsnext
-; scroll-down = i3wm-wsprev
-
-
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 [module/wired-network]
 type = internal/network
 interface = eth1
@@ -88,7 +89,6 @@ interface = wlan1
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 [module/xwindow]
 type = internal/xwindow
 
@@ -102,7 +102,6 @@ label = %title:0:30:...%
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 [module/xkeyboard]
 
 type = internal/xkeyboard
@@ -125,7 +124,6 @@ label-indicator-underline = ${colors.secondary}
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 [module/filesystem]
 type = internal/fs
 interval = 25
@@ -140,7 +138,6 @@ label-unmounted-foreground = ${colors.foreground-alt}
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 [module/bspwm]
 type = internal/bspwm
 
@@ -163,7 +160,6 @@ label-empty-padding = 2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 [module/i3]
 type = internal/i3
 index-sort = true
@@ -183,8 +179,8 @@ fuzzy-match = true
 ;   %output%
 ; Default: %icon%  %name%
 label-focused = %icon%
-label-focused-background = ${module/bspwm.label-focused-background}
-label-focused-underline = ${module/bspwm.label-focused-underline}
+label-focused-background = ${colors.background-alt}
+label-focused-underline = ${xrdb:color8:#ffff00}
 label-focused-padding = ${module/bspwm.label-focused-padding}
 
 ; unfocused = Inactive workspace on any monitor
@@ -199,7 +195,7 @@ label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
 label-urgent = %index% %icon%
-label-urgent-background = ${module/bspwm.label-urgent-background}
+label-urgent-background = ${xrdb:color0:#bd2c40}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
 
 ; ws-icon-[0-9]+ = label;icon
@@ -229,25 +225,25 @@ label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = ${colors.background-alt}
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[module/mpd]
+type = internal/mpd
+format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
 
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+label-song-maxlen = 25
+label-song-ellipsis = true
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; [module/mpd]
-; type = internal/mpd
-; format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-
-; icon-prev = 
-; icon-stop = 
-; icon-play = 
-; icon-pause = 
-; icon-next = 
-
-; label-song-maxlen = 25
-; label-song-ellipsis = true
-
 [module/xbacklight]
 type = internal/xbacklight
 
@@ -267,11 +263,17 @@ bar-empty = -
 bar-empty-font = 2
 bar-empty-foreground = ${colors.foreground}
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/backlight-acpi]
 inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/cpu]
 type = internal/cpu
 interval = 2
@@ -280,6 +282,9 @@ format-prefix = " "
 format-underline = #f90000
 label = %percentage%%
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/memory]
 type = internal/memory
 interval = 2
@@ -288,6 +293,9 @@ format-prefix = " "
 format-underline = #4bffdc
 label = %percentage_used%%
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/wlan]
 type = internal/network
 interface = wlp8s0
@@ -311,6 +319,9 @@ ramp-signal-3 = 
 ramp-signal-4 = 
 ; ramp-signal-foreground = ${colors.foreground-alt}
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/eth]
 type = internal/network
 interface = enp9s0
@@ -327,6 +338,9 @@ format-disconnected =
 ; label-disconnected = eth0-none
 ; label-disconnected-foreground = ${colors.foreground-alt}
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/date]
 type = internal/date
 interval = 1
@@ -342,6 +356,9 @@ format-underline = #0a6cf5
 
 label = %date% %time%
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/volume]
 type = internal/volume
 
@@ -373,6 +390,9 @@ bar-volume-empty = -
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground}
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/battery]
 type = internal/battery
 battery = BAT0
@@ -430,6 +450,9 @@ animation-charging-9 = 
 ; animation-charging-foreground = ${colors.foreground-alt}
 animation-charging-framerate = 100
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
@@ -449,6 +472,9 @@ ramp-1 = 
 ramp-2 = 
 ; ramp-foreground = ${colors.foreground-alt}
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/powermenu]
 type = custom/menu
 
@@ -476,6 +502,9 @@ menu-2-0-exec = poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/pkg]
 type = custom/script
 interval = 1200
@@ -483,8 +512,11 @@ format = <label>
 format-underline = #dc322f
 label = "%output:0:30%"
 exec = .config/polybar/pkg.sh
-exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
+exec-if = "ping -q -w 3 -c 1 176.34.135.167 > /dev/null"
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/mpv]
 type = custom/script
 
@@ -495,20 +527,29 @@ interval = 1
 format = <label>
 label = %output%
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/bluetooth]
 type = custom/script
 interval = 5
 
 exec = ~/.config/polybar/bluetooth.sh
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [settings]
 screenchange-reload = true
 ; compositing-background = xor
 ; compositing-background = over
 ; compositing-foreground = xor
 ; compositing-foreground = source
-;compositing-border = over
+; compositing-border = over
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [global/wm]
 margin-top = 5
 margin-bottom = 5
