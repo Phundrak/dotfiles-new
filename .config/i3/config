@@ -197,7 +197,10 @@ bindsym XF86Launch9 workspace 4; exec /usr/bin/nemo
 bindsym XF86AudioMute exec amixer -D pulse set Master 1+ toggle
 bindsym XF86AudioRaiseVolume exec amixer -D pulse -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec amixer -D pulse -q set Master 5%- unmute
-#bindsym XF86AudioPlay exec mpd
+bindsym $alt+XF86AudioRaiseVolume exec mpc next
+bindsym $alt+XF86AudioLowerVolume exec mpc prev
+bindsym XF86AudioPlay exec mpc toggle
+bindsym $alt+XF86AudioPlay exec mpc stop
 #bindsym XF86Favourites
 bindsym XF86Calculator exec /usr/bin/gnome-calculator
 #bindsym Help
