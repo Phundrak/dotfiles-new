@@ -39,8 +39,8 @@ line-color = #f00
 border-size = 5
 border-color = #00000000
 
-padding-left = 0
-padding-right = 2
+padding-left = 4
+padding-right = 5
 
 locale=ja_JP.UTF-8
 
@@ -52,7 +52,7 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false
 font-2 = "Wuncon Siji:pixelsize=10"
 font-3 = "IPAMincho:style=regular:pixelsize=10"
 
-modules-left = i3 filesystem memory cpu xkeyboard
+modules-left = i3 filesystem memory cpu xkeyboard mpd
 modules-center = date xwindow
 modules-right = pkg volume backlight-acpi wlan eth battery temperature powermenu
 
@@ -173,7 +173,7 @@ wrapping-scroll = false
 strip-wsnumbers = false
 
 ; Only show workspaces on the same output as the bar
-pin-workspaces = false
+pin-workspaces = true
 
 fuzzy-match = true
 
@@ -235,7 +235,7 @@ label-mode-background = ${colors.background-alt}
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/mpd]
 type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+format-online = <label-song> <icon-prev> <toggle> <icon-next>
 
 icon-prev = 
 icon-stop = 
