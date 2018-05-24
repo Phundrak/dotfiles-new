@@ -9,14 +9,9 @@
 
 [colors]
 background = ${xrdb:color1:#50000000}
-; background = #50000000
-; background = #222
-; background-alt = #444
 background-alt = ${xrdb:color2:#444}
 foreground = ${xrdb:color7:#dfdfdf}
-; foreground = #dfdfdf
 foreground-alt = ${xrdb:color6:#555}
-; foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
@@ -25,13 +20,14 @@ alert = #bd2c40
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [bar/example]
-; monitor = ${env:MONITOR:HDMI-1}
+monitor= ${env:MONITOR}
+
 bottom = false
 width = 100%
-height = 27
+height = 30
 ; offset-x = 10%
 ; offset-y = 10%
-radius = 0.0
+radius = 15.0
 fixed-center = true
 
 background = ${colors.background}
@@ -40,11 +36,13 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 0
+border-size = 5
 border-color = #00000000
 
 padding-left = 0
 padding-right = 2
+
+locale=ja_JP.UTF-8
 
 module-margin-left = 1
 module-margin-right = 2
@@ -55,14 +53,14 @@ font-2 = "Wuncon Siji:pixelsize=10"
 font-3 = "IPAMincho:style=regular:pixelsize=10"
 
 modules-left = i3 filesystem memory cpu xkeyboard
-modules-center = date
+modules-center = date xwindow
 modules-right = pkg volume backlight-acpi wlan eth battery temperature powermenu
 
-tray-position = right
-tray-padding = 2
+tray-position =
+tray-padding = 0
 tray-detached = false
 tray-maxsize = 15
-tray-transparent = true
+tray-transparent = false
 tray-background = ${colors.background}
 
 ; wm-restack = bspwm
@@ -82,6 +80,9 @@ scroll-down = i3wm-wsprev
 type = internal/network
 interface = eth1
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/wireless-network]
 type = internal/network
 interface = wlan1
@@ -92,12 +93,13 @@ interface = wlan1
 [module/xwindow]
 type = internal/xwindow
 
-; format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-underline = ${colors.secondary}
 format-underline = ${colors.secondary}
+format-padding = 1
 
-label = %title:0:30:...%
-; label-maxlen = 30
+label = %title%
+label-maxlen = 30
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
@@ -111,8 +113,11 @@ format = <label-layout> <label-indicator>
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground}
 format-prefix-underline = ${colors.secondary}
+format-underline = ${colors.secondary}
+format-padding = 1
 
-label-layout = %name%
+label-layout = %layout% %number%
+label-layout-padding = 1
 label-layout-underline = ${colors.secondary}
 
 label-indicator = %name%
@@ -131,7 +136,7 @@ interval = 25
 mount-0 = /
 mount-1 = /home
 
-label-mounted =  %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted =  %{F#aeaeae}%mountpoint%%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -277,10 +282,34 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
+; format-prefix = " "
+; ; format-prefix-foreground = ${colors.foreground-alt}
+; format-underline = #f90000
+; label = %percentage%%
+
+; Available tags:
+;   <label> (default)
+;   <bar-load>
+;   <ramp-load>
+;   <ramp-coreload>
+format = <label> <ramp-coreload>
 format-prefix = " "
-; format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
+
+; Available tokens:
+;   %percentage% (default) - total cpu load
+;   %percentage-cores% - load percentage for each core
+;   %percentage-core[1-9]% - load percentage for specific core
 label = %percentage%%
+
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
@@ -288,10 +317,84 @@ label = %percentage%%
 [module/memory]
 type = internal/memory
 interval = 2
+
+; format = <label> <bar-used>
+; format-prefix = " "
+; ; format-prefix-foreground = ${colors.foreground-alt}
+; format-underline = #4bffdc
+; label = %percentage_used%%
+
+; Available tags:
+;   <label> (default)
+;   <bar-used>
+;   <bar-free>
+;   <ramp-used>
+;   <ramp-free>
+format = <label>
 format-prefix = " "
-; format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
+
+; Available tokens:
+;   %percentage_used% (default)
+;   %percentage_free%
+;   %gb_used%
+;   %gb_free%
+;   %gb_total%
+;   %mb_used%
+;   %mb_free%
+;   %mb_total%
+;   %percentage_swap_used%
+;   %percentage_swap_free%
+;   %mb_swap_total%
+;   %mb_swap_free%
+;   %mb_swap_used%
+;   %gb_swap_total%
+;   %gb_swap_free%
+;   %gb_swap_used%
+
 label = %percentage_used%%
+
+; Only applies if <bar-used> is used
+bar-used-indicator =
+bar-used-width = 20
+bar-used-foreground-0 = #55aa55
+bar-used-foreground-1 = #557755
+bar-used-foreground-2 = #f5a70a
+bar-used-foreground-3 = #ff5555
+bar-used-fill = ▐
+bar-used-empty = ▐
+bar-used-empty-foreground = #444444
+
+; Only applies if <bar-free> is used
+bar-free-indicator =
+bar-free-width = 20
+bar-free-foreground-0 = #55aa55
+bar-free-foreground-1 = #557755
+bar-free-foreground-2 = #f5a70a
+bar-free-foreground-3 = #ff5555
+bar-free-fill = ▐
+bar-free-empty = ▐
+bar-free-empty-foreground = #444444
+
+; Only applies if <ramp-used> is used
+ramp-used-0 = ▁
+ramp-used-1 = ▂
+ramp-used-2 = ▃
+ramp-used-3 = ▄
+ramp-used-4 = ▅
+ramp-used-5 = ▆
+ramp-used-6 = ▇
+ramp-used-7 = █
+
+; Only applies if <ramp-free> is used
+ramp-free-0 = ▁
+ramp-free-1 = ▂
+ramp-free-2 = ▃
+ramp-free-3 = ▄
+ramp-free-4 = ▅
+ramp-free-5 = ▆
+ramp-free-6 = ▇
+ramp-free-7 = █
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
