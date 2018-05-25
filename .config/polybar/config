@@ -235,16 +235,21 @@ label-mode-background = ${colors.background-alt}
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [module/mpd]
 type = internal/mpd
+
+label-song =   %title% - %artist%
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+label-offline =  mpd is offline
+
 format-online = <label-song> <icon-prev> <toggle> <icon-next>
+format-offline = <label-offline>
 
 icon-prev = 
 icon-stop = 
 icon-play = 
 icon-pause = 
 icon-next = 
-
-label-song-maxlen = 25
-label-song-ellipsis = true
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
