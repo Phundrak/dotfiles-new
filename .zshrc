@@ -81,6 +81,9 @@ alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 alias cpuinfo='lscpu'
 alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
 
+# I can't type
+alias exti=exit
+
 alias ..='cd ..'
 alias cd..='cd ..'
 alias solo='cd ~/dotfiles/.config && ln -s compton-solo.conf compton.conf ; pkill compton ; compton'
