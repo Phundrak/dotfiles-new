@@ -343,6 +343,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (load "~/dotfiles/private/private_emacs.el")
 
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((C . t)
+     (emacs-lisp .t)
+     (latex . t)
+     (makefile . t)
+     (python . t)))
+
   )
 
 (defun dotspacemacs/user-config ()
