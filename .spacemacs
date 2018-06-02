@@ -26,16 +26,13 @@
    dotspacemacs-configuration-layers
    '(
      asm
-     (auto-completion
-      :variables
-      auto-completion-complete-with-key-sequence-delay 0.02)
-     (better-defaults
-      :variables
-      better-defaults-move-to-beginning-of-code-first t
-      better-defaults-move-to-end-of-code-first t)
-     (c-c++
-      :variables
-      c-c++-enable-clang-support t)
+     (auto-completion :variables
+                      auto-completion-complete-with-key-sequence-delay 0.02)
+     (better-defaults :variables
+                      better-defaults-move-to-beginning-of-code-first t
+                      better-defaults-move-to-end-of-code-first t)
+     (c-c++ :variables
+            c-c++-enable-clang-support t)
      csv
      colors
      elixir
@@ -49,10 +46,9 @@
      html
      imenu-list
      javascript
-     (latex
-      :variables
-      latex-build-command "xelatex"
-      latex-enable-auto-fill t)
+     (latex :variables
+            latex-build-command "xelatex"
+            latex-enable-auto-fill t)
      markdown
      org
      pandoc
@@ -60,22 +56,21 @@
      plantuml
      php
      python
-     ranger
+     (ranger :variables
+             ranger-show-preview t)
      rust
      scheme
      shaders
-     (shell
-      :variables
-      shell-default-height 40
-      shell-default-position 'bottom)
+     (shell :variables
+            shell-default-height 40
+            shell-default-position 'bottom)
      selectric
      semantic
      spell-checking
      sql
-     (syntax-checking
-      :variables
-      spell-checking-enable-by-default nil
-      spell-checking-enable-auto-dictionary t)
+     (syntax-checking :variables
+                      spell-checking-enable-by-default nil
+                      spell-checking-enable-auto-dictionary t)
      twitter
      yaml
      )
@@ -85,6 +80,7 @@
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       elcord
+                                      image-dired+
                                       xresources-theme
                                       )
    ;; A list of packages that cannot be updated.
@@ -367,6 +363,12 @@ you should place your code here."
   (add-hook 'before-save-hook 'whitespace-cleanup)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;                ranger               ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (setq ranger-cleanup-eagerly t
+        ranger-show-hidden t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;            file extension           ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -391,6 +393,13 @@ you should place your code here."
   (add-hook 'org-mode-hook 'flyspell-mode)
   (defun ck/org-confirm-babel-evaluate (lang body)
     (not (or (string= lang "latex") (string= lang "maxima"))))
+  (defun ipa-x-sampa-keyboard ()
+    "Activate ipa-x-sampa layout"
+    (interactive)
+    (setq current-input-method "ipa-x-sampa")
+    )
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode
+    "kx" 'ipa-x-sampa-keyboard)
   (require 'ox-latex)
   (setq geiser-default-implementation 'racket
         org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate
@@ -470,8 +479,9 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
-   '(go-guru go-eldoc company-go go-mode unfill mwim company-web web-completion-data company-tern company-cabal company-c-headers company-auctex company-anaconda elcord xresources-theme sql-indent rainbow-mode php-extras php-mode mmm-mode json-mode js2-mode csv-mode coffee-mode auctex helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+   '(image-dired+ go-guru go-eldoc company-go go-mode unfill mwim company-web web-completion-data company-tern company-cabal company-c-headers company-auctex company-anaconda elcord xresources-theme sql-indent rainbow-mode php-extras php-mode mmm-mode json-mode js2-mode csv-mode coffee-mode auctex helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

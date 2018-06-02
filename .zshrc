@@ -172,10 +172,10 @@ alias gimme='sudo pacman -Syu'
 alias install='sudo pacman -S'
 alias purge='sudo pacman -Sc'
 alias remove='sudo pacman -Rscnd'
-alias rmdb='sudo rm /var/lib/pacman/db.lck'
 alias search='pacaur -Ss'
 alias update='sudo pacman -Syu'
 alias optimize='sudo pacman-optimize && sync'
+alias pac-clean='remove $(pacman -Qtdq)'
 
 # Dev
 alias clang='clang -Wall'
