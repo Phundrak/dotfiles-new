@@ -393,7 +393,8 @@ you should place your code here."
         org-journal-dir "~/org/journal/"
         org-latex-listings 'minted
         org-latex-packages-alist '(("" "minted"))
-        org-latex-pdf-process '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+        org-latex-pdf-process '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")
         org-plantuml-jar-path "/opt/plantuml/plantuml.jar"
         org-src-tab-acts-natively t
         user-full-name "Lucien Cartier-Tilet"
