@@ -19,6 +19,9 @@
 # Line to hopefully fix tramp-mode in Spacemacs
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
+# I want muh GL4D library
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=100000
