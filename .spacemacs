@@ -430,6 +430,10 @@ you should place your code here."
   (global-set-key (kbd "C-<next>") 'next-buffer)
   (global-set-key (kbd "M-»") 'end-of-buffer)
   (global-set-key (kbd "M-«") 'beginning-of-buffer)
+  (global-set-key (kbd "<XF86HomePage>") 'spacemacs/home)
+  (global-set-key (kbd "<XF86Open>") 'helm-find-files)
+  (global-set-key (kbd "<XF86Close>") 'kill-this-buffer)
+  (global-set-key (kbd "<XF86Save>") 'save-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                  Qt                 ;
