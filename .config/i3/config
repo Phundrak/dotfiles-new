@@ -32,10 +32,10 @@ font pango:monospace 8
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
-set $up l
-set $down k
-set $left j
-set $right semicolon
+set $up Up
+set $down Down
+set $left Left
+set $right Right
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -65,23 +65,11 @@ bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 # move focused window
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -162,16 +150,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s )) height.
-        bindsym $left       resize shrink width 5 px or 5 ppt
-        bindsym $down       resize grow height 5 px or 5 ppt
-        bindsym $up         resize shrink height 5 px or 5 ppt
-        bindsym $right      resize grow width 5 px or 5 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left        resize shrink width 5 px or 5 ppt
-        bindsym Down        resize grow height 5 px or 5 ppt
-        bindsym Up          resize shrink height 5 px or 5 ppt
-        bindsym Right       resize grow width 5 px or 5 ppt
+        bindsym $right      resize grow width 15 px or 5 ppt
+        bindsym $left       resize shrink width 10 px or 5 ppt
+        bindsym $down       resize grow height 10 px or 5 ppt
+        bindsym $up         resize shrink height 10 px or 5 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -213,9 +195,6 @@ bindsym XF86Calculator exec /usr/bin/gnome-calculator
 #bindsym XF86MailForward
 #bindsym XF86Send
 #bindsym XF86Save
-bindsym Print exec scrot
-bindsym $mod+Print exec scrot -d 3
-bindsym Ctrl+Print exec scrot -s
 
 # Brightness keyboard shortcuts
 bindsym XF86MonBrightnessUp exec light -A 5
@@ -227,6 +206,9 @@ bindsym $mod+Ctrl+w exec "wal -i ~/.config/Wallpapers -o wal-set"
 # Take a screenshot
 bindsym $mod+Ctrl+z exec scrot
 bindsym $mod+Shift+z exec scrot -s
+bindsym Print exec scrot
+bindsym $mod+Print exec scrot -d 3
+bindsym Ctrl+Print exec scrot -s
 
 # Lock screen
 bindsym $mod+Ctrl+l exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'"
@@ -235,7 +217,6 @@ bindsym $mod+Ctrl+l exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 
 #                               i3-gaps settings                               #
 ################################################################################
 
-# Gaps
 smart_gaps on
 gaps inner 20
 gaps outer -10
@@ -243,12 +224,6 @@ Focus_follows_mouse off
 
 new_window none
 smart_borders on
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-# bar {
-#         status_command i3status
-# }
 
 ################################################################################
 #                                Modules startup                               #
