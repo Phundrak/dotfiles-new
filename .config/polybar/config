@@ -52,9 +52,9 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false
 font-2 = "Wuncon Siji:pixelsize=10"
 font-3 = "IPAMincho:style=regular:pixelsize=10"
 
-modules-left = i3 filesystem xkeyboard mpd
+modules-left = i3 filesystem mpd memory
 modules-center = date xwindow
-modules-right = memory cpu pkg volume backlight-acpi wlan eth battery temperature powermenu
+modules-right = cpu volume backlight-acpi wlan eth temperature battery powermenu
 
 tray-position =
 tray-padding = 0
