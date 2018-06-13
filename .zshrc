@@ -149,7 +149,7 @@ alias wep='we Paris'
 
 # Download
 alias wget='wget -c'
-alias 4chandl='wget -c -erobots=off -nd -rHD4cdn.org -Ajpg,png,gif,webm -Rs.jpg'
+alias 4chandl='wget -c -erobots=off -nd -rHD4chan.org -Ajpg,png,gif,webm -Rs.jpg'
 alias gehentaidl='wget -c -erobots=off -t4 -Umozilla -nd -rHl0 -Is,h -ERhtml'
 
 # System
