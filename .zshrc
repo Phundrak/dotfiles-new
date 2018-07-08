@@ -86,6 +86,7 @@ alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
 
 # I can't type
 alias exti=exit
+alias exi=exit
 
 alias ..='cd ..'
 alias cd..='cd ..'
@@ -98,8 +99,9 @@ alias ll='ls -alh | less'
 alias ls='ls --color'
 alias lsl='ls -Alh --color'
 alias la='ls -A --color'
-alias mp3='youtube-dl -x --audio-format mp3 --audio-quality 0 $*'
+#alias mp3='youtube-dl -x --audio-format mp3 --audio-quality 0 $*'
 alias flac='youtube-dl -x --audio-format flac --audio-quality 0 $*'
+alias mp3=flac
 alias mpv='mpv --no-border --force-window=no'
 alias feh='feh -Zx.'
 alias neofetch='clear && neofetch --cpu_temp C --os_arch off --cpu_cores physical --kernel_shorthand on --uptime_shorthand tiny --w3m --source ~/dotfiles/ArjLinugz-xDDDDDDDDDDDD-neofetch.png --size 340px'
