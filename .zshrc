@@ -89,10 +89,8 @@ alias exti=exit
 alias exi=exit
 
 alias ..='cd ..'
-alias cd..='cd ..'
 alias solo='cd ~/dotfiles/.config && ln -s compton-solo.conf compton.conf ; pkill compton ; compton'
 alias multiscreen='cd ~/dotfiles/.config && ln -s compton-multi.conf compton.conf ; pkill compton ; compton'
-alias ccat='highlight -O ansi'
 alias grep="grep --color=auto"
 alias help='run-help'
 alias ll='ls -alh | less'
@@ -107,7 +105,6 @@ alias rainbowstream='rainbowstream -iot'
 alias mpv='mpv --no-border --force-window=no'
 alias feh='feh -Zx.'
 alias neofetch='clear && neofetch --cpu_temp C --os_arch off --cpu_cores physical --kernel_shorthand on --uptime_shorthand tiny --w3m --source ~/dotfiles/ArjLinugz-xDDDDDDDDDDDD-neofetch.png --size 340px'
-alias disc-spc='~/Documents/code/Javascript/DiscordApps/launch.sh'
 alias untar='tar -zxvf'
 alias compress='tar -czf'
 alias df='df -H'
@@ -115,17 +112,9 @@ alias du='du -ch'
 mkcddir(){
     mkdir -p "$1" && cd "$1"
 }
-dlyt(){
-    str="$1"
-    youtube-dl --write-sub "${str#*=}"
-}
 ytdl(){
     str="$1"
     youtube-dl --write-sub "${str#*=}"
-}
-ytmpv(){
-    str="$1"
-    mpv ytdl://"${str#*=}"
 }
 rainymood() {
     volume="50"
@@ -154,7 +143,6 @@ alias wep='we Paris'
 # Download
 alias wget='wget -c'
 alias 4chandl='wget -c -erobots=off -nd -rHD4chan.org -Ajpg,png,gif,webm -Rs.jpg'
-alias gehentaidl='wget -c -erobots=off -t4 -Umozilla -nd -rHl0 -Is,h -ERhtml'
 
 # System
 alias diskspace='du -S | sort -n -r |more'
