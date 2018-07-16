@@ -186,10 +186,9 @@ alias swipl='clear && swipl -q && clear'
 cppnew() {
     mkdir -p "$1"
     cd "$1";
-    mkdir -p src bin build debug
-    cp ~/dotfiles/dev/CC/gitignore bin/.gitignore
-    cp ~/dotfiles/dev/CC/gitignore build/.gitignore
-    cp ~/dotfiles/dev/CC/gitignore debug/.gitignore
+    mkdir -p src
+    cp ~/dotfiles/dev/CC/gitignore .gitignore
+    cp ~/dotfiles/dev/CC/Makefile Makefile
     cp ~/dotfiles/dev/C++/main.cc src/main.cc
     cp ~/dotfiles/dev/C++/CMakeLists.txt.part1 CMakeLists.txt
     printf "%s" "$1" >> CMakeLists.txt
@@ -203,17 +202,15 @@ cppnew() {
 cnew() {
     mkdir -p "$1"
     cd "$1"
-    mkdir -p src bin build debug
-    cp ~/dotfiles/dev/CC/gitignore bin/.gitignore
-    cp ~/dotfiles/dev/CC/gitignore build/.gitignore
-    cp ~/dotfiles/dev/CC/gitignore debug/.gitignore
+    mkdir -p src
+    cp ~/dotfiles/dev/CC/gitignore .gitignore
+    cp ~/dotfiles/dev/CC/Makefile Makefile
     cp ~/dotfiles/dev/C/main.c src/main.c
     cp ~/dotfiles/dev/C/CMakeLists.txt.part1 CMakeLists.txt
     printf "%s" "$1" >> CMakeLists.txt
     cat ~/dotfiles/dev/C/CMakeLists.txt.part2 >> CMakeLists.txt
     printf "%s" "$1" >> CMakeLists.txt
     cat ~/dotfiles/dev/C/CMakeLists.txt.part3 >> CMakeLists.txt
-    git init
     git init
     git add .
     git commit -m "initial commit"
