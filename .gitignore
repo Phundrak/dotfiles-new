@@ -34,3 +34,5 @@
 \.config/ranger/bookmarks
 
 \.config/ranger/ranger
+
+completer.hist
