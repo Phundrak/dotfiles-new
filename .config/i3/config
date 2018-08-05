@@ -236,7 +236,6 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always redshift-gtk
 exec_always mpd
 exec_always mpc stop
-exec_always pulseaudio -k && pulseaudio --start
 
 ################################################################################
 #                          Set colors from Xresources                          #
