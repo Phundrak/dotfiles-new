@@ -157,7 +157,7 @@ values."
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
-   dotspacemacs-scratch-mode 'text-mode
+   dotspacemacs-scratch-mode 'org-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
@@ -296,8 +296,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers '(;;:relative t
-                               :disabled-for-modes dired-mode
+   dotspacemacs-line-numbers '(:disabled-for-modes dired-mode
                                                    doc-view-mode
                                                    pdf-view-mode
                               )
@@ -450,6 +449,8 @@ you should place your code here."
   (global-set-key (kbd "<XF86Open>") 'helm-find-files)
   (global-set-key (kbd "<XF86Close>") 'kill-this-buffer)
   (global-set-key (kbd "<XF86Save>") 'save-buffer)
+  (global-set-key (kbd "<C-tab>") 'evil-close-fold)
+  (global-set-key (kbd "<C-iso-lefttab>") 'evil-open-fold)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                  Qt                 ;
