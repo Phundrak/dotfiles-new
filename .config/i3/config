@@ -231,7 +231,9 @@ smart_borders on
 exec_always ~/dotfiles/enable_thouch.sh
 exec_always wal -i "$(< "${HOME}/.cache/wal/wal")"
 exec "xrdb $HOME/.Xresources"
+exec --no-startup-id xfce4-power-manager
 exec --no-startup-id compton -F --opengl --config ~/.config/compton.conf -e 1
+exec --no-startup-id numlockx on
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always redshift-gtk
 exec_always mpd
