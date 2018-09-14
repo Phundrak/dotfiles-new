@@ -146,8 +146,6 @@ alias 4chandl='wget -c -erobots=off -nd -rHD4chan.org -Ajpg,png,gif,webm -Rs.jpg
 
 # System
 alias diskspace='du -S | sort -n -r |more'
-alias hibernate='lock -t "Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89" && systemctl hibernate'
-alias suspend='lock -t "Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89" && systemctl suspend'
 alias spoweroff='systemctl poweroff -i'
 alias sreboot='systemctl reboot -i'
 alias zshrc='source ~/.zshrc'
