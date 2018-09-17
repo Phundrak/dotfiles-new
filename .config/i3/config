@@ -174,8 +174,8 @@ bindsym $mod+$alt+Ctrl+k exec setxkbmap us
 bindsym XF86Launch5 workspace 2; exec /usr/bin/emacs
 bindsym XF86Launch6 workspace 3; exec /usr/bin/chromium
 bindsym XF86Launch7 workspace 10; exec /usr/bin/discord-canary
-bindsym XF86Launch8 workspace 4; exec /usr/bin/nautilus
-bindsym XF86Launch9 workspace 4; exec /usr/bin/nemo
+bindsym XF86Launch8 workspace 4; exec /usr/bin/thunderbird
+bindsym XF86Launch9 workspace 5; exec /usr/bin/nemo
 bindsym XF86AudioMute exec amixer -D pulse set Master 1+ toggle
 bindsym XF86AudioRaiseVolume exec amixer -D pulse -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec amixer -D pulse -q set Master 5%- unmute
