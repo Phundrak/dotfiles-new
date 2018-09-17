@@ -403,7 +403,7 @@ you should place your code here."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (add-hook 'org-mode-hook 'visual-line-mode)
-  (add-hook 'org-mode-hook 'flyspell-mode)
+  ;; (add-hook 'org-mode-hook 'flyspell-mode)
   (defun ck/org-confirm-babel-evaluate (lang body)
     (not (or (string= lang "latex") (string= lang "maxima"))))
   (defun ipa-x-sampa-keyboard ()
