@@ -357,8 +357,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
      (emacs-lisp .t)
      (latex . t)
      (makefile . t)
-     (python . t)))
-
+     (python . t)
+     (gnuplot . t)))
   )
 
 (defun dotspacemacs/user-config ()
