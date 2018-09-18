@@ -377,6 +377,34 @@ you should place your code here."
   (spacemacs/set-leader-keys "oe" 'eww)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;                 gnus                ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; get email, store in nnml
+  (setq gnus-secondary-select-methods
+        '(
+          (nnimap "1and1"
+                  (nnimap-address
+                   "imap.1and1.fr")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl))
+          ))
+  ;; send email via 1and1
+  (setq message-send-mail-function 'smtpmail-send-it
+        smtpmail-smtp-server "auth.smtp.1and1.fr"
+        smtpmail-stream-type 'ssl
+        smtpmail-smtp-service 465)
+
+  ;; archive outgoing emails in Sent folder on imap.1and1.fr
+  (setq gnus-message-archive-method '(nnimap "imap.1and1.fr")
+        gnus-message-archive-group "Sent Mail")
+
+  ;; store email in ~/Mails directory
+  (setq nnml-directory "~/Mails")
+  (setq message-directory "~/Mails")
+  (setq gnus-fetch-old-headers 'some)
+  (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                ranger               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (setq ranger-cleanup-eagerly t
