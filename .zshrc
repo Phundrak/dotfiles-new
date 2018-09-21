@@ -17,7 +17,7 @@
 ######################################################################
 
 # Line to hopefully fix tramp-mode in Spacemacs
-[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+[[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
 
 # I want muh GL4D library
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
