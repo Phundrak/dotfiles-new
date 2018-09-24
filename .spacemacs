@@ -376,6 +376,7 @@ you should place your code here."
   (add-hook 'before-save-hook 'whitespace-cleanup)
 
   (spacemacs/set-leader-keys "oe" 'eww)
+  (spacemacs/set-leader-keys "oc" 'calc)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                 gnus                ;
