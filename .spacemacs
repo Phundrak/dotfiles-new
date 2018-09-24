@@ -436,13 +436,6 @@ you should place your code here."
   ;; (add-hook 'org-mode-hook 'flyspell-mode)
   (defun ck/org-confirm-babel-evaluate (lang body)
     (not (or (string= lang "latex") (string= lang "maxima"))))
-  (defun ipa-x-sampa-keyboard ()
-    "Activate ipa-x-sampa layout"
-    (interactive)
-    (setq current-input-method "ipa-x-sampa")
-    )
-  (spacemacs/set-leader-keys-for-major-mode 'org-mode
-    "kx" 'ipa-x-sampa-keyboard)
   (require 'ox-latex)
   (setq geiser-default-implementation 'racket
         org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate
