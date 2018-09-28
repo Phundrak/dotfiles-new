@@ -360,6 +360,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
      (latex . t)
      (makefile . t)
      (python . t)
+     (ditaa . t)
      (gnuplot . t)))
   )
 
@@ -443,7 +444,7 @@ you should place your code here."
   (require 'ox-latex)
   (setq geiser-default-implementation 'racket
         org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate
-        org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar"
+        org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0.11.jar"
         org-export-latex-hyperref-format "\\ref{%s}"
         org-html-validation-link nil
         org-journal-date-prefix "#+TITLE: "
