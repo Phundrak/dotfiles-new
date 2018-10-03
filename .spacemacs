@@ -68,7 +68,8 @@
      shaders
      (shell :variables
             shell-default-height 40
-            shell-default-position 'bottom)
+            shell-default-position 'bottom
+            shell-default-term-shell "/usr/bin/zsh")
      shell-scripts
      selectric
      semantic
@@ -380,6 +381,7 @@ you should place your code here."
 
   (spacemacs/set-leader-keys "oe" 'eww)
   (spacemacs/set-leader-keys "oc" 'calc)
+  (spacemacs/set-leader-keys "oC" 'calendar)
   (spacemacs/set-leader-keys "ogd" 'turn-on-gnus-dired-mode)
   (spacemacs/set-leader-keys "of" 'flycheck-mode)
 
