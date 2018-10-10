@@ -33,7 +33,6 @@
                       better-defaults-move-to-end-of-code-first t)
      (c-c++ :variables
             c-c++-enable-clang-support t)
-     chrome
      csv
      colors
      common-lisp
