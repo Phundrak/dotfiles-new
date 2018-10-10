@@ -378,6 +378,13 @@ you should place your code here."
         twittering-use-master-password t)
 
   (add-hook 'before-save-hook 'whitespace-cleanup)
+  (defun kill-other-buffers ()
+    "Kill all other buffers."
+    (interactive)
+    (mapc 'kill-buffer
+          (delq (current-buffer)
+                (remove-if-not 'buffer-file-name (buffer-list))))
+    )
 
   (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -388,6 +395,8 @@ you should place your code here."
   (spacemacs/declare-prefix "og" "gnus")
   (spacemacs/set-leader-keys "ogd" 'turn-on-gnus-dired-mode)
   (spacemacs/set-leader-keys "of" 'flycheck-mode)
+  (spacemacs/declare-prefix "ob" "buffers")
+  (spacemacs/set-leader-keys "oba" 'kill-other-buffers)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                 gnus                ;
