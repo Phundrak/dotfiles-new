@@ -465,7 +465,24 @@ you should place your code here."
         org-src-tab-acts-natively t
         user-full-name "Lucien Cartier-Tilet"
         user-mail-address "phundrak@phundrak.fr"
+        org-agenda-files (list "~/org/school.org"
+                               "~/org/private.org")
+        org-agenda-custom-commands
+        '(("h" "Daily habits"
+           ((agenda ""))
+           ((org-agenda-show-log t)
+            (org-agenda-ndays 7)
+            (org-agenda-log-mode-items '(state))
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":DAILY:")))
+           ;; other commands here
+           ))
         )
+  (spacemacs/declare-prefix "oo" "org-mode")
+  (spacemacs/declare-prefix "oos" "school.org")
+  (spacemacs/set-leader-keys "oos" (lambda () (interactive) (dired "~/org/school.org")))
+  (spacemacs/declare-prefix "oop" "private.org")
+  (spacemacs/set-leader-keys "oop" (lambda () (interactive) (dired "~/org/private.org")))
+  (spacemacs/set-leader-keys "oow" 'org-pomodoro)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;           custom commands           ;
