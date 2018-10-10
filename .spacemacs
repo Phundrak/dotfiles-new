@@ -379,9 +379,13 @@ you should place your code here."
 
   (add-hook 'before-save-hook 'whitespace-cleanup)
 
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+  (spacemacs/declare-prefix "o" "custom")
   (spacemacs/set-leader-keys "oe" 'eww)
   (spacemacs/set-leader-keys "oc" 'calc)
   (spacemacs/set-leader-keys "oC" 'calendar)
+  (spacemacs/declare-prefix "og" "gnus")
   (spacemacs/set-leader-keys "ogd" 'turn-on-gnus-dired-mode)
   (spacemacs/set-leader-keys "of" 'flycheck-mode)
 
