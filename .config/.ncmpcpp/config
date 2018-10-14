@@ -82,13 +82,14 @@ visualizer_sync_interval = 30
 ##
 visualizer_type = "spectrum"
 #
-visualizer_look = "+|"
+# visualizer_look = "+|"
+visualizer_look = "▋▋"
 #
 visualizer_color = blue, cyan, green, yellow, magenta, red
 #
 ## Alternative subset of 256 colors for terminals that support it.
 ##
-#visualizer_color = 41, 83, 119, 155, 185, 215, 209, 203, 197, 161
+# visualizer_color = "white"
 #
 ##### system encoding #####
 ##
@@ -182,7 +183,7 @@ visualizer_color = blue, cyan, green, yellow, magenta, red
 ## Note: colors can be nested.
 ##
 #
-#song_list_format = {%a - }{%t}|{$8%f$9}$R{$3(%l)$9}
+song_list_format = (6)[]{} (23)[red]{a} (26)[yellow]{t|f} (40)[green]{b} (4)[blue]{l}
 #
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
 #
@@ -200,9 +201,9 @@ visualizer_color = blue, cyan, green, yellow, magenta, red
 #
 #current_item_inactive_column_suffix = $/r$(end)
 #
-#now_playing_prefix = $b
+now_playing_prefix = $b
 #
-#now_playing_suffix = $/b
+now_playing_suffix = $8$/b
 #
 #browser_playlist_prefix = "$2playlist$9 "
 #
@@ -262,7 +263,7 @@ visualizer_color = blue, cyan, green, yellow, magenta, red
 ##   available.
 ##
 #
-#song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
+song_columns_list_format = (6)[]{} (23)[red]{a} (26)[yellow]{t|f} (40)[green]{b} (4)[blue]{l}
 #
 ##### various settings #####
 #
@@ -270,7 +271,8 @@ visualizer_color = blue, cyan, green, yellow, magenta, red
 ## Note: Custom command that will be executed each time song changes. Useful for
 ## notifications etc.
 ##
-#execute_on_song_change = ""
+# execute_on_song_change = "~/.ncmpcpp/art.sh"
+# song_list_format = "                       $2%t $R$5%a "
 #
 ##
 ## Note: Custom command that will be executed each time player state
@@ -284,7 +286,7 @@ visualizer_color = blue, cyan, green, yellow, magenta, red
 #
 #playlist_show_remaining_time = no
 #
-#playlist_shorten_total_times = no
+playlist_shorten_total_times = yes
 #
 #playlist_separate_albums = no
 #
@@ -293,11 +295,11 @@ visualizer_color = blue, cyan, green, yellow, magenta, red
 ##
 #playlist_display_mode = columns
 #
-#browser_display_mode = classic
+browser_display_mode = "columns"
 #
-#search_engine_display_mode = classic
+search_engine_display_mode = "columns"
 #
-#playlist_editor_display_mode = classic
+playlist_editor_display_mode = "columns"
 #
 #discard_colors_if_item_is_selected = yes
 #
@@ -318,6 +320,7 @@ visualizer_color = blue, cyan, green, yellow, magenta, red
 ## part of progressbar.
 ##
 #progressbar_look = =>
+progressbar_look = "─o "
 #
 ## Available values: database, playlist.
 ##
@@ -341,11 +344,11 @@ visualizer_color = blue, cyan, green, yellow, magenta, red
 #
 #default_tag_editor_pattern = %n - %t
 #
-#header_visibility = yes
+header_visibility = no
 #
-#statusbar_visibility = yes
+statusbar_visibility = no
 #
-#titles_visibility = yes
+titles_visibility = no
 #
 #header_text_scrolling = yes
 #
@@ -419,7 +422,7 @@ allow_for_physical_item_deletion = yes
 #
 #display_volume_level = yes
 #
-#display_bitrate = no
+display_bitrate = no
 #
 #display_remaining_time = no
 #
@@ -442,7 +445,7 @@ allow_for_physical_item_deletion = yes
 #
 #block_search_constraints_change_if_items_found = yes
 #
-#mouse_support = yes
+mouse_support = no
 #
 #mouse_list_scroll_whole_page = yes
 #
@@ -454,7 +457,7 @@ allow_for_physical_item_deletion = yes
 #
 #media_library_sort_by_mtime = no
 #
-#enable_window_title = yes
+enable_window_title = yes
 #
 ##
 ## Note: You can choose default search mode for search engine. Available modes
@@ -472,7 +475,7 @@ allow_for_physical_item_deletion = yes
 #
 #search_engine_default_search_mode = 1
 #
-#external_editor = nano
+external_editor = nano
 #
 ## Note: set to yes if external editor is a console application.
 ##
@@ -526,11 +529,11 @@ volume_color = default
 #
 #color2 = green
 #
-#progressbar_color = black:b
+progressbar_color = "black"
 #
-#progressbar_elapsed_color = green:b
+progressbar_elapsed_color = "white"
 #
-#statusbar_color = default
+statusbar_color = "white"
 #
 #statusbar_time_color = default:b
 #
