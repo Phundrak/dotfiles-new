@@ -76,7 +76,7 @@ This function should only modify configuration layer settings."
      (shell :variables
             shell-default-height 40
             shell-default-position 'bottom
-            shell-default-term-shell "/usr/bin/zsh")
+            shell-default-shell 'eshell)
      shell-scripts
      selectric
      semantic
