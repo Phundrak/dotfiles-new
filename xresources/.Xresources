@@ -3,7 +3,7 @@ URxvt.internalBorder: 0
 URxvt.externalBorder: 0
 URxvt.borderLess: true
 URxvt.transparent: true
-URxvt.shading: 15
+URxvt.shading: 40
 URxvt.fading: 2%
 URxvt.depth: 16
 URxvt.fadeColor: grey
