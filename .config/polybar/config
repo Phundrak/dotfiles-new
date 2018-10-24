@@ -39,8 +39,8 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding-left = 4
-padding-right = 5
+padding-left = 0
+padding-right = 2
 
 locale=ja_JP.UTF-8
 
