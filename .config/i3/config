@@ -200,6 +200,9 @@ bindsym XF86Calculator exec /usr/bin/gnome-calculator
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
+# Emacs
+bindsym Shift+$mod+e workspace 2; exec /usr/bin/emacs
+
 # Wal
 bindsym $mod+Ctrl+w exec "wal -i ~/.config/Wallpapers -o wal-set"
 
