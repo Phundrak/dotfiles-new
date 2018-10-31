@@ -530,15 +530,16 @@ you should place your code here."
   (global-set-key (kbd "C-x C-b") 'ibuffer)
 
   (spacemacs/declare-prefix "o" "custom")
-  (spacemacs/set-leader-keys "oe" 'eww)
-  (spacemacs/set-leader-keys "oc" 'calc)
-  (spacemacs/set-leader-keys "oC" 'calendar)
-  (spacemacs/declare-prefix "og" "gnus")
-  (spacemacs/set-leader-keys "ogd" 'turn-on-gnus-dired-mode)
-  (spacemacs/set-leader-keys "of" 'flycheck-mode)
+  (spacemacs/set-leader-keys "oB" 'fancy-battery-mode)
   (spacemacs/declare-prefix "ob" "buffers")
   (spacemacs/set-leader-keys "oba" 'kill-other-buffers)
+  (spacemacs/set-leader-keys "oC" 'calendar)
+  (spacemacs/set-leader-keys "oc" 'calc)
   (spacemacs/set-leader-keys "od" 'elcord-mode)
+  (spacemacs/set-leader-keys "oe" 'eww)
+  (spacemacs/set-leader-keys "of" 'flycheck-mode)
+  (spacemacs/declare-prefix "og" "gnus")
+  (spacemacs/set-leader-keys "ogd" 'turn-on-gnus-dired-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                 gnus                ;
