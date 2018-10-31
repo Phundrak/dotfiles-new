@@ -540,6 +540,9 @@ you should place your code here."
   (spacemacs/set-leader-keys "of" 'flycheck-mode)
   (spacemacs/declare-prefix "og" "gnus")
   (spacemacs/set-leader-keys "ogd" 'turn-on-gnus-dired-mode)
+  (spacemacs/declare-prefix "ol" "linenum")
+  (spacemacs/set-leader-keys "ola" 'global-linum-mode)
+  (spacemacs/set-leader-keys "olr" 'linum-relative-global-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                 gnus                ;
