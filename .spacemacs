@@ -94,7 +94,8 @@ This function should only modify configuration layer settings."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(elcord
+   dotspacemacs-additional-packages '(cmake-mode
+                                      elcord
                                       image-dired+
                                       modern-cpp-font-lock
                                       xresources-theme
@@ -206,8 +207,9 @@ It should only modify the values of Spacemacs settings."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 10)
-                                (projects . 10)
+                                (projects . 15)
                                 (bookmarks . 5)
+                                (todos . 5)
                                 (agenda . 3))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
