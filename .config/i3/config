@@ -204,6 +204,7 @@ bindsym XF86MonBrightnessDown exec light -U 5
 bindsym $mod+e workspace 2; exec /usr/bin/emacs
 bindsym $mod+c workspace 3; exec /usr/bin/chromium
 bindsym Ctrl+Shift+d workspace 10; exec /usr/bin/discord-canary
+bindsym $mod+n workspace 4; exec /usr/bin/nemo
 
 # Wal
 bindsym Ctrl+$mod+w exec "wal -i ~/.config/Wallpapers -o wal-set"
