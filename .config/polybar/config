@@ -242,7 +242,7 @@ label-song-ellipsis = true
 
 label-offline =  mpd is offline
 
-format-online = <label-song> <icon-prev> <toggle> <icon-next>
+format-online = <icon-prev> <toggle> <icon-next> <label-song>
 format-offline = <label-offline>
 
 icon-prev = 
