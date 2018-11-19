@@ -200,15 +200,17 @@ bindsym XF86Calculator exec /usr/bin/gnome-calculator
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
-# Emacs
+# Software shortcuts
 bindsym $mod+e workspace 2; exec /usr/bin/emacs
+bindsym $mod+c workspace 3; exec /usr/bin/chromium
+bindsym Ctrl+Shift+d workspace 10; exec /usr/bin/discord-canary
 
 # Wal
-bindsym $mod+Ctrl+w exec "wal -i ~/.config/Wallpapers -o wal-set"
+bindsym Ctrl+$mod+w exec "wal -i ~/.config/Wallpapers -o wal-set"
 
 # Take a screenshot
-bindsym $mod+Ctrl+z exec scrot
-bindsym $mod+Shift+z exec scrot -s
+bindsym Ctrl+$mod+z exec scrot
+bindsym Shift+$mod+z exec scrot -s
 bindsym Print exec scrot
 bindsym $mod+Print exec scrot -d 3
 bindsym Ctrl+Print exec scrot -s
