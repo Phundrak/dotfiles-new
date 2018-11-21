@@ -518,6 +518,7 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   (setq x86-lookup-pdf "~/Documents/code/asm/Intelx86/325383-sdm-vol-2abcd.pdf"
+        asm-comment-char ?\#
         twittering-use-master-password t)
 
   (add-hook 'before-save-hook 'whitespace-cleanup)
