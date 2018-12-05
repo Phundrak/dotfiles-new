@@ -629,7 +629,6 @@ It should only modify the values of Spacemacs settings."
           org-agenda-files (list "~/org/school.org"
                                  "~/org/private.org")
           org-agenda-custom-commands
-          org-export-headline-levels 5
           '(("h" "Daily habits"
              ((agenda ""))
              ((org-agenda-show-log t)
