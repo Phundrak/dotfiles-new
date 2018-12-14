@@ -15,9 +15,3 @@ UXTerm*borderLess: true
 UXTerm*externalBorder: 0
 UXTerm*internalBorder: 0
 URxvt.font: xft:Source Code Pro for Powerline:pixelsize=9
-! URxvt.font: xft:DejaVu Sans Mono for Powerline:pixelsize=9
-export_emacs() {
-    x_colors+="emacs*background: ${colors[0]}${newline}"
-    x_colors+="emacs*foreground: ${colors[15]}${newline}"
-}
-export_emacs
