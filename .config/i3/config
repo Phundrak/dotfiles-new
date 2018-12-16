@@ -114,14 +114,19 @@ bindsym $mod+$alt+Shift+k exec setxkbmap fr
 bindsym $mod+$alt+Ctrl+k  exec setxkbmap us
 
 # bindings for MS Natural Ergonomic Keyboard 4000 ##############################
-bindsym XF86HomePage              workspace 3;  exec /usr/bin/chromium https://labs.phundrak.fr
-bindsym XF86Search                workspace 3;  exec /usr/bin/xdg-open https://www.google.com
-bindsym XF86Mail                  workspace 5;  exec /usr/bin/thunderbird
-bindsym XF86Launch5               workspace 2;  exec /usr/bin/emacs
-bindsym XF86Launch6               workspace 3;  exec /usr/bin/chromium
-bindsym XF86Launch7               workspace 10; exec /usr/bin/discord-canary
-#bindsym XF86Launch8              workspace 4;  exec /usr/bin/nautilus
-bindsym XF86Launch9               workspace 4;  exec /usr/bin/nemo
+bindsym XF86Launch5               workspace 2;  exec emacs
+bindsym $mod+e                    workspace 2;  exec emacs
+bindsym XF86Launch6               workspace 3;  exec chromium
+bindsym $mod+c                    workspace 3;  exec chromium
+bindsym XF86HomePage              workspace 3;  exec chromium https://labs.phundrak.fr
+bindsym XF86Search                workspace 3;  exec chromium https://www.google.com
+bindsym XF86Launch9               workspace 4;  exec nemo
+bindsym $mod+n                    workspace 4;  exec nemo
+bindsym XF86Launch8               workspace 5;  exec emacs --eval "(gnus)"
+bindsym XF86Mail                  workspace 5;  exec emacs --eval "(gnus)"
+bindsym $mod+m                    workspace 5;  exec emacs --eval "(gnus)"
+bindsym XF86Launch7               workspace 10; exec discord-canary
+bindsym Ctrl+Shift+d              workspace 10; exec discord-canary
 bindsym XF86AudioMute                           exec amixer -D pulse set Master 1+ toggle
 bindsym XF86AudioRaiseVolume                    exec amixer -D pulse -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume                    exec amixer -D pulse -q set Master 5%- unmute
@@ -144,12 +149,6 @@ bindsym $mod+F2 exec systemctl restart NetworkManager
 # Brightness keyboard shortcuts
 bindsym XF86MonBrightnessUp   exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
-
-# Software shortcuts
-bindsym $mod+e workspace 2;         exec /usr/bin/emacs
-bindsym $mod+c workspace 3;         exec /usr/bin/chromium
-bindsym Ctrl+Shift+d workspace 10;  exec /usr/bin/discord-canary
-bindsym $mod+n workspace 4;         exec /usr/bin/nemo
 
 # Wal
 bindsym Ctrl+$mod+w exec "wal -i ~/.config/Wallpapers -o wal-set"
