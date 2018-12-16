@@ -8,10 +8,10 @@ font pango:monospace 8
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
-set $up Up
-set $down Down
-set $left Left
-set $right Right
+set $up     Up
+set $down   Down
+set $left   Left
+set $right  Right
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -21,60 +21,43 @@ floating_modifier $mod
 ################################################################################
 
 # start a terminal
-bindsym $mod+Return exec uxterm
+bindsym $mod+Return exec st
 
 # kill focused window
-bindsym $mod+q kill
+bindsym $mod+q  kill
 bindsym $alt+F4 kill
 
 # start dmenu (a program launcher)
-bindsym $mod+Shift+d exec --no-startup-id j4-dmenu-desktop
-bindsym $mod+d exec "rofi -combi-modi window,drun -show combi -mohh combi"
+bindsym $mod+Shift+d  exec --no-startup-id j4-dmenu-desktop
+bindsym $mod+d        exec "rofi -combi-modi window,drun -show combi -mohh combi"
 
 # change focus
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
-
+bindsym $mod+$left        focus left
+bindsym $mod+$down        focus down
+bindsym $mod+$up          focus up
+bindsym $mod+$right       focus right
 # move focused window
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$left  move left
+bindsym $mod+Shift+$down  move down
+bindsym $mod+Shift+$up    move up
 bindsym $mod+Shift+$right move right
 
 # split in horizontal orientation
 bindsym $mod+h split h
-
 # split in vertical orientation
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-# change container layout (stacked, tabbed, toggle split)
-# bindsym $mod+s layout stacking
-# bindsym $mod+w layout tabbed
-# bindsym $mod+e layout toggle split
-
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
+bindsym $mod+Shift+space  floating toggle
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+space        focus mode_toggle
 
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
-
-# move the currently focused window to the scratchpad
-bindsym $mod+Shift+s move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+s scratchpad show
+# Scratchpad
+bindsym $mod+Shift+s  move scratchpad
+bindsym $mod+s        scratchpad show
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -101,18 +84,16 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # move to previous or next workspace
-bindsym $mod+Tab workspace next
-bindsym $mod+Shift+Tab workspace previous
+bindsym $mod+Tab        workspace next
+bindsym $mod+Shift+Tab  workspace previous
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c  reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+r  restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-# hibernate
-bindsym $mod+Shift+h exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89' && systemctl hibernate"
-bindsym $mod+$alt+h exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89' && systemctl suspend"
+bindsym $mod+Shift+e  exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 
+'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -128,28 +109,24 @@ bindsym $mod+r mode "resize"
 mouse_warping none
 
 # Keyboard layout
-bindsym $mod+$alt+k exec setxkbmap fr bepo
+bindsym $mod+$alt+k       exec setxkbmap fr bepo
 bindsym $mod+$alt+Shift+k exec setxkbmap fr
-bindsym $mod+$alt+Ctrl+k exec setxkbmap us
+bindsym $mod+$alt+Ctrl+k  exec setxkbmap us
 
 # bindings for MS Natural Ergonomic Keyboard 4000 ##############################
-bindsym XF86HomePage exec /usr/bin/chromium https://github.com; workspace 3
-bindsym XF86Search exec /usr/bin/xdg-open http://www.google.com; workspace 3
-bindsym XF86Mail workspace 5; exec /usr/bin/thunderbird
-bindsym XF86Launch5 workspace 2; exec /usr/bin/emacs
-bindsym XF86Launch6 workspace 3; exec /usr/bin/chromium
-bindsym XF86Launch7 workspace 10; exec /usr/bin/discord-canary
-#bindsym XF86Launch8 workspace 4; exec /usr/bin/nautilus
-bindsym XF86Launch9 workspace 4; exec /usr/bin/nemo
-bindsym XF86AudioMute exec amixer -D pulse set Master 1+ toggle
-bindsym XF86AudioRaiseVolume exec amixer -D pulse -q set Master 5%+ unmute
-bindsym XF86AudioLowerVolume exec amixer -D pulse -q set Master 5%- unmute
-bindsym $alt+XF86AudioRaiseVolume exec mpc next
-bindsym $alt+XF86AudioLowerVolume exec mpc prev
-bindsym XF86AudioPlay exec mpc toggle
-bindsym $alt+XF86AudioPlay exec mpc stop
+bindsym XF86HomePage              workspace 3;  exec /usr/bin/chromium https://labs.phundrak.fr
+bindsym XF86Search                workspace 3;  exec /usr/bin/xdg-open https://www.google.com
+bindsym XF86Mail                  workspace 5;  exec /usr/bin/thunderbird
+bindsym XF86Launch5               workspace 2;  exec /usr/bin/emacs
+bindsym XF86Launch6               workspace 3;  exec /usr/bin/chromium
+bindsym XF86Launch7               workspace 10; exec /usr/bin/discord-canary
+#bindsym XF86Launch8              workspace 4;  exec /usr/bin/nautilus
+bindsym XF86Launch9               workspace 4;  exec /usr/bin/nemo
+bindsym XF86AudioMute                           exec amixer -D pulse set Master 1+ toggle
+bindsym XF86AudioRaiseVolume                    exec amixer -D pulse -q set Master 5%+ unmute
+bindsym XF86AudioLowerVolume                    exec amixer -D pulse -q set Master 5%- unmute
+bindsym XF86Calculator                          exec /usr/bin/gnome-calculator
 #bindsym XF86Favourites
-bindsym XF86Calculator exec /usr/bin/gnome-calculator
 #bindsym Help
 #bindsym Undo
 #bindsym Redo
@@ -161,37 +138,59 @@ bindsym XF86Calculator exec /usr/bin/gnome-calculator
 #bindsym XF86Send
 #bindsym XF86Save
 
+bindsym $mod+F3 exec arandr
+bindsym $mod+F2 exec systemctl restart NetworkManager
+
 # Brightness keyboard shortcuts
-bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessUp   exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
 # Software shortcuts
-bindsym $mod+e workspace 2; exec /usr/bin/emacs
-bindsym $mod+c workspace 3; exec /usr/bin/chromium
-bindsym Ctrl+Shift+d workspace 10; exec /usr/bin/discord-canary
-bindsym $mod+n workspace 4; exec /usr/bin/nemo
+bindsym $mod+e workspace 2;         exec /usr/bin/emacs
+bindsym $mod+c workspace 3;         exec /usr/bin/chromium
+bindsym Ctrl+Shift+d workspace 10;  exec /usr/bin/discord-canary
+bindsym $mod+n workspace 4;         exec /usr/bin/nemo
 
 # Wal
 bindsym Ctrl+$mod+w exec "wal -i ~/.config/Wallpapers -o wal-set"
 
 # Take a screenshot
-bindsym Ctrl+$mod+z exec scrot
-bindsym Shift+$mod+z exec scrot -s
-bindsym Print exec scrot
-bindsym $mod+Print exec scrot -d 3
-bindsym Ctrl+Print exec scrot -s
+bindsym Print             exec --no-startup-id scrot
+bindsym Shift+Print       exec --no-startup-id scrot -d 3
+bindsym Ctrl+Print        exec --no-startup-id scrot -s
 
 # Lock screen
-bindsym $mod+Ctrl+l exec "lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'"
+set     $lockscreen   lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'
+bindsym $mod+l        exec "$lockscreen"
+bindsym $mod+$alt+h   exec "$lockscreen && systemctl suspend"
+bindsym $mod+Shift+h  exec "$lockscreen && systemctl hibernate"
+
+# Music shortcuts
+bindsym $alt+XF86AudioRaiseVolume               exec mpc next
+bindsym $mod+Next                               exec mpc next
+bindsym $alt+XF86AudioLowerVolume               exec mpc prev
+bindsym $mod+Prior                              exec mpc prev
+bindsym XF86AudioPlay                           exec mpc toggle
+bindsym $mod+p                                  exec mpc toggle
+bindsym $mod+$alt+p                             exec mpc stop
+bindsym $alt+XF86AudioPlay                      exec mpc stop
+bindsym $mod+Shift+n                            exec st ncmpcpp -q
 
 ################################################################################
 #                               i3-gaps settings                               #
 ################################################################################
 
-smart_gaps on
-gaps inner 20
-gaps outer -10
+smart_gaps          on
+gaps                inner 20
+gaps                outer -10
 Focus_follows_mouse off
+
+# Change gaps size
+bindsym $mod+g            gaps inner current plus 5
+bindsym $mod+Shift+g      gaps inner current minus 5
+bindsym $mod+Ctrl+g       gaps outer current plus 5
+bindsym $mod+Ctrl+Shift+g gaps outer current minus 5
+bindsym $mod+$alt+g       gaps inner all set 20; gaps outer all set -10
 
 new_window none
 smart_borders on
