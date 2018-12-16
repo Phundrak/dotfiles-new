@@ -166,15 +166,16 @@ bindsym $mod+$alt+h   exec "$lockscreen && systemctl suspend"
 bindsym $mod+Shift+h  exec "$lockscreen && systemctl hibernate"
 
 # Music shortcuts
-bindsym $alt+XF86AudioRaiseVolume               exec mpc next
-bindsym $mod+Next                               exec mpc next
-bindsym $alt+XF86AudioLowerVolume               exec mpc prev
-bindsym $mod+Prior                              exec mpc prev
-bindsym XF86AudioPlay                           exec mpc toggle
-bindsym $mod+p                                  exec mpc toggle
-bindsym $mod+$alt+p                             exec mpc stop
-bindsym $alt+XF86AudioPlay                      exec mpc stop
-bindsym $mod+Shift+n                            exec st ncmpcpp -q
+bindsym $alt+XF86AudioRaiseVolume exec mpc next
+bindsym $mod+Next                 exec mpc next
+bindsym $alt+XF86AudioLowerVolume exec mpc prev
+bindsym $mod+Prior                exec mpc prev
+bindsym XF86AudioPlay             exec mpc toggle
+bindsym $mod+p                    exec mpc toggle
+bindsym $mod+$alt+p               exec mpc stop
+bindsym $alt+XF86AudioPlay        exec mpc stop
+bindsym $mod+Shift+n              exec st ncmpcpp -q
+bindsym $mod+Shift+v              exec st ncmpcpp -qs visualizer    
 
 ################################################################################
 #                               i3-gaps settings                               #
