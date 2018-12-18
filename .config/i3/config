@@ -159,6 +159,7 @@ bindsym Ctrl+$mod+w exec "wal -i ~/.config/Wallpapers -o wal-set"
 bindsym Print             exec --no-startup-id scrot
 bindsym Shift+Print       exec --no-startup-id scrot -d 3
 bindsym Ctrl+Print        exec --no-startup-id scrot -s
+bindsym $alt+Print                exec --no-startup-id scrot -u
 
 # Lock screen
 bindsym $mod+l        exec "$lockscreen"
@@ -206,8 +207,8 @@ smart_borders on
 ################################################################################
 exec_always --no-startup-id       ~/dotfiles/enable_thouch.sh
 exec_always --no-startup-id       ~/.config/polybar/launch.sh
+exec_always --no-startup-id       wal -i "$(< "${HOME}/.cache/wal/wal")"
 exec        --no-startup-id       i3-battery-popup -N -t 2m
-exec        --no-startup-id       wal -i "$(< "${HOME}/.cache/wal/wal")"
 exec        --no-startup-id       "xrdb $HOME/.Xresources"
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id compton -F --opengl --config ~/.config/compton.conf -e 1
