@@ -23,14 +23,16 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec st
+bindsym $mod+$alt+Return          split h;; exec st
+bindsym $mod+Shift+Return         split v;; exec st
 
 # kill focused window
 bindsym $mod+q  kill
 bindsym $alt+F4 kill
 
-# start dmenu (a program launcher)
+# program launcher
 bindsym $mod+Shift+d  exec --no-startup-id j4-dmenu-desktop
-bindsym $mod+d        exec "rofi -combi-modi window,drun -show combi -mohh combi"
+bindsym $mod+d                    exec --no-startup-id $rofiexec
 
 # change focus
 bindsym $mod+$left        focus left
@@ -43,10 +45,10 @@ bindsym $mod+Shift+$down  move down
 bindsym $mod+Shift+$up    move up
 bindsym $mod+Shift+$right move right
 
-# split in horizontal orientation
+# Change split
 bindsym $mod+h split h
-# split in vertical orientation
 bindsym $mod+v split v
+bindsym $mod+t                    split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -90,11 +92,10 @@ bindsym $mod+Shift+Tab  workspace previous
 
 # reload the configuration file
 bindsym $mod+Shift+c  reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# restart i3 inplace
 bindsym $mod+Shift+r  restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e  exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 
-'i3-msg exit'"
+# exit i3
+bindsym $mod+Shift+e              exec $exiti3
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -145,7 +146,7 @@ bindsym XF86Calculator                          exec /usr/bin/gnome-calculator
 #bindsym XF86Save
 
 bindsym $mod+F3 exec arandr
-bindsym $mod+F2 exec systemctl restart NetworkManager
+bindsym $mod+F2                   exec --no-startup-id systemctl restart NetworkManager
 
 # Brightness keyboard shortcuts
 bindsym XF86MonBrightnessUp   exec light -A 5
@@ -203,25 +204,22 @@ smart_borders on
 ################################################################################
 #                                Modules startup                               #
 ################################################################################
-exec_always ~/dotfiles/enable_thouch.sh
-exec_always --no-startup-id i3-battery-popup -N -t 2m
-exec_always wal -i "$(< "${HOME}/.cache/wal/wal")"
-exec "xrdb $HOME/.Xresources"
+exec_always --no-startup-id       ~/dotfiles/enable_thouch.sh
+exec_always --no-startup-id       ~/.config/polybar/launch.sh
+exec        --no-startup-id       i3-battery-popup -N -t 2m
+exec        --no-startup-id       wal -i "$(< "${HOME}/.cache/wal/wal")"
+exec        --no-startup-id       "xrdb $HOME/.Xresources"
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id compton -F --opengl --config ~/.config/compton.conf -e 1
 exec --no-startup-id numlockx on
-exec_always --no-startup-id ~/.config/polybar/launch.sh
-exec_always redshift-gtk
-exec_always mpd
-exec_always mpc stop
+exec        --no-startup-id       redshift-gtk
+exec        --no-startup-id       mpd
+exec        --no-startup-id       mpc stop
 
 ################################################################################
 #                          Set colors from Xresources                          #
 ################################################################################
-# Change 'color7' and 'color2' to whatever colors you want i3 to use
-# from the generated scheme.
-# NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
-# it fails to get colors from Xresources for some reason.
+
 set_from_resource $fg i3wm.color7 #f0f0f0
 set_from_resource $bg i3wm.color2 #f0f0f0
 
