@@ -2,16 +2,17 @@
 set $mod Mod4
 set $alt Mod1
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
+# Font for window titles
 font pango:monospace 8
 
-# use these keys for focus, movement, and resize directions when reaching for
-# the arrows is not convenient
+# Variables
 set $up     Up
 set $down   Down
 set $left   Left
 set $right  Right
+set $exiti3                       "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+set $lockscreen                   lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'
+set $rofiexec                     "rofi -combi-modi window,drun -show combi -mohh combi"
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -159,10 +160,14 @@ bindsym Shift+Print       exec --no-startup-id scrot -d 3
 bindsym Ctrl+Print        exec --no-startup-id scrot -s
 
 # Lock screen
-set     $lockscreen   lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'
 bindsym $mod+l        exec "$lockscreen"
 bindsym $mod+$alt+h   exec "$lockscreen && systemctl suspend"
 bindsym $mod+Shift+h  exec "$lockscreen && systemctl hibernate"
+
+# SSH terminals
+bindsym $mod+$alt+m               exec "st ssh Mila"
+bindsym $mod+$alt+t               exec "st ssh Tilo"
+bindsym $mod+$alt+n               exec "st ssh Naro"
 
 # Music shortcuts
 bindsym $alt+XF86AudioRaiseVolume exec mpc next
