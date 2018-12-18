@@ -171,6 +171,9 @@ bindsym $mod+$alt+m               exec "st ssh Mila"
 bindsym $mod+$alt+t               exec "st ssh Tilo"
 bindsym $mod+$alt+n               exec "st ssh Naro"
 
+# Utilities
+bindsym $mod+Ctrl+h               exec "st htop"
+
 # Music shortcuts
 bindsym $alt+XF86AudioRaiseVolume exec mpc next
 bindsym $mod+Next                 exec mpc next
