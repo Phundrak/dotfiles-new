@@ -504,6 +504,12 @@ It should only modify the values of Spacemacs settings."
         asm-comment-char ?\#
         twittering-use-master-password t)
 
+  (define-key dired-mode-map
+    (kbd "F")
+    (lambda ()
+      (interactive)
+      (find-file (car (dired-get-marked-files)))))
+
   (add-hook 'before-save-hook 'whitespace-cleanup)
   (defun kill-other-buffers ()
     "Kill all other buffers."
