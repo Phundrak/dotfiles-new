@@ -13,6 +13,7 @@ set $right                        Right
 set $exiti3                       "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 set $lockscreen                   lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'
 set $rofiexec                     "rofi -combi-modi window,drun -show combi -mohh combi"
+set $execgnus                     "workspace 5;  exec emacsclient --create-frame --eval '(gnus)'"
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier                 $mod
@@ -116,17 +117,17 @@ bindsym $mod+$alt+Shift+k         exec setxkbmap fr
 bindsym $mod+$alt+Ctrl+k          exec setxkbmap us
 
 # bindings for MS Natural Ergonomic Keyboard 4000 ##############################
-bindsym XF86Launch5               workspace 2;  exec emacs
-bindsym $mod+e                    workspace 2;  exec emacs
+bindsym XF86Launch5               workspace 2;  exec emacsclient --create-frame
+bindsym $mod+e                    workspace 2;  exec emacsclient --create-frame
 bindsym XF86Launch6               workspace 3;  exec chromium
 bindsym $mod+c                    workspace 3;  exec chromium
 bindsym XF86HomePage              workspace 3;  exec chromium https://labs.phundrak.fr
 bindsym XF86Search                workspace 3;  exec chromium https://www.google.com
 bindsym XF86Launch9               workspace 4;  exec nemo
 bindsym $mod+n                    workspace 4;  exec nemo
-bindsym XF86Launch8               workspace 5;  exec emacs --eval "(gnus)"
-bindsym XF86Mail                  workspace 5;  exec emacs --eval "(gnus)"
-bindsym $mod+m                    workspace 5;  exec emacs --eval "(gnus)"
+bindsym XF86Launch8               $execgnus
+bindsym XF86Mail                  $execgnus
+bindsym $mod+m                    $execgnus
 bindsym XF86Launch7               workspace 10; exec discord-canary
 bindsym Ctrl+Shift+d              workspace 10; exec discord-canary
 bindsym XF86AudioMute                           exec amixer -D pulse set Master 1+ toggle
@@ -219,6 +220,9 @@ exec        --no-startup-id       numlockx on
 exec        --no-startup-id       redshift-gtk
 exec        --no-startup-id       mpd
 exec        --no-startup-id       mpc stop
+exec        --no-startup-id       syndaemon -i 1.0 -t -k
+exec                              sleep 3; workspace 2; emacs --eval "(server-start)"
+
 
 ################################################################################
 #                          Set colors from Xresources                          #
