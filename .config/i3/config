@@ -34,6 +34,7 @@ bindsym $alt+F4                   kill
 # program launcher
 bindsym $mod+Shift+d              exec --no-startup-id j4-dmenu-desktop
 bindsym $mod+d                    exec --no-startup-id $rofiexec
+bindsym $mod+w                    exec --no-startup-id rofi-wifi-menu
 
 # change focus
 bindsym $mod+$left                focus left
