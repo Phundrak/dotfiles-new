@@ -135,6 +135,7 @@ bindsym XF86AudioMute                           exec amixer -D pulse set Master 
 bindsym XF86AudioRaiseVolume                    exec amixer -D pulse -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume                    exec amixer -D pulse -q set Master 5%- unmute
 bindsym XF86Calculator                          exec /usr/bin/gnome-calculator
+bindsym $mod+$alt+c                             exec /usr/bin/gnome-calculator
 #bindsym XF86Favourites
 #bindsym Help
 #bindsym Undo
