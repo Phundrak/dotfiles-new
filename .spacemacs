@@ -36,7 +36,8 @@ This function should only modify configuration layer settings."
    '(
      asm
      (auto-completion :variables
-                      auto-completion-complete-with-key-sequence-delay 0.02)
+                      auto-completion-complete-with-key-sequence-delay 0.02
+                      :disabled-for org git github)
      (better-defaults :variables
                       better-defaults-move-to-beginning-of-code-first t
                       better-defaults-move-to-end-of-code-first t)
@@ -505,6 +506,8 @@ It should only modify the values of Spacemacs settings."
   (setq x86-lookup-pdf "~/Documents/code/asm/Intelx86/325383-sdm-vol-2abcd.pdf"
         asm-comment-char ?\#
         twittering-use-master-password t)
+
+  (setq linum-relative-global-mode '(not pdf-view-mode))
 
   (define-key dired-mode-map
     (kbd "F")
