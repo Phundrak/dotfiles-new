@@ -417,10 +417,10 @@ It should only modify the values of Spacemacs settings."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers '(:disabled-for-modes dired-mode
+   dotspacemacs-line-numbers '(:disabled-for-modes
+                               dired-mode
                                                    doc-view-mode
-                                                   pdf-view-mode
-                              )
+                               pdf-view-mode)
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -507,7 +507,9 @@ It should only modify the values of Spacemacs settings."
         asm-comment-char ?\#
         twittering-use-master-password t)
 
-  (setq linum-relative-global-mode '(not pdf-view-mode))
+  (defun phundrak/turn-off-linum ()
+    (linum-mode 0))
+  (add-hook 'pdf-view-mode 'phundrak/turn-off-linum)
 
   (define-key dired-mode-map
     (kbd "F")
