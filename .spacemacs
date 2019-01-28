@@ -37,40 +37,64 @@ This function should only modify configuration layer settings."
      asm
      (auto-completion :variables
                       auto-completion-complete-with-key-sequence-delay 0.02
-                      :disabled-for org git github)
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t
+                      :disabled-for
+                      org
+                      git
+                      github)
      (better-defaults :variables
                       better-defaults-move-to-beginning-of-code-first t
                       better-defaults-move-to-end-of-code-first t)
      (c-c++ :variables
-            c-c++-enable-clang-support t)
+            c-c++-enable-clang-support t
+            c-c++-enable-c++11 t
+            c-c++-enable-google-style t
+            c-c++-enable-google-newline t
+            c-c++-enable-auto-newline t
+            c-c++-backend 'rtags)
+     chrome
+     (cmake :variables
+            cmake-enable-cmake-ide-support t)
      csv
      colors
      django
-     elixir
      emacs-lisp
-     erlang
+     epub
      git
      github
+     gpu
      gnus
-     go
-     haskell
-     helm
+     (helm :variables
+           helm-enable-auto-resize t
+           helm-no-header t)
      html
+     (ibuffer :variables
+              ibuffer-group-buffers-by 'projects)
      imenu-list
-     java
-     javascript
+     (java :variables
+           java-backend 'meghanada)
+     (javascript :variables
+                 javascript-backend 'tern
+                 javascript-fmt-tool 'web-beautify)
      (latex :variables
             latex-build-command "xelatex"
             latex-enable-auto-fill t)
      markdown
      (org :variables
-          org-enable-github-support t)
+          org-enable-github-support t
+          org-enable-org-journal-support t
+          org-projectile-file "TODOs.org")
      pandoc
-     pdf-tools
+     pdf
      plantuml
-     php
-     python
-     racket
+     (python :variables
+             python-sort-imports-on-save t
+             python-fill-column 80
+             python-enable-yapf-format-on-save t)
      (ranger :variables
              ranger-show-preview t)
      rust
@@ -83,11 +107,19 @@ This function should only modify configuration layer settings."
      shell-scripts
      selectric
      semantic
-     spell-checking
+     (spell-checking :variables
+                     spell-checking-enable-by-default nil
+                     spell-checking-enable-auto-dictionary t
+                     enable-flyspell-auto-completion nil)
      sql
      (syntax-checking :variables
                       spell-checking-enable-by-default nil
-                      spell-checking-enable-auto-dictionary t)
+                      spell-checking-enable-auto-dictionary t
+                      syntax-checking-enable-tooltips t
+                      syntax-checking-use-original-bitmaps t)
+     (treemacs :variables
+               treemacs-use-follow-mode nil
+               treemacs-use-filewatch-mode t)
      twitter
      yaml
      )
@@ -108,8 +140,8 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(popwin
-                                    anaconda-mode
+   dotspacemacs-excluded-packages '(anaconda-mode
+                                    popwin
                                     )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -419,7 +451,7 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-line-numbers '(:disabled-for-modes
                                dired-mode
-                                                   doc-view-mode
+                               doc-view-mode
                                pdf-view-mode)
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
@@ -493,23 +525,29 @@ It should only modify the values of Spacemacs settings."
    ))
 
 (defun dotspacemacs/user-init ()
+  (load "~/dotfiles/private/private_emacs.el")
   (require 'package)
   (add-to-list 'package-archives
                '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   (flyspell-mode 0)
-  (load "~/dotfiles/private/private_emacs.el")
   )
 
 (defun dotspacemacs/user-config ()
 
   (setq x86-lookup-pdf "~/Documents/code/asm/Intelx86/325383-sdm-vol-2abcd.pdf"
         asm-comment-char ?\#
-        twittering-use-master-password t)
+        twittering-use-master-password t
+        edit-server-default-major-mode 'org-mode)
 
   (defun phundrak/turn-off-linum ()
     (linum-mode 0))
   (add-hook 'pdf-view-mode 'phundrak/turn-off-linum)
+  (add-hook 'dired-mode 'phundrak/turn-off-linum)
+  (add-hook 'doc-view-mode 'phundrak/turn-off-linum)
+  (add-hook 'org-mode 'phundrak/turn-off-linum)
+  (add-hook 'markdown-mode 'phundrak/turn-off-linum)
+  (add-hook 'text-mode 'phundrak/turn-off-linum)
 
   (define-key dired-mode-map
     (kbd "F")
@@ -635,6 +673,7 @@ It should only modify the values of Spacemacs settings."
           org-html-validation-link nil
           org-journal-date-prefix "#+TITLE: "
           org-journal-dir "~/org/journal/"
+          org-journal-file-format "%Y-%m-%d"
           org-latex-listings 'minted
           org-latex-packages-alist '(("" "minted"))
           org-latex-pdf-process
@@ -670,6 +709,13 @@ It should only modify the values of Spacemacs settings."
     (spacemacs/set-leader-keys "occ" 'outorg-copy-edits-and-exit)
     )
 
+  (with-eval-after-load 'org-agenda
+    (require 'org-projectile)
+    (mapcar '(lambda (file)
+               (when (file-exists-p file)
+                 (push file org-agenda-files)))
+            (org-projectile-todo-files))
+    )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;           custom commands           ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -775,11 +821,9 @@ This function is called at the very end of Spacemacs initialization."
  '(ansi-color-names-vector
    ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(evil-want-Y-yank-to-eol nil)
- '(magit-diff-section-arguments
-   '("--ignore-space-change" "--ignore-all-space" "--no-ext-diff"))
  '(org-export-headline-levels 4)
  '(package-selected-packages
-   '(mvn meghanada maven-test-mode groovy-mode groovy-imports gradle-mode ensime sbt-mode scala-mode company-emacs-eclim eclim ox-gfm slime-company slime common-lisp-snippets erlang insert-shebang fish-mode company-shell faceup racket-mode treepy graphql yapfify yaml-mode xterm-color web-beautify twittering-mode toml-mode tagedit stickyfunc-enhance smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode ranger rainbow-identifiers pytest pyenv-mode py-isort pug-mode plantuml-mode phpunit phpcbf php-auto-yasnippets pdf-tools tablist ox-pandoc orgit org-present org-pomodoro alert log4e gntp ob-elixir multi-term markdown-toc magit-gitflow magit-gh-pulls livid-mode live-py-mode json-snatcher js2-refactor js-doc htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss haskell-snippets haml-mode gnuplot glsl-mode gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-messenger gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-rust pos-tip flycheck-mix flycheck-credo eshell-z eshell-prompt-extras esh-help drupal-mode disaster cython-mode dash-functional tern company-ghci company-ghc ghc color-identifiers-mode cmm-mode clang-format cargo auto-dictionary alchemist modern-cpp-font-lock yasnippet-snippets x86-lookup web-mode srefactor racer pyvenv pip-requirements pandoc-mode org-projectile org-category-capture org-mime org-download nasm-mode json-reformat intero imenu-list hy-mode git-timemachine git-link geiser flycheck-pos-tip flycheck-haskell evil-magit emmet-mode cmake-mode anaconda-mode rust-mode elixir-mode flycheck haskell-mode multiple-cursors skewer-mode simple-httpd markdown-mode magit magit-popup git-commit ghub with-editor pythonic emms gmail-message-mode ham-mode html-to-markdown flymd edit-server image-dired+ go-guru go-eldoc company-go go-mode unfill mwim company-web web-completion-data company-tern company-cabal company-c-headers company-auctex company-anaconda elcord xresources-theme sql-indent rainbow-mode php-extras php-mode mmm-mode json-mode js2-mode csv-mode coffee-mode auctex helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+   '(nov esxml ox-gfm slime-company slime common-lisp-snippets erlang insert-shebang fish-mode company-shell faceup racket-mode treepy graphql yapfify yaml-mode xterm-color web-beautify twittering-mode toml-mode tagedit stickyfunc-enhance smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode ranger rainbow-identifiers pytest pyenv-mode py-isort pug-mode plantuml-mode phpunit phpcbf php-auto-yasnippets pdf-tools tablist ox-pandoc orgit org-present org-pomodoro alert log4e gntp ob-elixir multi-term markdown-toc magit-gitflow magit-gh-pulls livid-mode live-py-mode json-snatcher js2-refactor js-doc htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss haskell-snippets haml-mode gnuplot glsl-mode gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-messenger gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-rust pos-tip flycheck-mix flycheck-credo eshell-z eshell-prompt-extras esh-help drupal-mode disaster cython-mode dash-functional tern company-ghci company-ghc ghc color-identifiers-mode cmm-mode clang-format cargo auto-dictionary alchemist modern-cpp-font-lock yasnippet-snippets x86-lookup web-mode srefactor racer pyvenv pip-requirements pandoc-mode org-projectile org-category-capture org-mime org-download nasm-mode json-reformat intero imenu-list hy-mode git-timemachine git-link geiser flycheck-pos-tip flycheck-haskell evil-magit emmet-mode cmake-mode anaconda-mode rust-mode elixir-mode flycheck haskell-mode multiple-cursors skewer-mode simple-httpd markdown-mode magit magit-popup git-commit ghub with-editor pythonic emms gmail-message-mode ham-mode html-to-markdown flymd edit-server image-dired+ go-guru go-eldoc company-go go-mode unfill mwim company-web web-completion-data company-tern company-cabal company-c-headers company-auctex company-anaconda elcord xresources-theme sql-indent rainbow-mode php-extras php-mode mmm-mode json-mode js2-mode csv-mode coffee-mode auctex helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
