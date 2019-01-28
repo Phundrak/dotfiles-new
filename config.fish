@@ -8,5 +8,5 @@ function fish_title
     true
 end
 
-set -gx PATH $HOME/.local/bin $PATH
+set -gx PATH $HOME/.cargo/bin $HOME/.local/bin $PATH
 set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH /usr/local/lib
