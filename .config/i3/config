@@ -11,7 +11,7 @@ set $down                         Down
 set $left                         Left
 set $right                        Right
 set $exiti3                       "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-set $lockscreen                   lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa), +33 (0)6 83 90 56 89'
+set $lockscreen                   lock -t 'Lucien Cartier-Tilet (Phuntsok Drak-pa)\n+33 (0)6 83 90 56 89'
 set $rofiexec                     "rofi -combi-modi window,drun -show combi -mohh combi"
 set $execgnus                     "workspace 5;  exec emacsclient --create-frame --eval '(gnus)'"
 
