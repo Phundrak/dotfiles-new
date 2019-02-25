@@ -187,6 +187,8 @@ bindsym XF86AudioPlay             exec mpc toggle
 bindsym $mod+p                    exec mpc toggle
 bindsym $mod+$alt+p               exec mpc stop
 bindsym $alt+XF86AudioPlay        exec mpc stop
+bindsym $mod+$alt+7               exec mpc volume +5
+bindsym $mod+$alt+8               exec mpc volume -5
 bindsym $mod+Shift+n              exec st ncmpcpp -q
 bindsym $mod+Shift+v              exec st ncmpcpp -qs visualizer
 
