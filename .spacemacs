@@ -124,6 +124,7 @@ This function should only modify configuration layer settings."
                                       elcord
                                       image-dired+
                                       modern-cpp-font-lock
+                                      multiple-cursors
                                       outorg
                                       pinentry
                                       visual-fill-column
@@ -580,11 +581,11 @@ It should only modify the values of Spacemacs settings."
   (spacemacs/declare-prefix "ol" "linenum")
   (spacemacs/set-leader-keys "ola" 'global-linum-mode)
   (spacemacs/set-leader-keys "olr" 'linum-relative-global-mode)
-  (spacemacs/declare-prefix "om" "mpc")
-  (spacemacs/set-leader-keys "omm" 'mpc)
-  (spacemacs/set-leader-keys "omP" 'mpc-toggle-play)
-  (spacemacs/set-leader-keys "omp" 'mpc-prev)
-  (spacemacs/set-leader-keys "omn" 'mpc-next)
+  (spacemacs/declare-prefix "om" "multiple-cursors")
+  (spacemacs/set-leader-keys "ome" 'mc/edit-lines)
+  (spacemacs/set-leader-keys "omn" 'mc/mark-next-like-this)
+  (spacemacs/set-leader-keys "omp" 'mc/mark-previous-like-this)
+  (spacemacs/set-leader-keys "oma" 'mc/mark-all-like-this)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;               Nov-mode              ;
