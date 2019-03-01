@@ -157,7 +157,7 @@ bindsym XF86MonBrightnessUp       exec light -A 5
 bindsym XF86MonBrightnessDown     exec light -U 5
 
 # Wal
-bindsym Ctrl+$mod+w exec "wal -i ~/.config/Wallpapers -o wal-set"
+bindsym $mod+Ctrl+w               exec "wal -i ~/.config/Wallpapers -o wal-set"
 
 # Take a screenshot
 bindsym Print                     exec --no-startup-id scrot
@@ -187,6 +187,8 @@ bindsym XF86AudioPlay             exec mpc toggle
 bindsym $mod+p                    exec mpc toggle
 bindsym $mod+$alt+p               exec mpc stop
 bindsym $alt+XF86AudioPlay        exec mpc stop
+# below, 7 and 8 are the emplacement for `+` and `-` on the bépo layout
+# respectively, hence the order
 bindsym $mod+$alt+7               exec mpc volume +5
 bindsym $mod+$alt+8               exec mpc volume -5
 bindsym $mod+Shift+n              exec st ncmpcpp -q
