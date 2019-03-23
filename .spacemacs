@@ -605,6 +605,7 @@ It should only modify the values of Spacemacs settings."
       (find-file "~/Documents/code/web/langue-phundrak-fr/matter/matter.org")))
   (spacemacs/set-leader-keys "olmr" 'conlanging/matter-to-runes)
   (spacemacs/set-leader-keys "olml" 'conlanging/matter-to-native-latin)
+  (spacemacs/set-leader-keys "olmL" 'conlanging/matter-to-latex-runes)
   (spacemacs/declare-prefix "om" "multiple-cursors")
   (spacemacs/set-leader-keys "ome" 'mc/edit-lines)
   (spacemacs/set-leader-keys "omn" 'mc/mark-next-like-this)
