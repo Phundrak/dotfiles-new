@@ -90,6 +90,7 @@ This function should only modify configuration layer settings."
              python-sort-imports-on-save t
              python-fill-column 80
              python-enable-yapf-format-on-save t)
+     restclient
      rust
      scheme
      semantic
@@ -123,12 +124,12 @@ This function should only modify configuration layer settings."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(cmake-mode
+                                      dired-x
                                       elcord
                                       image-dired+
                                       modern-cpp-font-lock
                                       multiple-cursors
                                       outorg
-                                      restclient
                                       pinentry
                                       visual-fill-column
                                       xresources-theme
