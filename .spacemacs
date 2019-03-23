@@ -52,11 +52,13 @@ This function should only modify configuration layer settings."
      chrome
      (cmake :variables
             cmake-enable-cmake-ide-support t)
+     conlanging
      csv
      colors
      django
      emacs-lisp
      epub
+     games
      git
      github
      gpu
@@ -579,9 +581,23 @@ It should only modify the values of Spacemacs settings."
   (spacemacs/set-leader-keys "oae" 'eww)
   (spacemacs/set-leader-keys "of" 'flycheck-mode)
   (spacemacs/set-leader-keys "ogd" 'turn-on-gnus-dired-mode)
-  (spacemacs/declare-prefix "ol" "linenum")
-  (spacemacs/set-leader-keys "ola" 'global-linum-mode)
-  (spacemacs/set-leader-keys "olr" 'linum-relative-global-mode)
+  (spacemacs/declare-prefix "ol" "conlanging")
+  (spacemacs/declare-prefix "olh" "Hjelp")
+  (spacemacs/declare-prefix "olho" "open hjelp.org")
+  (spacemacs/set-leader-keys
+    "olho"
+    (lambda ()
+      (interactive)
+      (find-file "~/Documents/code/web/langue-phundrak-fr/hjelp/hjelp.org")))
+  (spacemacs/declare-prefix "olm" "Mattér")
+  (spacemacs/declare-prefix "olmo" "open matter.org")
+  (spacemacs/set-leader-keys
+    "olmo"
+    (lambda ()
+      (interactive)
+      (find-file "~/Documents/code/web/langue-phundrak-fr/matter/matter.org")))
+  (spacemacs/set-leader-keys "olmr" 'conlanging/matter-to-runes)
+  (spacemacs/set-leader-keys "olml" 'conlanging/matter-to-native-latin)
   (spacemacs/declare-prefix "om" "multiple-cursors")
   (spacemacs/set-leader-keys "ome" 'mc/edit-lines)
   (spacemacs/set-leader-keys "omn" 'mc/mark-next-like-this)
