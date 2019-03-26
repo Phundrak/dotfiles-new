@@ -1,8 +1,13 @@
-")
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+set(CMAKE_LEGACY_CYGWIN_WIN32 0)
+
+project("PROJECTNAME")
+
+set(TGT "PROJECTNAME")
 set(${TGT}_VERSION_MAJOR 0)
 set(${TGT}_VERSION_MINOR 1)
 
-set(CC_COVERAGE_COMPILE_FLAGS "-pedantic -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -Wfloat-equal -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wconversion -Wshadow -Wredundant-decls -Wdouble-promotion -Winit-self -Wswitch-default -Wswitch-enum -Wundef -Winline")
+set(CC_COVERAGE_COMPILE_FLAGS "-pedantic -Wall -Wextra -Wfloat-equal -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wconversion -Wshadow -Wredundant-decls -Wdouble-promotion -Winit-self -Wswitch-default -Wswitch-enum -Wundef -Winline")
 set(CMAKE_C_FLAGS_DEBUG "${CC_COVERAGE_COMPILE_FLAGS} -DDebug -g -pg")
 set(CMAKE_C_FLAGS_RELEASE "${CC_COVERAGE_COMPILE_FLAGS} -O3 -flto")
 

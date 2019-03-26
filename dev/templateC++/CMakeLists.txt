@@ -1,4 +1,9 @@
-")
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+set(CMAKE_LEGACY_CYGWIN_WIN32 0)
+
+project("PROJECTNAME")
+
+set(TGT "PROJECTNAME")
 set(${TGT}_VERSION_MAJOR 0)
 set(${TGT}_VERSION_MINOR 1)
 
