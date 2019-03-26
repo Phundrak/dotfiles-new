@@ -3,6 +3,7 @@ function conannew -d "Create new C++ project with Conan and Ninja"
     cd $argv[1]
     sed -i "s/PROJECTNAME/$argv[1]/g" README.org
     sed -i "s/PROJECTNAME/$argv[1]/g" CMakeLists.txt
+    sed -i "s/CPPPROJECTNAME/$argv[1]/g" doc/Doxyfile
     git init
     git add .
     git commit -m "initial commit"
