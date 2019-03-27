@@ -9,6 +9,35 @@
 ;;
 ;;; License: GPLv3
 
+(setq latin-to-runes-table '((", ?" . "᛬") ("\\." . "᛭") (" " . "᛫")
+                             ("ch " . "ᛇ") ("ae" . "ᚫ") ("ea" . "ᛠ")
+                             ("f" . "ᚠ") ("u" . "ᚢ") ("s" . "ᚦ")
+                             ("o" . "ᚩ") ("r" . "ᚱ") ("c" . "ᚳ")
+                             ("g" . "ᚷ") ("w" . "ᚹ") ("h" . "ᚻ")
+                             ("n" . "ᚾ") ("i" . "ᛁ") ("j" . "ᛄ")
+                             ("p" . "ᛈ") ("z" . "ᛋ") ("v" . "ᛝ")
+                             ("t" . "ᛏ") ("b" . "ᛒ") ("e" . "ᛖ")
+                             ("m" . "ᛗ") ("l" . "ᛚ") ("d" . "ᛞ")
+                             ("é" . "ᛟ") ("a" . "ᚪ") ("y" . "ᚣ")))
+(setq latin-to-native-table '(("ch" . "ȝ") ("ae" . "æ") ("s" . "þ")
+                              ("z" . "ð") ("w" . "ƿ") ("j" . "i")
+                              ("g" . "ᵹ")))
+(setq latin-to-latex-runes '((", ?" . ":") ("\\." . "*") (" " . ".")
+                             ("ch" . "I") ("ae" . "æ") ("ea" . "\\\\ea")
+                             ("z" . "s") ("v" . "\\\\ng") ("é " . "\\\\oe")
+                             ("s" . "þ")))
+
+(defun conlanging//replace-string-by-char (t-string t-correspondance-table)
+  "Return a copy of t-string converted with the correspondance table"
+  (while t-correspondance-table
+    (let ((cur-from-char (car (car t-correspondance-table)))
+          (cur-to-char (cdr (car t-correspondance-table))))
+      (setq t-string (replace-regexp-in-string cur-from-char
+                                               cur-to-char
+                                               t-string))
+      (setq t-correspondance-table (cdr t-correspondance-table))))
+  t-string)
+
 (defun conlanging//get-boundary ()
   "Get the boundary of either the selected region, or if there is none the
 word the cursor is over"
@@ -29,51 +58,23 @@ has to be replaced with."
          (beg (car cur-boundary))
          (end (cdr cur-boundary)))
     (setq regionp (buffer-substring-no-properties beg end))
-    (while correspondance-table
-      (let ((cur-from-char (car (car correspondance-table)))
-            (cur-to-char (cdr (car correspondance-table))))
-        (setq regionp (replace-regexp-in-string cur-from-char
-                                                cur-to-char
-                                                regionp))
-        (setq correspondance-table (cdr correspondance-table))))
+    (setq regionp (conlanging//replace-string-by-char regionp
+                                                      correspondance-table))
     (delete-region beg end)
     (goto-char beg)
     (insert regionp)))
 
+
 (defun conlanging/matter-to-runes ()
   "Replaces translitterated Mattér to its runic writing system"
   (interactive)
-  (setq latin-to-runes-table '((", ?" . "᛬") ("\\." . "᛭") (" " . "᛫")
-                               ("ch " . "ᛇ") ("ae" . "ᚫ") ("ea" . "ᛠ")
-                               ("f" . "ᚠ") ("u" . "ᚢ") ("s" . "ᚦ")
-                               ("o" . "ᚩ") ("r" . "ᚱ") ("c" . "ᚳ")
-                               ("g" . "ᚷ") ("w" . "ᚹ") ("h" . "ᚻ")
-                               ("n" . "ᚾ") ("i" . "ᛁ") ("j" . "ᛄ")
-                               ("p" . "ᛈ") ("z" . "ᛋ") ("v" . "ᛝ")
-                               ("t" . "ᛏ") ("b" . "ᛒ") ("e" . "ᛖ")
-                               ("m" . "ᛗ") ("l" . "ᛚ") ("d" . "ᛞ")
-                               ("é" . "ᛟ") ("a" . "ᚪ") ("y" . "ᚣ")))
   (conlanging//replace-char-by-table latin-to-runes-table))
 
 (defun conlanging/matter-to-native-latin ()
   "Replaces translitterated Mattér to its native latin writing system"
   (interactive)
-  (setq latin-to-native-table '(("ch" . "ȝ") ("ae" . "æ") ("s" . "þ")
-                                ("z" . "ð") ("w" . "ƿ") ("j" . "i")
-                                ("g" . "ᵹ")))
   (conlanging//replace-char-by-table latin-to-native-table))
 
 (defun conlanging/matter-to-latex-runes ()
   (interactive)
-  (setq latin-to-latex-runes '(("s" . "þ")
-                               ("ch" . "I")
-                               ("z" . "s")
-                               ("v" . "\ng")
-                               ("é " . "\oe")
-                               ("ae" . "æ")
-                               ("ea" . "\ea")
-                               (" " . ".")
-                               (", ?" . ":")
-                               ("\\." . "*")))
-  (conlanging//replace-char-by-table latin-to-latex-runes)
-  )
+  (conlanging//replace-char-by-table latin-to-latex-runes))
