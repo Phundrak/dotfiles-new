@@ -20,10 +20,23 @@ enable_cxx_compiler_flag_if_supported("-O3")
 enable_cxx_compiler_flag_if_supported("-flto")
 
 # include_directories(<PUBLIC HEADER DIRECTORIES>)
+
+# Main software
 set(TGT PROJECTNAME)
 add_executable(${TGT} ${SRC_FILES})
 target_compile_features(${TGT} PRIVATE cxx_std_17)
 target_include_directories(${TGT} PRIVATE include/PROJECTNAME)
+target_link_libraries(${TGT} ${CONAN_LIBS})
+
+# Tests, -DTESTS=True to activate
+if(TESTS)
+  set(TESTTGT PROJECTNAME-tests)
+  file(GLOB TEST_FILES "tests/tests.cc")
+  add_executable(${TESTTGT} ${TEST_FILES})
+  target_compile_features(${TESTTGT} PRIVATE cxx_std_17)
+  target_include_directories(${TESTTGT} PRIVATE include/PROJECTNAME)
+  target_link_libraries(${TESTTGT} ${CONAN_LIBS})
+endif()
 
 # OS specific instructions.
 if(APPLE)

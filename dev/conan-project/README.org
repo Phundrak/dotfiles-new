@@ -39,6 +39,12 @@ following line instead of the second line:
 #+begin_src shell
   conan install .. --build missing --profile <your_profile>
 #+end_src
+If you wish to build the project’s tests in addition to the project itself, you
+can add the option ~-DTESTS=True~ to the first ~cmake~ command to build the
+project’s tests too.
+#+begin_src shell
+  cmake -DCMAKE_CXX_COMPILER=clang++ -DTESTS=True .. -G Ninja
+#+end_src
 
 If you do not wish to build your project with Ninja but with another generator,
 such as Unix Makefiles, simply replace ~Ninja~ in the second to last ~cmake~
