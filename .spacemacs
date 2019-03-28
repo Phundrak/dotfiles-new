@@ -547,6 +547,8 @@ It should only modify the values of Spacemacs settings."
         edit-server-default-major-mode 'org-mode
         epa-pinentry-mode 'loopback)
 
+  (setq-default indent-tabs-mode t)
+
                                         ; linum stuff ;;;;;;;;;;;;;;;;;;;;;;;;;
   (defun phundrak/turn-off-linum ()
     (linum-mode 0))
@@ -567,7 +569,7 @@ It should only modify the values of Spacemacs settings."
       (interactive)
       (find-file (car (dired-get-marked-files)))))
 
-  (add-hook 'before-save-hook 'whitespace-cleanup)
+	(add-hook 'before-save-hook 'delete-trailing-whitespace)
   (defun kill-other-buffers ()
     "Kill all other buffers."
     (interactive)
