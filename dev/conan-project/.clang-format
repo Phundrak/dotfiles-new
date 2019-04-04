@@ -14,7 +14,7 @@ BreakConstructorInitializersBeforeComma: 'false'
 ColumnLimit: '80'
 ConstructorInitializerAllOnOneLineOrOnePerLine: 'true'
 Cpp11BracedListStyle: 'true'
-IndentCaseLabels: 'true'
+IndentCaseLabels: 'false'
 KeepEmptyLinesAtTheStartOfBlocks: 'false'
 Language: Cpp
 MaxEmptyLinesToKeep: '2'
