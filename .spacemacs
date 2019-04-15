@@ -554,9 +554,22 @@ dump.")
         asm-comment-char ?\#
         twittering-use-master-password t
         edit-server-default-major-mode 'org-mode
-        epa-pinentry-mode 'loopback)
+        epa-pinentry-mode 'loopback
+        ;; France
+        calendar-latitude 2.22
+        calendar-longitude 48.5
+        calendar-location-name "Paris, FRA"
+        calendar-daylight-time-zone-name "CEST"
+        calendar-standard-time-zone-name "CET"
+        ;; Japan
+        ;; calendar-latitude 139.42
+        ;; calendar-longitude 35.41
+        ;; calendar-location-name "Tokyo, JPN"
+        ;; calendar-daylight-time-zone-name "JST"
+        ;; calendar-standard-time-zone-name "JST"
+        )
 
-  (setq-default indent-tabs-mode t)
+  ;; (setq-default indent-tabs-mode t)
 
                                         ; linum stuff ;;;;;;;;;;;;;;;;;;;;;;;;;
   (defun phundrak/turn-off-linum ()
