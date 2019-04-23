@@ -55,7 +55,7 @@ target_include_directories(${TGT} PRIVATE include/PROJECTNAME)
 # Tests, -DTESTS=True to activate
 if(TESTS)
   set(TESTTGT PROJECTNAME-tests)
-  file(GLOB TEST_FILES "tests/tests.cc")
+  file(GLOB TEST_FILES "tests/tests.c")
   add_executable(${TESTTGT} ${TEST_FILES})
   set_property(TARGET ${TESTTGT} PROPERTY C_STANDARD 11)
   target_include_directories(${TESTTGT} PRIVATE include/PROJECTNAME)
