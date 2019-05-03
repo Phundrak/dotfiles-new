@@ -60,8 +60,11 @@ This function should only modify configuration layer settings."
      games
      git
      github
-     gpu
+		 (go :variables
+				 go-use-gometalinter t
+				 go-tab-width 2)
      gnus
+     gpu
      (helm :variables
            helm-enable-auto-resize t
            helm-no-header t)
@@ -130,6 +133,7 @@ This function should only modify configuration layer settings."
                                       image-dired+
                                       modern-cpp-font-lock
                                       multiple-cursors
+																			org-id
                                       outorg
                                       pinentry
                                       visual-fill-column
@@ -280,7 +284,7 @@ It should only modify the values of Spacemacs settings."
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    ;; link to the Fantasque font : https://github.com/belluzj/fantasque-sans
    dotspacemacs-default-font '("Fantasque Sans Mono"
-                               :size 15
+                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -497,7 +501,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I : %t %b"
+   dotspacemacs-frame-title-format "%I@%S"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -554,20 +558,7 @@ dump.")
         asm-comment-char ?\#
         twittering-use-master-password t
         edit-server-default-major-mode 'org-mode
-        epa-pinentry-mode 'loopback
-        ;; France
-        calendar-latitude 2.22
-        calendar-longitude 48.5
-        calendar-location-name "Paris, FRA"
-        calendar-daylight-time-zone-name "CEST"
-        calendar-standard-time-zone-name "CET"
-        ;; Japan
-        ;; calendar-latitude 139.42
-        ;; calendar-longitude 35.41
-        ;; calendar-location-name "Tokyo, JPN"
-        ;; calendar-daylight-time-zone-name "JST"
-        ;; calendar-standard-time-zone-name "JST"
-        )
+        epa-pinentry-mode 'loopback)
 
   ;; (setq-default indent-tabs-mode t)
 
@@ -704,9 +695,75 @@ dump.")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (with-eval-after-load 'org
+
                                         ; custom org functions ;;;;;;;;;;;;;;;;
     (defun ck/org-confirm-babel-evaluate (lang body)
       (not (or (string= lang "latex") (string= lang "maxima"))))
+
+																				; custom IDs when exporting
+																				; inspired by
+																				; https://writequit.org/articles/emacs-org-mode-generate-ids.html
+		(setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+		(defun org-id-new (&optional prefix)
+			"Create a new globally unique ID.
+
+An ID consists of two parts separated by a colon:
+- a prefix
+- a unique part that will be created according to `org-id-method'.
+
+PREFIX can specify the prefix, the default is given by the variable
+`org-id-prefix'.  However, if PREFIX is the symbol `none', don't use any
+prefix even if `org-id-prefix' specifies one.
+
+So a typical ID could look like \"Org-4nd91V40HI\"."
+			(let* ((prefix (if (eq prefix 'none)
+												 ""
+											 (concat (or prefix org-id-prefix) "-")))
+						 unique)
+				(if (equal prefix "-") (setq prefix ""))
+				(cond
+				 ((memq org-id-method '(uuidgen uuid))
+					(setq unique (org-trim (shell-command-to-string org-id-uuid-program)))
+					(unless (org-uuidgen-p unique)
+						(setq unique (org-id-uuid))))
+				 ((eq org-id-method 'org)
+					(let* ((etime (org-reverse-string (org-id-time-to-b36)))
+								 (postfix (if org-id-include-domain
+															(progn
+																(require 'message)
+																(concat "@" (message-make-fqdn))))))
+						(setq unique (concat etime postfix))))
+				 (t (error "Invalid `org-id-method'")))
+				(concat prefix unique)))
+		(defun eos/org-custom-id-get (&optional pom create prefix)
+			"Get the CUSTOM_ID property of the entry at point-or-marker POM.
+   If POM is nil, refer to the entry at point. If the entry does
+   not have an CUSTOM_ID, the function returns nil. However, when
+   CREATE is non nil, create a CUSTOM_ID if none is present
+   already. PREFIX will be passed through to `org-id-new'. In any
+   case, the CUSTOM_ID of the entry is returned."
+			(interactive)
+			(org-with-point-at pom
+				(let ((id (org-entry-get nil "CUSTOM_ID")))
+					(cond
+					 ((and id (stringp id) (string-match "\\S-" id))
+						id)
+					 (create
+						(setq id (org-id-new (concat prefix "h")))
+						(org-entry-put pom "CUSTOM_ID" id)
+						(org-id-add-location id (buffer-file-name (buffer-base-buffer)))
+						id)))))
+		(defun eos/org-add-ids-to-headlines-in-file ()
+			"Add CUSTOM_ID properties to all headlines in the current
+   file which do not already have one. Only adds ids if the
+   `auto-id' option is set to `t' in the file somewhere. ie,
+   #+OPTIONS: auto-id:t"
+			(interactive)
+			(save-excursion
+				(widen)
+				(goto-char (point-min))
+				(when (re-search-forward "^#\\+OPTIONS:.*auto-id:t" (point-max) t)
+					(org-map-entries (lambda () (eos/org-custom-id-get (point) 'create))))))
 
                                         ; custom requires ;;;;;;;;;;;;;;;;;;;;;
 
@@ -726,6 +783,14 @@ dump.")
 
                                         ; org hooks ;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (add-hook 'org-mode-hook 'visual-line-mode)
+		(add-hook 'org-mode-hook
+							(lambda ()
+								(add-hook 'before-save-hook
+													(lambda ()
+														(when (and (eq major-mode 'org-mode)
+																			 (eq buffer-read-only nil))
+															(eos/org-add-ids-to-headlines-in-file))))))
+
 
                                         ; variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -762,6 +827,8 @@ dump.")
                                         ; Shortcuts ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     (spacemacs/declare-prefix "oo" "org-mode")
+		(spacemacs/declare-prefix "ooi" "custom IDs")
+		(spacemacs/set-leader-keys "ooi" 'eos/org-add-ids-to-headlines-in-file)
     (spacemacs/declare-prefix "oos" "school.org")
     (spacemacs/set-leader-keys "oos" (lambda () (interactive) (find-file "~/org/school.org")))
     (spacemacs/declare-prefix "oop" "private.org")
@@ -884,9 +951,28 @@ This function is called at the very end of Spacemacs initialization."
  '(ansi-color-names-vector
    ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(evil-want-Y-yank-to-eol nil)
+ '(hl-todo-keyword-faces
+   (quote
+    (("TODO" . "#dc752f")
+     ("NEXT" . "#dc752f")
+     ("THEM" . "#2d9574")
+     ("PROG" . "#3a81c3")
+     ("OKAY" . "#3a81c3")
+     ("DONT" . "#f2241f")
+     ("FAIL" . "#f2241f")
+     ("DONE" . "#42ae2c")
+     ("NOTE" . "#b1951d")
+     ("KLUDGE" . "#b1951d")
+     ("HACK" . "#b1951d")
+     ("TEMP" . "#b1951d")
+     ("FIXME" . "#dc752f")
+     ("XXX" . "#dc752f")
+     ("XXXX" . "#dc752f"))))
  '(org-export-headline-levels 4)
  '(package-selected-packages
-   '(vmd-mode ox-gfm slime-company slime common-lisp-snippets erlang insert-shebang fish-mode company-shell faceup racket-mode treepy graphql yapfify yaml-mode xterm-color web-beautify twittering-mode toml-mode tagedit stickyfunc-enhance smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode ranger rainbow-identifiers pytest pyenv-mode py-isort pug-mode plantuml-mode phpunit phpcbf php-auto-yasnippets pdf-tools tablist ox-pandoc orgit org-present org-pomodoro alert log4e gntp ob-elixir multi-term markdown-toc magit-gitflow magit-gh-pulls livid-mode live-py-mode json-snatcher js2-refactor js-doc htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss haskell-snippets haml-mode gnuplot glsl-mode gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-messenger gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-rust pos-tip flycheck-mix flycheck-credo eshell-z eshell-prompt-extras esh-help drupal-mode disaster cython-mode dash-functional tern company-ghci company-ghc ghc color-identifiers-mode cmm-mode clang-format cargo auto-dictionary alchemist modern-cpp-font-lock yasnippet-snippets x86-lookup web-mode srefactor racer pyvenv pip-requirements pandoc-mode org-projectile org-category-capture org-mime org-download nasm-mode json-reformat intero imenu-list hy-mode git-timemachine git-link geiser flycheck-pos-tip flycheck-haskell evil-magit emmet-mode cmake-mode anaconda-mode rust-mode elixir-mode flycheck haskell-mode multiple-cursors skewer-mode simple-httpd markdown-mode magit magit-popup git-commit ghub with-editor pythonic emms gmail-message-mode ham-mode html-to-markdown flymd edit-server image-dired+ go-guru go-eldoc company-go go-mode unfill mwim company-web web-completion-data company-tern company-cabal company-c-headers company-auctex company-anaconda elcord xresources-theme sql-indent rainbow-mode php-extras php-mode mmm-mode json-mode js2-mode csv-mode coffee-mode auctex helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+   (quote
+    (godoctor go-tag go-rename go-impl go-gen-test go-fill-struct flycheck-gometalinter ox-gfm slime-company slime common-lisp-snippets erlang insert-shebang fish-mode company-shell faceup racket-mode treepy graphql yapfify yaml-mode xterm-color web-beautify twittering-mode toml-mode tagedit stickyfunc-enhance smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode ranger rainbow-identifiers pytest pyenv-mode py-isort pug-mode plantuml-mode phpunit phpcbf php-auto-yasnippets pdf-tools tablist ox-pandoc orgit org-present org-pomodoro alert log4e gntp ob-elixir multi-term markdown-toc magit-gitflow magit-gh-pulls livid-mode live-py-mode json-snatcher js2-refactor js-doc htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss haskell-snippets haml-mode gnuplot glsl-mode gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-messenger gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-rust pos-tip flycheck-mix flycheck-credo eshell-z eshell-prompt-extras esh-help drupal-mode disaster cython-mode dash-functional tern company-ghci company-ghc ghc color-identifiers-mode cmm-mode clang-format cargo auto-dictionary alchemist modern-cpp-font-lock yasnippet-snippets x86-lookup web-mode srefactor racer pyvenv pip-requirements pandoc-mode org-projectile org-category-capture org-mime org-download nasm-mode json-reformat intero imenu-list hy-mode git-timemachine git-link geiser flycheck-pos-tip flycheck-haskell evil-magit emmet-mode cmake-mode anaconda-mode rust-mode elixir-mode flycheck haskell-mode multiple-cursors skewer-mode simple-httpd markdown-mode magit magit-popup git-commit ghub with-editor pythonic emms gmail-message-mode ham-mode html-to-markdown flymd edit-server image-dired+ go-guru go-eldoc company-go go-mode unfill mwim company-web web-completion-data company-tern company-cabal company-c-headers company-auctex company-anaconda elcord xresources-theme sql-indent rainbow-mode php-extras php-mode mmm-mode json-mode js2-mode csv-mode coffee-mode auctex helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+ '(pdf-view-midnight-colors (quote ("#655370" . "#fbf8ef"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
