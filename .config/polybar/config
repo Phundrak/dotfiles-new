@@ -159,16 +159,16 @@ label-urgent = %index% %icon%
 label-urgent-background = ${xrdb:color0:#bd2c40}
 label-urgent-padding = 2
 
-ws-icon-0 = 1;term
-ws-icon-1 = 2;dev
-ws-icon-2 = 3;www
-ws-icon-3 = 4;files
-ws-icon-4 = 5;mails
-ws-icon-5 = 6;media
-ws-icon-6 = 7;VMs
-ws-icon-7 = 8;8
-ws-icon-8 = 9;steam
-ws-icon-9 = 0;discord
+ws-icon-0 = 1;一
+ws-icon-1 = 2;二
+ws-icon-2 = 3;三
+ws-icon-3 = 4;四
+ws-icon-4 = 5;五
+ws-icon-5 = 6;六
+ws-icon-6 = 7;七
+ws-icon-7 = 8;八
+ws-icon-8 = 9;九
+ws-icon-9 = 0;十
 ws-icon-default = %index%
 format = <label-state> <label-mode>
 
@@ -483,7 +483,6 @@ format-discharging-underline = ${self.format-charging-underline}
 format-full-prefix = " "
 ; format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
-
 ; 0-10
 ramp-capacity-0 = 
 ramp-capacity-0-foreground = #f44336

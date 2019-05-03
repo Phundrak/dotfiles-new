@@ -229,6 +229,7 @@ exec        --no-startup-id       redshift-gtk
 exec        --no-startup-id       mpd
 exec        --no-startup-id       mpc stop
 exec        --no-startup-id       syndaemon -i 1.0 -t -k
+exec        --no-startup-id       mpd_discord_richpresence --no-idle --fork
 exec                              sleep 3; workspace 2; emacs --eval "(server-start)"
 
 
