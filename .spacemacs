@@ -89,6 +89,7 @@ This function should only modify configuration layer settings."
      pandoc
      pdf
      plantuml
+     prolog
      (python :variables
              python-sort-imports-on-save t
              python-fill-column 80
@@ -119,8 +120,7 @@ This function should only modify configuration layer settings."
                treemacs-use-filewatch-mode t)
      twitter
      unicode-fonts
-     yaml
-     )
+     yaml)
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -133,20 +133,17 @@ This function should only modify configuration layer settings."
                                       image-dired+
                                       modern-cpp-font-lock
                                       multiple-cursors
-																			org-id
                                       outorg
                                       pinentry
                                       visual-fill-column
                                       xresources-theme
-                                      yasnippet-snippets
-                                      )
+                                      yasnippet-snippets)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(anaconda-mode
-                                    popwin
-                                    )
+                                    popwin)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and deletes any unused
@@ -365,7 +362,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil, the paste transient-state is enabled. While enabled, after you
    ;; paste something, pressing `C-j' and `C-k' several times cycles through the
    ;; elements in the `kill-ring'. (default nil)
-   dotspacemacs-enable-paste-transient-state nil
+   dotspacemacs-enable-paste-transient-state t
 
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
@@ -533,14 +530,15 @@ See the header of this file for more information."
 
 (defun dotspacemacs/user-init ()
   (load "~/dotfiles/private/private_emacs.el")
+  (require 'org-id)
   (require 'package)
+  (require 'ox-latex)
   (add-to-list 'package-archives
                '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   (flyspell-mode 0)
   (setq tramp-ssh-controlmaster-options
-        "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
-  )
+        "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no"))
 
 (defun dotspacemacs/user-load()
 	"Library to load while dumping.
@@ -559,6 +557,7 @@ dump.")
         twittering-use-master-password t
         edit-server-default-major-mode 'org-mode
         epa-pinentry-mode 'loopback)
+	(add-hook 'prog-mode-hook 'fci-mode)
 
   ;; (setq-default indent-tabs-mode t)
 
@@ -588,8 +587,7 @@ dump.")
     (interactive)
     (mapc 'kill-buffer
           (delq (current-buffer)
-                (remove-if-not 'buffer-file-name (buffer-list))))
-    )
+                (remove-if-not 'buffer-file-name (buffer-list)))))
 
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (spacemacs/declare-prefix "o" "custom")
@@ -636,7 +634,7 @@ dump.")
                              :height 1.0))
   (add-hook 'nov-mode-hook 'my-nov-font-setup)
   (add-hook 'nov-mode-hook 'visual-line-mode)
-  (setq nov-text-width 120)
+  (setq nov-text-width 80)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -644,28 +642,24 @@ dump.")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; get email, store in nnml
   (setq gnus-secondary-select-methods
-        '(
-          (nnimap "1and1"
+        '((nnimap "1and1"
                   (nnimap-address
                    "imap.1and1.fr")
                   (nnimap-server-port 993)
-                  (nnimap-stream ssl))
-          ))
-  ;; send email via 1and1
-  (setq message-send-mail-function 'smtpmail-send-it
+                  (nnimap-stream ssl)))
+        ;; send email via 1and1
+        message-send-mail-function 'smtpmail-send-it
         smtpmail-smtp-server "auth.smtp.1and1.fr"
         smtpmail-stream-type 'ssl
-        smtpmail-smtp-service 465)
-
-  ;; archive outgoing emails in Sent folder on imap.1and1.fr
-  (setq gnus-message-archive-method '(nnimap "imap.1and1.fr")
-        gnus-message-archive-group "Objets envoyés")
-
-  ;; store email in ~/Mails directory
-  (setq nnml-directory "~/Mails")
-  (setq message-directory "~/Mails")
-  (setq gnus-fetch-old-headers 'some)
-  (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
+        smtpmail-smtp-service 465
+        ;; archive outgoing emails in Sent folder on imap.1and1.fr
+        gnus-message-archive-method '(nnimap "imap.1and1.fr")
+        gnus-message-archive-group "Objets envoyés"
+        ;; store email in ~/Mails directory
+        nnml-directory "~/Mails"
+        message-directory "~/Mails"
+        gnus-fetch-old-headers 'some
+        mm-discouraged-alternatives '("text/html" "text/richtext"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                ranger               ;
@@ -696,13 +690,13 @@ dump.")
 
   (with-eval-after-load 'org
 
-                                        ; custom org functions ;;;;;;;;;;;;;;;;
+    ;; custom org functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (defun ck/org-confirm-babel-evaluate (lang body)
       (not (or (string= lang "latex") (string= lang "maxima"))))
 
-																				; custom IDs when exporting
-																				; inspired by
-																				; https://writequit.org/articles/emacs-org-mode-generate-ids.html
+    ;; custom IDs when exporting
+    ;; inspired by
+    ;; https://writequit.org/articles/emacs-org-mode-generate-ids.html
 		(setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 		(defun org-id-new (&optional prefix)
 			"Create a new globally unique ID.
@@ -765,11 +759,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
 				(when (re-search-forward "^#\\+OPTIONS:.*auto-id:t" (point-max) t)
 					(org-map-entries (lambda () (eos/org-custom-id-get (point) 'create))))))
 
-                                        ; custom requires ;;;;;;;;;;;;;;;;;;;;;
-
-    (require 'ox-latex)
-
-                                        ; org-babel languages ;;;;;;;;;;;;;;;;;
+    ;; org-babel languages ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (org-babel-do-load-languages
      'org-babel-load-languages
      '((C . t)
@@ -781,7 +771,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
        (shell .t)
        (gnuplot . t)))
 
-                                        ; org hooks ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; org hooks ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (add-hook 'org-mode-hook 'visual-line-mode)
 		(add-hook 'org-mode-hook
 							(lambda ()
@@ -792,8 +782,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
 															(eos/org-add-ids-to-headlines-in-file))))))
 
 
-                                        ; variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+    ;; variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (setq geiser-default-implementation 'racket
           org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate
           org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0.11.jar"
@@ -824,7 +813,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
              ))
           )
 
-                                        ; Shortcuts ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Shortcuts ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     (spacemacs/declare-prefix "oo" "org-mode")
 		(spacemacs/declare-prefix "ooi" "custom IDs")
@@ -836,16 +825,29 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
     (spacemacs/set-leader-keys "oow" 'org-pomodoro)
     (spacemacs/declare-prefix "oc" "comments")
     (spacemacs/set-leader-keys "oce" 'outorg-edit-as-org)
-    (spacemacs/set-leader-keys "occ" 'outorg-copy-edits-and-exit)
-    )
+    (spacemacs/set-leader-keys "occ" 'outorg-copy-edits-and-exit))
 
   (with-eval-after-load 'org-agenda
     (require 'org-projectile)
     (mapcar '(lambda (file)
                (when (file-exists-p file)
                  (push file org-agenda-files)))
-            (org-projectile-todo-files))
-    )
+            (org-projectile-todo-files)))
+
+  (eval-after-load "ox-latex"
+
+    ;; update the list of LaTeX classes and associated header (encoding, etc.)
+    ;; and structure
+    '(add-to-list 'org-latex-classes
+                  `("beamer"
+                    ,(concat "\\documentclass[presentation]{beamer}\n"
+                             "[DEFAULT-PACKAGES]"
+                             "[PACKAGES]"
+                             "[EXTRA]\n")
+                    ("\\section{%s}" . "\\section*{%s}")
+                    ("\\subsection{%s}" . "\\subsection*{%s}")
+                    ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+  (setq org-latex-listings t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;           custom commands           ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -888,22 +890,15 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
             (lambda () (setq flycheck-clang-language-standard "c++17")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;                C/C++                ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; clang-format can be triggered using C-M-tab
-  (global-set-key [C-s-tab] 'clang-format-region)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                 rust                ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+  (setq racer-cmd "~/.cargo/bin/racer"
+        racer-rust-src-path (concat
+                             (getenv "HOME")
+                             "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
   (add-hook 'rust-mode-hook
             '(lambda ()
-               (setq racer-cmd "~/.cargo/bin/racer")
-               (setq racer-rust-src-path
-                     (concat
-                      (getenv "HOME")
-                      "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
                (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
                (electric-pair-mode 1)
                (indent-guide-mode 1)))
@@ -911,9 +906,9 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                 Java                ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (setq eclimd-default-workspace "/home/phundrak/eclipse-workspace")
 
-  )
+  (setq eclimd-default-workspace "/home/phundrak/eclipse-workspace"))
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
