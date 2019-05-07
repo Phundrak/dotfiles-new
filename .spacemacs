@@ -166,7 +166,7 @@ It should only modify the values of Spacemacs settings."
    ;; to compile Emacs 27 from source following the instructions in file
    ;; EXPERIMENTAL.org at to root of the git repository.
    ;; (default nil)
-   dotspacemacs-enable-emacs-pdumper nil
+   dotspacemacs-enable-emacs-pdumper t
 
    ;; File path pointing to emacs 27.1 executable compiled with support
    ;; for the portable dumper (this is currently the branch pdumper).
@@ -559,42 +559,46 @@ dump.")
         edit-server-default-major-mode 'org-mode
         epa-pinentry-mode 'loopback)
 	(add-hook 'prog-mode-hook 'fci-mode)
+	(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;               Nov-mode              ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (defun my-nov-font-setup ()
+    (face-remap-add-relative 'variable-pitch :family "Charis SIL"
+                             :size 16
+                             :height 1.0))
+  (add-hook 'nov-mode-hook 'my-nov-font-setup)
+  (add-hook 'nov-mode-hook 'visual-line-mode)
+  (setq nov-text-width 80)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;            file extension           ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (dolist (e '(("xml" . web-mode)
+               ("xinp" . web-mode)
+               ("C" . c++-mode)
+               ("dconf" . conf-mode)
+               ("yy" . bison-mode)
+               ("ll" . flex-mode)
+               ("s" . asm-mode)
+               ("pl" . prolog-mode)
+               ("l" . scheme-mode)
+               ("vs" . glsl-mode)
+               ("fs" . glsl-mode)))
+    (push (cons (concat "\\." (car e) "\\'") (cdr e)) auto-mode-alist))
 
   ;; (setq-default indent-tabs-mode t)
-
-                                        ; linum stuff ;;;;;;;;;;;;;;;;;;;;;;;;;
-  (defun phundrak/turn-off-linum ()
-    (linum-mode 0))
-  (add-hook 'pdf-view-mode 'phundrak/turn-off-linum)
-  (add-hook 'dired-mode 'phundrak/turn-off-linum)
-  (add-hook 'doc-view-mode 'phundrak/turn-off-linum)
-  (add-hook 'org-mode 'phundrak/turn-off-linum)
-  (add-hook 'markdown-mode 'phundrak/turn-off-linum)
-  (add-hook 'text-mode 'phundrak/turn-off-linum)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;              shortcuts              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (define-key dired-mode-map
-    (kbd "F")
-    (lambda ()
-      (interactive)
-      (find-file (car (dired-get-marked-files)))))
-
-	(add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (defun kill-other-buffers ()
-    "Kill all other buffers."
-    (interactive)
-    (mapc 'kill-buffer
-          (delq (current-buffer)
-                (remove-if-not 'buffer-file-name (buffer-list)))))
-
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (spacemacs/declare-prefix "o" "custom")
   (spacemacs/set-leader-keys "oB" 'fancy-battery-mode)
-  (spacemacs/declare-prefix "ob" "buffers")
-  (spacemacs/set-leader-keys "oba" 'kill-other-buffers)
   (spacemacs/declare-prefix "oa" "applications")
   (spacemacs/set-leader-keys "oaC" 'calendar)
   (spacemacs/set-leader-keys "oac" 'calc)
@@ -627,20 +631,9 @@ dump.")
   (spacemacs/set-leader-keys "oma" 'mc/mark-all-like-this)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;               Nov-mode              ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (defun my-nov-font-setup ()
-    (face-remap-add-relative 'variable-pitch :family "Charis SIL"
-                             :size 16
-                             :height 1.0))
-  (add-hook 'nov-mode-hook 'my-nov-font-setup)
-  (add-hook 'nov-mode-hook 'visual-line-mode)
-  (setq nov-text-width 80)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                 gnus                ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
   ;; get email, store in nnml
   (setq gnus-secondary-select-methods
         '((nnimap "1and1"
@@ -661,29 +654,6 @@ dump.")
         message-directory "~/Mails"
         gnus-fetch-old-headers 'some
         mm-discouraged-alternatives '("text/html" "text/richtext"))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;                ranger               ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (setq ranger-cleanup-eagerly t
-        ranger-show-hidden t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;            file extension           ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  (dolist (e '(("xml" . web-mode)
-               ("xinp" . web-mode)
-               ("C" . c++-mode)
-               ("dconf" . conf-mode)
-               ("yy" . bison-mode)
-               ("ll" . flex-mode)
-               ("s" . asm-mode)
-               ("pl" . prolog-mode)
-               ("l" . scheme-mode)
-               ("vs" . glsl-mode)
-               ("fs" . glsl-mode)))
-    (push (cons (concat "\\." (car e) "\\'") (cdr e)) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;              org--mode              ;
@@ -782,37 +752,35 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
 																			 (eq buffer-read-only nil))
 															(eos/org-add-ids-to-headlines-in-file))))))
 
-
     ;; variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (setq geiser-default-implementation 'racket
-          org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate
-          org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0.11.jar"
-          org-export-latex-hyperref-format "\\ref{%s}"
-          org-html-validation-link nil
-          org-journal-date-prefix "#+TITLE: "
-          org-journal-dir "~/org/journal/"
-          org-journal-file-format "%Y-%m-%d"
-          org-latex-listings 'minted
-          org-latex-packages-alist '(("" "minted"))
-          org-latex-pdf-process
-          '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-            "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")
-          org-plantuml-jar-path "/opt/plantuml/plantuml.jar"
-          org-src-tab-acts-natively t
-          user-full-name "Lucien Cartier-Tilet"
-          user-mail-address "phundrak@phundrak.fr"
-          org-agenda-files (list "~/org/school.org"
-                                 "~/org/private.org")
-          org-agenda-custom-commands
-          '(("h" "Daily habits"
-             ((agenda ""))
-             ((org-agenda-show-log t)
-              (org-agenda-ndays 7)
-              (org-agenda-log-mode-items '(state))
-              (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":DAILY:")))
-             ;; other commands here
-             ))
-          )
+    (setq
+     geiser-default-implementation 'racket
+     org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate
+     org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0.11.jar"
+     org-export-latex-hyperref-format "\\ref{%s}"
+     org-html-validation-link nil
+     org-journal-date-prefix "#+TITLE: "
+     org-journal-dir "~/org/journal/"
+     org-journal-file-format "%Y-%m-%d"
+     org-latex-listings 'minted
+     org-latex-packages-alist '(("" "minted"))
+     org-latex-pdf-process
+     '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+       "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+     org-plantuml-jar-path "/opt/plantuml/plantuml.jar"
+     org-src-tab-acts-natively t
+     user-full-name "Lucien Cartier-Tilet"
+     user-mail-address "phundrak@phundrak.fr"
+     org-agenda-custom-commands
+     '(("h" "Daily habits"
+        ((agenda ""))
+        ((org-agenda-show-log t)
+         (org-agenda-ndays 7)
+         (org-agenda-log-mode-items '(state))
+         (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":DAILY:")))
+        ;; other commands here
+        ))
+     )
 
     ;; Shortcuts ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -834,9 +802,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
                (when (file-exists-p file)
                  (push file org-agenda-files)))
             (org-projectile-todo-files)))
-
   (eval-after-load "ox-latex"
-
     ;; update the list of LaTeX classes and associated header (encoding, etc.)
     ;; and structure
     '(add-to-list 'org-latex-classes
@@ -849,6 +815,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
                     ("\\subsection{%s}" . "\\subsection*{%s}")
                     ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
   (setq org-latex-listings t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;           custom commands           ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -908,7 +875,9 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
                                         ;                 Java                ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (setq eclimd-default-workspace "/home/phundrak/eclipse-workspace"))
+  (setq eclimd-default-workspace "/home/phundrak/eclipse-workspace")
+
+)
 
 
 ;; Do not write anything past this comment. This is where Emacs will
