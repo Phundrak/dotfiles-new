@@ -798,10 +798,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
 
   (with-eval-after-load 'org-agenda
     (require 'org-projectile)
-    (mapcar '(lambda (file)
-               (when (file-exists-p file)
-                 (push file org-agenda-files)))
-            (org-projectile-todo-files)))
+    (push (org-projectile:todo-files) org-agenda-files))
   (eval-after-load "ox-latex"
     ;; update the list of LaTeX classes and associated header (encoding, etc.)
     ;; and structure
