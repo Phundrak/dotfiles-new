@@ -244,10 +244,7 @@ It should only modify the values of Spacemacs settings."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 15)
-                                (projects . 15)
-                                (bookmarks . 5)
-                                (todos . 5)
-                                (agenda . 3))
+                                (projects . 15))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
 
@@ -771,6 +768,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
      org-src-tab-acts-natively t
      user-full-name "Lucien Cartier-Tilet"
      user-mail-address "phundrak@phundrak.fr"
+     org-agenda-files (list "~/org")
      org-agenda-custom-commands
      '(("h" "Daily habits"
         ((agenda ""))
@@ -798,7 +796,10 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
 
   (with-eval-after-load 'org-agenda
     (require 'org-projectile)
-    (push (org-projectile:todo-files) org-agenda-files))
+    (mapcar '(lambda (file)
+               (when (file-exists-p file)
+                 (push file org-agenda-files)))
+            (org-projectile-todo-files)))
   (eval-after-load "ox-latex"
     ;; update the list of LaTeX classes and associated header (encoding, etc.)
     ;; and structure
