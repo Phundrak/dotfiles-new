@@ -55,6 +55,7 @@ This function should only modify configuration layer settings."
      csv
      colors
      django
+     docker
      emacs-lisp
      epub
      games
