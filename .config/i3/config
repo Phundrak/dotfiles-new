@@ -23,8 +23,8 @@ floating_modifier                 $mod
 ################################################################################
 
 # start a terminal
-bindsym $mod+Return               exec emacsclient --eval "(eshell-new)" --create-frame
-bindsym Ctrl+$mod+Return          exec st
+bindsym $mod+Return               exec st
+bindsym Ctrl+$mod+Return          exec emacsclient --eval "(eshell-new)" --create-frame
 bindsym $mod+$alt+Return          split h;; exec st
 bindsym $mod+Shift+Return         split v;; exec st
 
