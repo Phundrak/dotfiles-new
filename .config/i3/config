@@ -134,7 +134,9 @@ bindsym $mod+m                    $execgnus
 bindsym XF86Launch7               workspace 10; exec discord-canary
 bindsym Ctrl+Shift+d              workspace 10; exec discord-canary
 bindsym XF86AudioMute                           exec amixer -D pulse set Master 1+ toggle
+bindsym Ctrl+$mod+Prior                         exec amixer -D pulse -q set Master 5%+ unmute
 bindsym XF86AudioRaiseVolume                    exec amixer -D pulse -q set Master 5%+ unmute
+bindsym Ctrl+$mod+Next                          exec amixer -D pulse -q set Master 5%- unmute
 bindsym XF86AudioLowerVolume                    exec amixer -D pulse -q set Master 5%- unmute
 bindsym XF86Calculator                          exec /usr/bin/speedcrunch
 bindsym $mod+$alt+c                             exec /usr/bin/speedcrunch
