@@ -557,9 +557,18 @@ dump.")
         asm-comment-char ?\#
         twittering-use-master-password t
         edit-server-default-major-mode 'org-mode
-        epa-pinentry-mode 'loopback)
-	(add-hook 'prog-mode-hook 'fci-mode)
-	(add-hook 'before-save-hook 'delete-trailing-whitespace)
+        epa-pinentry-mode 'loopback
+        paragraph-start "\f\\|[ \t]*$\\|[ \t]*[-+*] ")
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'prog-mode-hook 'fci-mode)
+  (add-hook 'prog-mode-hook 'visual-line-mode)
+  (mapc (lambda (x)
+          (add-hook x 'auto-fill-mode)
+          (add-hook x 'visual-line-mode))
+        '(message-mode-hook
+          org-mode-hook
+          text-mode-hook
+          markdown-mode-hook))
 
   (defun eshell-new()
     "Open a new instance of eshell"
@@ -595,45 +604,73 @@ dump.")
                ("fs" . glsl-mode)))
     (push (cons (concat "\\." (car e) "\\'") (cdr e)) auto-mode-alist))
 
-  ;; (setq-default indent-tabs-mode t)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;              shortcuts              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (global-set-key (kbd "C-x C-b") 'ibuffer)
+  (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+  (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+  (global-set-key (kbd "S-C-<down>") 'shrink-window)
+  (global-set-key (kbd "S-C-<up>") 'enlarge-window)
+  (global-set-key (kbd "C-x <up>") 'windmove-up)
+  (global-set-key (kbd "C-x <down>") 'windmove-down)
+  (global-set-key (kbd "C-x <right>") 'windmove-right)
+  (global-set-key (kbd "C-x <left>") 'windmove-left)
+  (global-set-key (kbd "C-<prior>") 'previous-buffer)
+  (global-set-key (kbd "C-<next>") 'next-buffer)
+  (global-set-key (kbd "M-»") 'end-of-buffer)
+  (global-set-key (kbd "M-«") 'beginning-of-buffer)
+  (global-set-key (kbd "<XF86HomePage>") 'spacemacs/home)
+  (global-set-key (kbd "<XF86Open>") 'helm-find-files)
+  (global-set-key (kbd "<XF86Close>") 'kill-this-buffer)
+  (global-set-key (kbd "<XF86Save>") 'save-buffer)
+  (global-set-key (kbd "<C-tab>") 'evil-close-fold)
+  (global-set-key (kbd "<C-iso-lefttab>") 'evil-open-fold)
   (spacemacs/declare-prefix "o" "custom")
-  (spacemacs/set-leader-keys "oB" 'fancy-battery-mode)
   (spacemacs/declare-prefix "oa" "applications")
-  (spacemacs/set-leader-keys "oaC" 'calendar)
-  (spacemacs/set-leader-keys "oac" 'calc)
-  (spacemacs/set-leader-keys "od" 'elcord-mode)
-  (spacemacs/set-leader-keys "oae" 'eww)
-  (spacemacs/set-leader-keys "of" 'flycheck-mode)
-  (spacemacs/set-leader-keys "ogd" 'turn-on-gnus-dired-mode)
+  (spacemacs/declare-prefix "og" "gnus")
   (spacemacs/declare-prefix "ol" "conlanging")
   (spacemacs/declare-prefix "olh" "Hjelp")
-  (spacemacs/declare-prefix "olho" "open hjelp.org")
-  (spacemacs/set-leader-keys
-    "olho"
-    (lambda ()
-      (interactive)
-      (find-file "~/Documents/code/web/langue-phundrak-fr/hjelp/hjelp.org")))
+  (spacemacs/declare-prefix "olho" "hjelp.org")
   (spacemacs/declare-prefix "olm" "Mattér")
-  (spacemacs/declare-prefix "olmo" "open matter.org")
-  (spacemacs/set-leader-keys
-    "olmo"
-    (lambda ()
-      (interactive)
-      (find-file "~/Documents/code/web/langue-phundrak-fr/matter/matter.org")))
-  (spacemacs/set-leader-keys "olmr" 'conlanging/matter-to-runes)
-  (spacemacs/set-leader-keys "olml" 'conlanging/matter-to-native-latin)
-  (spacemacs/set-leader-keys "olmL" 'conlanging/matter-to-latex-runes)
+  (spacemacs/declare-prefix "olmo" "matter.org")
   (spacemacs/declare-prefix "om" "multiple-cursors")
-  (spacemacs/set-leader-keys "ome" 'mc/edit-lines)
-  (spacemacs/set-leader-keys "omn" 'mc/mark-next-like-this)
-  (spacemacs/set-leader-keys "omp" 'mc/mark-previous-like-this)
-  (spacemacs/set-leader-keys "oma" 'mc/mark-all-like-this)
+  (spacemacs/declare-prefix "oo" "org-mode")
+  (spacemacs/declare-prefix "oc" "comments")
+  (spacemacs/declare-prefix "ooi" "custom IDs")
+  (spacemacs/declare-prefix "oop" "private.org")
+  (spacemacs/declare-prefix "oos" "school.org")
+  (spacemacs/declare-prefix "ow" "writeroom")
+  (spacemacs/set-leader-keys
+    "oac" 'calc
+    "oaC" 'calendar
+    "oae" 'eww
+    "oB" 'fancy-battery-mode
+    "od" 'elcord-mode
+    "of" 'flycheck-mode
+    "ogd" 'turn-on-gnus-dired-mode
+    "olho" (lambda ()
+             (interactive)
+             (find-file "~/Documents/code/web/langue-phundrak-fr/hjelp/hjelp.org"))
+    "olmo" (lambda ()
+             (interactive)
+             (find-file "~/Documents/code/web/langue-phundrak-fr/matter/matter.org"))
+    "olmr" 'conlanging/matter-to-runes
+    "olml" 'conlanging/matter-to-native-latin
+    "olmL" 'conlanging/matter-to-latex-runes
+    "oce" 'outorg-edit-as-org
+    "occ" 'outorg-copy-edits-and-exit
+    "ome" 'mc/edit-lines
+    "omn" 'mc/mark-next-like-this
+    "omp" 'mc/mark-previous-like-this
+    "oma" 'mc/mark-all-like-this
+    "ooi" 'eos/org-add-ids-to-headlines-in-file
+    "oop" (lambda () (interactive) (find-file "~/org/private.org"))
+    "oos" (lambda () (interactive) (find-file "~/org/school.org"))
+    "oow" 'org-pomodoro
+    "owi" 'writeroom-increase-width
+    "owd" 'writeroom-decrease-width)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                 gnus                ;
@@ -748,7 +785,6 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
        (gnuplot . t)))
 
     ;; org hooks ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (add-hook 'org-mode-hook 'visual-line-mode)
 		(add-hook 'org-mode-hook
 							(lambda ()
 								(add-hook 'before-save-hook
@@ -760,6 +796,15 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
     ;; variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (setq
      geiser-default-implementation 'racket
+     org-agenda-custom-commands '(("h" "Daily habits"
+                                   ((agenda ""))
+                                   ((org-agenda-show-log t)
+                                    (org-agenda-ndays 7)
+                                    (org-agenda-log-mode-items '(state))
+                                    (org-agenda-skip-function
+                                     '(org-agenda-skip-entry-if 'notregexp
+                                                                ":DAILY:")))))
+     org-agenda-files (list "~/org")
      org-confirm-babel-evaluate 'ck/org-confirm-babel-evaluate
      org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0.11.jar"
      org-export-latex-hyperref-format "\\ref{%s}"
@@ -768,81 +813,37 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
      org-journal-dir "~/org/journal/"
      org-journal-file-format "%Y-%m-%d"
      org-latex-listings 'minted
+     ;; org-latex-listings t
      org-latex-packages-alist '(("" "minted"))
+     org-plantuml-jar-path "/opt/plantuml/plantuml.jar"
      org-latex-pdf-process
      '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
        "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")
-     org-plantuml-jar-path "/opt/plantuml/plantuml.jar"
      org-src-tab-acts-natively t
      user-full-name "Lucien Cartier-Tilet"
-     user-mail-address "phundrak@phundrak.fr"
-     org-agenda-files (list "~/org")
-     org-agenda-custom-commands
-     '(("h" "Daily habits"
-        ((agenda ""))
-        ((org-agenda-show-log t)
-         (org-agenda-ndays 7)
-         (org-agenda-log-mode-items '(state))
-         (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":DAILY:")))
-        ;; other commands here
-        ))
-     )
+     user-mail-address "phundrak@phundrak.fr")
 
     ;; Shortcuts ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    (spacemacs/declare-prefix "oo" "org-mode")
-		(spacemacs/declare-prefix "ooi" "custom IDs")
-		(spacemacs/set-leader-keys "ooi" 'eos/org-add-ids-to-headlines-in-file)
-    (spacemacs/declare-prefix "oos" "school.org")
-    (spacemacs/set-leader-keys "oos" (lambda () (interactive) (find-file "~/org/school.org")))
-    (spacemacs/declare-prefix "oop" "private.org")
-    (spacemacs/set-leader-keys "oop" (lambda () (interactive) (find-file "~/org/private.org")))
-    (spacemacs/set-leader-keys "oow" 'org-pomodoro)
-    (spacemacs/declare-prefix "oc" "comments")
-    (spacemacs/set-leader-keys "oce" 'outorg-edit-as-org)
-    (spacemacs/set-leader-keys "occ" 'outorg-copy-edits-and-exit))
-  (with-eval-after-load 'org-agenda
-    (require 'org-projectile)
-    (mapcar '(lambda (file)
-               (when (file-exists-p file)
-                 (push file org-agenda-files)))
-            (org-projectile-todo-files)))
-  (eval-after-load "ox-latex"
-    ;; update the list of LaTeX classes and associated header (encoding, etc.)
-    ;; and structure
-    '(add-to-list 'org-latex-classes
-                  `("beamer"
-                    ,(concat "\\documentclass[presentation]{beamer}\n"
-                             "[DEFAULT-PACKAGES]"
-                             "[PACKAGES]"
-                             "[EXTRA]\n")
-                    ("\\section{%s}" . "\\section*{%s}")
-                    ("\\subsection{%s}" . "\\subsection*{%s}")
-                    ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
-  (setq org-latex-listings t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;           custom commands           ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
-  (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
-  (global-set-key (kbd "S-C-<down>") 'shrink-window)
-  (global-set-key (kbd "S-C-<up>") 'enlarge-window)
-  (global-set-key (kbd "C-x <up>") 'windmove-up)
-  (global-set-key (kbd "C-x <down>") 'windmove-down)
-  (global-set-key (kbd "C-x <right>") 'windmove-right)
-  (global-set-key (kbd "C-x <left>") 'windmove-left)
-  (global-set-key (kbd "C-<prior>") 'previous-buffer)
-  (global-set-key (kbd "C-<next>") 'next-buffer)
-  (global-set-key (kbd "M-»") 'end-of-buffer)
-  (global-set-key (kbd "M-«") 'beginning-of-buffer)
-  (global-set-key (kbd "<XF86HomePage>") 'spacemacs/home)
-  (global-set-key (kbd "<XF86Open>") 'helm-find-files)
-  (global-set-key (kbd "<XF86Close>") 'kill-this-buffer)
-  (global-set-key (kbd "<XF86Save>") 'save-buffer)
-  (global-set-key (kbd "<C-tab>") 'evil-close-fold)
-  (global-set-key (kbd "<C-iso-lefttab>") 'evil-open-fold)
+    (with-eval-after-load 'org-agenda
+      (require 'org-projectile)
+      (mapcar '(lambda (file)
+                 (when (file-exists-p file)
+                   (push file org-agenda-files)))
+              (org-projectile-todo-files)))
+    (eval-after-load "ox-latex"
+      ;; update the list of LaTeX classes and associated header (encoding, etc.)
+      ;; and structure
+      '(add-to-list 'org-latex-classes
+                    `("beamer"
+                      ,(concat "\\documentclass[presentation]{beamer}\n"
+                               "[DEFAULT-PACKAGES]"
+                               "[PACKAGES]"
+                               "[EXTRA]\n")
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                  Qt                 ;
@@ -851,7 +852,8 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
    c-C++-access-key
    "\\<\\(slots\\|signals\\|private\\|protected\\|public\\)\\>[ \t]*[(slots\\|signals)]*[ \t]*:")
   (font-lock-add-keywords
-   'c++-mode'(("\\<\\(Q_OBJECT\\|public slots\\|public signals\\|private slots\\|private signals\\|protected slots\\|protected signals\\)\\>" . font-lock-constant-face)))
+   'c++-mode
+   '(("\\<\\(Q_OBJECT\\|public slots\\|public signals\\|private slots\\|private signals\\|protected slots\\|protected signals\\)\\>" . font-lock-constant-face)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;               flycheck              ;
@@ -891,14 +893,14 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
     (if (listp filename)
         (loop for f in filename do (find-file f wildcards))
       ad-do-it))
-  (defalias 'open 'find-file)
-  (defalias 'openo 'find-file-other-window)
-  (defalias 'yes-or-no-p 'y-or-n-p)
-  (defalias 'list-buffers 'ibuffer)
   (defalias 'ei3 (lambda ()
                    (find-file-other-window "~/.config/i3/config")))
   (defalias 'epoly (lambda ()
                      (find-file-other-window "~/.config/polybar/config")))
+  (defalias 'open 'find-file)
+  (defalias 'openo 'find-file-other-window)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (defalias 'list-buffers 'ibuffer)
   (defmacro with-face (str &rest properties)
     `(propertize ,str 'face (list ,@properties)))
   (defun eshell/abbr-pwd ()
@@ -923,9 +925,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
         '("git" "log" "l" "diff" "show")
         eshell-prompt-regexp "^[^#$\n]*[#$] "
         eshell-prompt-function 'eshell/my-prompt)
-  (eshell-git-prompt-use-theme 'powerline)
-
-)
+  (eshell-git-prompt-use-theme 'powerline))
 
 
 ;; Do not write anything past this comment. This is where Emacs will
