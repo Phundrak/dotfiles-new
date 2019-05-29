@@ -8,5 +8,5 @@ function fish_title
     true
 end
 
-set -gx PATH $HOME/.cargo/bin $HOME/.local/bin $PATH
+set -gx PATH $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.6.0/bin $PATH
 set -gx PKG_CONFIG_PATH /usr/local/lib/pkgconfig/
