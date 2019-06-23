@@ -276,6 +276,11 @@ It should only modify the values of Spacemacs settings."
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
 
+   ;; Default major mode for a new empty buffer. Possible values are mode
+   ;; names such as `text-mode'; and `nil' to use Fundamental mode.
+   ;; (default `text-mode')
+   dotspacemacs-new-empty-buffer-major-mode 'text-mode
+
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'org-mode
 
@@ -367,23 +372,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-auto-save-file-location 'cache
 
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
-   dotspacemacs-max-rollback-slots 10
-   ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
-   dotspacemacs-helm-resize nil
-
-   ;; if non-nil, the helm header is hidden when there is only one source.
-   ;; (default nil)
-   dotspacemacs-helm-no-header nil
-
-   ;; define the position to display `helm', options are `bottom', `top',
-   ;; `left', or `right'. (default 'bottom)
-   dotspacemacs-helm-position 'bottom
-
-   ;; Controls fuzzy matching in helm. If set to `always', force fuzzy matching
-   ;; in all non-asynchronous sources. If set to `source', preserve individual
-   ;; source settings. Else, disable fuzzy matching in all sources.
-   ;; (default 'always)
-   dotspacemacs-helm-use-fuzzy 'always
+   dotspacemacs-max-rollback-slots 5
 
    ;; If non-nil, the paste transient-state is enabled. While enabled, after you
    ;; paste something, pressing `C-j' and `C-k' several times cycles through the
@@ -424,6 +413,11 @@ It should only modify the values of Spacemacs settings."
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
    dotspacemacs-maximized-at-startup nil
+
+   ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
+   ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
+   ;; borderless fullscreen. (default nil)
+   dotspacemacs-undecorated-at-startup nil
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
@@ -566,11 +560,12 @@ See the header of this file for more information."
   (setq tramp-ssh-controlmaster-options
         "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no"))
 
-(defun dotspacemacs/user-load()
-	"Library to load while dumping.
+(defun dotspacemacs/user-load ()
+  "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
-dump.")
+dump."
+  )
 
 (defun dotspacemacs/user-config ()
 
@@ -682,10 +677,10 @@ dump.")
     "ogd" 'turn-on-gnus-dired-mode
     "olho" (lambda ()
              (interactive)
-             (find-file "~/Documents/code/web/langue-phundrak-fr/hjelp/hjelp.org"))
+             (find-file "~/Documents/code/web/langue-phundrak-fr/hjelp.org"))
     "olmo" (lambda ()
              (interactive)
-             (find-file "~/Documents/code/web/langue-phundrak-fr/matter/matter.org"))
+             (find-file "~/Documents/code/web/langue-phundrak-fr/matter.org"))
     "olmr" 'conlanging/matter-to-runes
     "olml" 'conlanging/matter-to-native-latin
     "olmL" 'conlanging/matter-to-latex-runes
@@ -807,6 +802,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
      'org-babel-load-languages
      '((C . t)
        (ditaa . t)
+       (dot . t)
        (emacs-lisp .t)
        (gnuplot . t)
        (latex . t)
