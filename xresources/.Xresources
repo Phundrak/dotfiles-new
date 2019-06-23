@@ -10,8 +10,11 @@ URxvt.fadeColor: grey
 UXTerm*faceName: Source Code Pro for Powerline:style=book
 ! UXTerm*faceName: Dejavu Sans Mono for Powerline:style=book
 UXTerm*faceNameDoublesize: IPAGothic:style=Regular
-UXTerm*faceSize: 10
+UXTerm*faceSize: 9
 UXTerm*borderLess: true
 UXTerm*externalBorder: 0
 UXTerm*internalBorder: 0
 URxvt.font: xft:Source Code Pro for Powerline:pixelsize=9
+
+st.font: Source Code Pro for Powerline:style=book
+st.shell: fish
