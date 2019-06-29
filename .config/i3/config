@@ -234,17 +234,16 @@ exec_always --no-startup-id       ~/dotfiles/enable_thouch.sh
 exec_always --no-startup-id       ~/.config/polybar/launch.sh
 exec_always --no-startup-id       wal -i "$(< "${HOME}/.cache/wal/wal")"
 exec        --no-startup-id       xss-lock -- i3lock-fancy -t $lockscreen
-exec        --no-startup-id       i3-battery-popup -N -t 2m
 exec        --no-startup-id       "xrdb $HOME/.Xresources"
 exec        --no-startup-id       xfce4-power-manager
 exec        --no-startup-id       compton -F --opengl --config ~/.config/compton.conf -e 1
-exec        --no-startup-id       numlockx on
 exec        --no-startup-id       redshift-gtk
 exec        --no-startup-id       mpd
 exec        --no-startup-id       mpc stop
 exec        --no-startup-id       syndaemon -i 1.0 -t -k
+exec        --no-startup-id       sleep 3; emacs --eval "(server-start)"
 exec        --no-startup-id       mpd_discord_richpresence --no-idle --fork
-exec                              sleep 3; emacs --eval "(server-start)"
+exec        --no-startup-id       i3-battery-popup -N -t 2m
 
 
 ################################################################################
