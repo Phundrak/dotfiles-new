@@ -656,11 +656,17 @@ dump."
   (spacemacs/declare-prefix "o" "custom")
   (spacemacs/declare-prefix "oa" "applications")
   (spacemacs/declare-prefix "og" "gnus")
+  (spacemacs/declare-prefix "oi" "insert")
+  (spacemacs/declare-prefix "oii" "invisible space")
   (spacemacs/declare-prefix "ol" "conlanging")
   (spacemacs/declare-prefix "olh" "Hjelp")
   (spacemacs/declare-prefix "olho" "hjelp.org")
   (spacemacs/declare-prefix "olm" "Mattér")
   (spacemacs/declare-prefix "olmo" "matter.org")
+  (spacemacs/declare-prefix "ole" "Einnlanda")
+  (spacemacs/declare-prefix "oleo" "einnlanda.org")
+  (spacemacs/declare-prefix "oln" "Ňyqy")
+  (spacemacs/declare-prefix "olno" "nyqy.org")
   (spacemacs/declare-prefix "om" "multiple-cursors")
   (spacemacs/declare-prefix "oo" "org-mode")
   (spacemacs/declare-prefix "oc" "comments")
@@ -675,13 +681,17 @@ dump."
     "oB" 'fancy-battery-mode
     "od" 'elcord-mode
     "of" 'flycheck-mode
+    "oii" (lambda () (interactive)
+            (insert "​"))
     "ogd" 'turn-on-gnus-dired-mode
-    "olho" (lambda ()
-             (interactive)
+    "olho" (lambda () (interactive)
              (find-file "~/Documents/code/web/langue-phundrak-fr/hjelp.org"))
-    "olmo" (lambda ()
-             (interactive)
+    "olmo" (lambda () (interactive)
              (find-file "~/Documents/code/web/langue-phundrak-fr/matter.org"))
+    "olno" (lambda () (interactive)
+             (find-file "~/Documents/code/web/langue-phundrak-fr/nyqy.org"))
+    "oleo" (lambda () (interactive)
+             (find-file "~/Documents/code/web/langue-phundrak-fr/einnlanda.org"))
     "olmr" 'conlanging/matter-to-runes
     "olml" 'conlanging/matter-to-native-latin
     "olmL" 'conlanging/matter-to-latex-runes
