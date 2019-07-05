@@ -519,7 +519,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemacs-frame-title-format "%b (%m)"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -554,6 +554,8 @@ See the header of this file for more information."
   (require 'org-id)
   (require 'package)
   (require 'ox-latex)
+  (require 'ox-publish)
+
   (add-to-list 'package-archives
                '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
@@ -860,7 +862,39 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
        "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")
      org-src-tab-acts-natively t
      user-full-name "Lucien Cartier-Tilet"
-     user-mail-address "phundrak@phundrak.fr")
+     user-mail-address "phundrak@phundrak.fr"
+     ;; subscripts and superscripts need {} to work
+     org-use-sub-superscripts (quote {})
+
+     org-publish-project-alist
+     '(("langue-phundrak-fr-org"
+        :base-directory "~/Documents/code/web/langue-phundrak-fr/"
+        :base-extension "org"
+        :exclude "CONTRIBUTING.*"
+        :publishing-directory "~/Documents/code/web/langue-phundrak-fr-export/"
+        :recursive t
+        :publishing-function org-html-publish-to-html
+        :headline-levels 5
+        :auto-preamble t)
+       ("langue-phundrak-fr-pdf"
+        :base-directory "~/Documents/code/web/langue-phundrak-fr/"
+        :base-extension "org"
+        :exclude "CONTRIBUTING.*"
+        :publishing-directory "~/Documents/code/web/langue-phundrak-fr-export/"
+        :recursive t
+        :publishing-function org-latex-publish-to-pdf
+        :headline-levels 5
+        :auto-preamble t)
+       ("langue-phundrak-fr-static"
+        :base-directory "~/Documents/code/web/langue-phundrak-fr"
+        :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|jpeg\\|woff\\|txt"
+        :publishing-directory "~/Documents/code/web/langue-phundrak-fr-export"
+        :recursive t
+        :publishing-function org-publish-attachment)
+       ("langue-phundrak-fr"
+        :components ("langue-phundrak-fr-org"
+                     "langue-phundrak-fr-static"
+                     "langue-phundrak-fr-pdf"))))
 
     ;; Shortcuts ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
