@@ -50,8 +50,8 @@ font-1 = unifont:fontformat=truetype:size=6:antialias=false
 font-2 = "Siji:pixelsize=8"
 font-3 = "IPAMincho:style=regular:pixelsize=8"
 
-modules-left = powermenu mpd 
-modules-center = 
+modules-left = powermenu mpd
+modules-center =
 modules-right = filesystem wlan eth volume backlight-acpi cpu memory temperature custom-battery
 
 tray-position =
@@ -95,9 +95,9 @@ font-1 = unifont:fontformat=truetype:size=6:antialias=false
 font-2 = "Siji:pixelsize=8"
 font-3 = "IPAMincho:style=regular:pixelsize=8"
 
-modules-left = i3 
+modules-left = i3
 modules-center = xwindow
-modules-right = date 
+modules-right = date
 
 tray-position =
 tray-padding = 0
@@ -126,7 +126,7 @@ format-underline = ${colors.secondary}
 format-padding = 1
 
 label = %title%
-label-maxlen = 30
+label-maxlen = 50
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
@@ -221,7 +221,7 @@ label-mode-background = ${colors.background-alt}
 type = internal/mpd
 
 label-song =   %title% - %artist%
-label-song-maxlen = 25
+label-song-maxlen = 50
 label-song-ellipsis = true
 
 label-offline =  mpd is offline
