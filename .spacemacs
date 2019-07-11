@@ -896,6 +896,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
        ("langue-phundrak-fr-static"
         :base-directory "~/Documents/code/web/langue-phundrak-fr"
         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|svg\\|jpeg\\|woff\\|txt"
+        :exclude ".*auto-generated.*"
         :publishing-directory "~/Documents/code/web/langue-phundrak-fr-export"
         :recursive t
         :publishing-function org-publish-attachment)
