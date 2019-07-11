@@ -675,17 +675,23 @@ dump."
   (spacemacs/declare-prefix "ooi" "custom IDs")
   (spacemacs/declare-prefix "oop" "private.org")
   (spacemacs/declare-prefix "oos" "school.org")
+  (spacemacs/declare-prefix "oot" "tables")
+  (spacemacs/declare-prefix "oott" "toggle width")
+  (spacemacs/declare-prefix "oote" "expand")
+  (spacemacs/declare-prefix "oots" "shrink")
   (spacemacs/declare-prefix "ow" "writeroom")
   (spacemacs/set-leader-keys
     "oac" 'calc
     "oaC" 'calendar
     "oae" 'eww
     "oB" 'fancy-battery-mode
+    "occ" 'outorg-copy-edits-and-exit
+    "oce" 'outorg-edit-as-org
     "od" 'elcord-mode
     "of" 'flycheck-mode
+    "ogd" 'turn-on-gnus-dired-mode
     "oii" (lambda () (interactive)
             (insert "​"))
-    "ogd" 'turn-on-gnus-dired-mode
     "olho" (lambda () (interactive)
              (find-file "~/Documents/code/web/langue-phundrak-fr/hjelp.org"))
     "olmo" (lambda () (interactive)
@@ -697,8 +703,6 @@ dump."
     "olmr" 'conlanging/matter-to-runes
     "olml" 'conlanging/matter-to-native-latin
     "olmL" 'conlanging/matter-to-latex-runes
-    "oce" 'outorg-edit-as-org
-    "occ" 'outorg-copy-edits-and-exit
     "ome" 'mc/edit-lines
     "omn" 'mc/mark-next-like-this
     "omp" 'mc/mark-previous-like-this
@@ -706,6 +710,9 @@ dump."
     "ooi" 'eos/org-add-ids-to-headlines-in-file
     "oop" (lambda () (interactive) (find-file "~/org/private.org"))
     "oos" (lambda () (interactive) (find-file "~/org/school.org"))
+    "oott" 'org-table-toggle-column-width
+    "oote" 'org-table-expand
+    "oots" 'org-table-shrink
     "oow" 'org-pomodoro
     "owi" 'writeroom-increase-width
     "owd" 'writeroom-decrease-width)
@@ -822,7 +829,8 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
        (makefile . t)
        (python . t)
        (R . t)
-       (shell .t)))
+       (scheme . t)
+       (shell . t)))
 
     ;; org hooks ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		(add-hook 'org-mode-hook
@@ -870,7 +878,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
      '(("langue-phundrak-fr-org"
         :base-directory "~/Documents/code/web/langue-phundrak-fr/"
         :base-extension "org"
-        :exclude "CONTRIBUTING.*"
+        :exclude ".\/(CONTRIB|README|head).*"
         :publishing-directory "~/Documents/code/web/langue-phundrak-fr-export/"
         :recursive t
         :publishing-function org-html-publish-to-html
@@ -879,7 +887,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
        ("langue-phundrak-fr-pdf"
         :base-directory "~/Documents/code/web/langue-phundrak-fr/"
         :base-extension "org"
-        :exclude "CONTRIBUTING.*"
+        :exclude ".\/(CONTRIB|README|index|head).*"
         :publishing-directory "~/Documents/code/web/langue-phundrak-fr-export/"
         :recursive t
         :publishing-function org-latex-publish-to-pdf
@@ -887,7 +895,7 @@ So a typical ID could look like \"Org-4nd91V40HI\"."
         :auto-preamble t)
        ("langue-phundrak-fr-static"
         :base-directory "~/Documents/code/web/langue-phundrak-fr"
-        :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|jpeg\\|woff\\|txt"
+        :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|svg\\|jpeg\\|woff\\|txt"
         :publishing-directory "~/Documents/code/web/langue-phundrak-fr-export"
         :recursive t
         :publishing-function org-publish-attachment)
@@ -1046,8 +1054,7 @@ This function is called at the very end of Spacemacs initialization."
  '(eshell-aliases-file "/home/phundrak/dotfiles/eshell-alias")
  '(evil-want-Y-yank-to-eol nil)
  '(hl-todo-keyword-faces
-   (quote
-    (("TODO" . "#dc752f")
+   '(("TODO" . "#dc752f")
      ("NEXT" . "#dc752f")
      ("THEM" . "#2d9574")
      ("PROG" . "#3a81c3")
@@ -1061,12 +1068,17 @@ This function is called at the very end of Spacemacs initialization."
      ("TEMP" . "#b1951d")
      ("FIXME" . "#dc752f")
      ("XXX" . "#dc752f")
-     ("XXXX" . "#dc752f"))))
+     ("XXXX" . "#dc752f")))
  '(org-export-headline-levels 4)
  '(package-selected-packages
-   (quote
-    (ob-restclient forge emacsql doom-modeline cpp-auto-include company-glsl counsel swiper ivy ess window-purpose treemacs font-lock+ ox-gfm slime-company slime common-lisp-snippets erlang insert-shebang fish-mode company-shell faceup racket-mode treepy graphql yapfify yaml-mode xterm-color web-beautify twittering-mode toml-mode tagedit stickyfunc-enhance smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode ranger rainbow-identifiers pytest pyenv-mode py-isort pug-mode plantuml-mode phpunit phpcbf php-auto-yasnippets pdf-tools tablist ox-pandoc orgit org-present org-pomodoro alert log4e gntp ob-elixir multi-term markdown-toc magit-gitflow magit-gh-pulls livid-mode live-py-mode json-snatcher js2-refactor js-doc htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss haskell-snippets haml-mode gnuplot glsl-mode gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-messenger gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-rust pos-tip flycheck-mix flycheck-credo eshell-z eshell-prompt-extras esh-help drupal-mode disaster cython-mode dash-functional tern company-ghci company-ghc ghc color-identifiers-mode cmm-mode clang-format cargo auto-dictionary alchemist modern-cpp-font-lock yasnippet-snippets x86-lookup web-mode srefactor racer pyvenv pip-requirements pandoc-mode org-projectile org-category-capture org-mime org-download nasm-mode json-reformat intero imenu-list hy-mode git-timemachine git-link geiser flycheck-pos-tip flycheck-haskell evil-magit emmet-mode cmake-mode anaconda-mode rust-mode elixir-mode flycheck haskell-mode multiple-cursors skewer-mode simple-httpd markdown-mode magit magit-popup git-commit ghub with-editor pythonic emms gmail-message-mode ham-mode html-to-markdown flymd edit-server image-dired+ go-guru go-eldoc company-go go-mode unfill mwim company-web web-completion-data company-tern company-cabal company-c-headers company-auctex company-anaconda elcord xresources-theme sql-indent rainbow-mode php-extras php-mode mmm-mode json-mode js2-mode csv-mode coffee-mode auctex helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
- '(pdf-view-midnight-colors (quote ("#655370" . "#fbf8ef"))))
+   '(ob-restclient forge emacsql doom-modeline cpp-auto-include company-glsl counsel swiper ivy ess window-purpose treemacs font-lock+ ox-gfm slime-company slime common-lisp-snippets erlang insert-shebang fish-mode company-shell faceup racket-mode treepy graphql yapfify yaml-mode xterm-color web-beautify twittering-mode toml-mode tagedit stickyfunc-enhance smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode ranger rainbow-identifiers pytest pyenv-mode py-isort pug-mode plantuml-mode phpunit phpcbf php-auto-yasnippets pdf-tools tablist ox-pandoc orgit org-present org-pomodoro alert log4e gntp ob-elixir multi-term markdown-toc magit-gitflow magit-gh-pulls livid-mode live-py-mode json-snatcher js2-refactor js-doc htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss haskell-snippets haml-mode gnuplot glsl-mode gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-messenger gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-rust pos-tip flycheck-mix flycheck-credo eshell-z eshell-prompt-extras esh-help drupal-mode disaster cython-mode dash-functional tern company-ghci company-ghc ghc color-identifiers-mode cmm-mode clang-format cargo auto-dictionary alchemist modern-cpp-font-lock yasnippet-snippets x86-lookup web-mode srefactor racer pyvenv pip-requirements pandoc-mode org-projectile org-category-capture org-mime org-download nasm-mode json-reformat intero imenu-list hy-mode git-timemachine git-link geiser flycheck-pos-tip flycheck-haskell evil-magit emmet-mode cmake-mode anaconda-mode rust-mode elixir-mode flycheck haskell-mode multiple-cursors skewer-mode simple-httpd markdown-mode magit magit-popup git-commit ghub with-editor pythonic emms gmail-message-mode ham-mode html-to-markdown flymd edit-server image-dired+ go-guru go-eldoc company-go go-mode unfill mwim company-web web-completion-data company-tern company-cabal company-c-headers company-auctex company-anaconda elcord xresources-theme sql-indent rainbow-mode php-extras php-mode mmm-mode json-mode js2-mode csv-mode coffee-mode auctex helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+ '(pdf-view-midnight-colors '("#655370" . "#fbf8ef"))
+ '(safe-local-variable-values
+   '((org-confirm-babel-evaluate)
+     (javascript-backend . tern)
+     (javascript-backend . lsp)
+     (go-backend . go-mode)
+     (go-backend . lsp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
