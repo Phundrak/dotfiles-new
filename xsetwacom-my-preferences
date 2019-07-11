@@ -7,7 +7,7 @@
 
 # Set this to your (stylus) device. Find it by running:
 # xsetwacom --list devices
-DEVICE='Wacom Co.,Ltd. Bamboo Pad, USB stylus'
+DEVICE='Wacom USB Bamboo PAD Pen stylus'
 
 # These numbers are specific for each device. Get them by running:
 # xsetwacom --set "Your device name here" ResetArea
