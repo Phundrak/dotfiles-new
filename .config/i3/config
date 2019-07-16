@@ -26,7 +26,6 @@ floating_modifier                 $mod
 assign [class="discord"] 10
 assign [class="Emacs"] 2
 assign [class="Chromium"] 3
-assign [class="tabbed"] 3
 assign [class="Nemo"] 4
 assign [class="Godot"] 5
 assign [class="Gimp*"] 6
@@ -137,7 +136,6 @@ bindsym XF86Launch5               exec emacsclient --create-frame
 bindsym $mod+e                    exec emacsclient --create-frame
 bindsym XF86Launch6               exec chromium
 bindsym $mod+c                    exec chromium
-bindsym $mod+$alt+s               exec tabbed -c surf -e
 bindsym XF86HomePage              exec chromium https://labs.phundrak.fr
 bindsym XF86Search                exec chromium https://www.google.com
 bindsym XF86Launch9               exec nemo
