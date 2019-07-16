@@ -162,7 +162,11 @@ interval = 20
 mount-0 = /
 mount-1 = /home
 
-label-mounted =  %mountpoint%: %percentage_used%%
+format-mounted = <label-mounted>
+label-mounted-underline = ${colors.secondary}
+format-unmounted = <label-unmounted>
+
+label-mounted =  %mountpoint%: %used%/%total% (%percentage_used%%)
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 label-mounted-foreground = ${colors.foreground}
@@ -248,7 +252,7 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
-format = <label>
+format = <label> <ramp-coreload>
 format-prefix = " "
 format-underline = #f90000
 
