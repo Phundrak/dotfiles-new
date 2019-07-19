@@ -740,7 +740,8 @@ dump."
         nnml-directory "~/Mails"
         message-directory "~/Mails"
         gnus-fetch-old-headers 'some
-        mm-discouraged-alternatives '("text/html" "text/richtext"))
+        mm-discouraged-alternatives '("text/html" "text/richtext")
+        mm-text-html-renderer 'w3m)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;              org--mode              ;
