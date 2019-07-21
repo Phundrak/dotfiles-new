@@ -73,6 +73,8 @@ bindsym $mod+f                    fullscreen toggle
 bindsym $mod+Shift+space          floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space                focus mode_toggle
+# center floating window
+bindsym Ctrl+$mod+c               move position center
 
 # Scratchpad
 bindsym $mod+Shift+s              move scratchpad
@@ -214,6 +216,7 @@ bindsym $mod+Shift+v              exec $term ncmpcpp -qs visualizer
 smart_gaps                        on
 gaps                              inner 20
 gaps                              outer -10
+border_radius                     10
 popup_during_fullscreen           leave_fullscreen
 workspace_auto_back_and_forth     yes
 focus_follows_mouse               off
@@ -225,7 +228,7 @@ bindsym $mod+Ctrl+g               gaps outer current plus 5
 bindsym $mod+Ctrl+Shift+g         gaps outer current minus 5
 bindsym $mod+$alt+g               gaps inner all set 20; gaps outer all set -10
 
-new_window                        none
+default_border                    pixel 0
 smart_borders                     on
 
 ################################################################################
