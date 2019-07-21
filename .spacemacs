@@ -657,6 +657,7 @@ dump."
   (global-set-key (kbd "<C-iso-lefttab>") 'evil-open-fold)
   (spacemacs/declare-prefix "o" "custom")
   (spacemacs/declare-prefix "oa" "applications")
+  (spacemacs/declare-prefix "oc" "comments")
   (spacemacs/declare-prefix "og" "gnus")
   (spacemacs/declare-prefix "oi" "insert")
   (spacemacs/declare-prefix "oii" "invisible space")
@@ -669,9 +670,10 @@ dump."
   (spacemacs/declare-prefix "oleo" "einnlanda.org")
   (spacemacs/declare-prefix "oln" "Ňyqy")
   (spacemacs/declare-prefix "olno" "nyqy.org")
+  (spacemacs/declare-prefix "olt" "Tãso")
+  (spacemacs/declare-prefix "olto" "taso.org")
   (spacemacs/declare-prefix "om" "multiple-cursors")
   (spacemacs/declare-prefix "oo" "org-mode")
-  (spacemacs/declare-prefix "oc" "comments")
   (spacemacs/declare-prefix "ooi" "custom IDs")
   (spacemacs/declare-prefix "oop" "private.org")
   (spacemacs/declare-prefix "oos" "school.org")
@@ -700,6 +702,8 @@ dump."
              (find-file "~/Documents/code/web/langue-phundrak-fr/nyqy.org"))
     "oleo" (lambda () (interactive)
              (find-file "~/Documents/code/web/langue-phundrak-fr/einnlanda.org"))
+    "olto" (lambda () (interactive)
+             (find-file "~/Documents/code/web/langue-phundrak-fr/taso.org"))
     "olmr" 'conlanging/matter-to-runes
     "olml" 'conlanging/matter-to-native-latin
     "olmL" 'conlanging/matter-to-latex-runes
